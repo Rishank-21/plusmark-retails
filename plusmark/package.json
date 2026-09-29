@@ -1,0 +1,51 @@
+{
+  "name": "plusmark",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "typecheck": "next typegen && tsc --noEmit",
+    "assets:models": "node scripts/generate-models.mts",
+    "assets:renders": "node scripts/render-products.mts",
+    "assets:placeholders": "node scripts/generate-placeholders.mts",
+    "assets:photos": "node scripts/import-photos.mts",
+    "assets": "npm run assets:models && npm run assets:renders && npm run assets:placeholders"
+  },
+  "dependencies": {
+    "@gsap/react": "^2.1.2",
+    "@react-three/drei": "^10.7.9",
+    "@react-three/fiber": "^9.8.1",
+    "firebase": "12.19.0",
+    "firebase-admin": "14.5.0",
+    "framer-motion": "^13.4.4",
+    "gsap": "^3.15.0",
+    "lucide-react": "^1.48.0",
+    "next": "16.3.6",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "three": "^0.186.1",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@gltf-transform/core": "^4.5.0",
+    "@gltf-transform/extensions": "^4.5.0",
+    "@gltf-transform/functions": "^4.5.0",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "22.20.4",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/three": "^0.186.0",
+    "draco3dgltf": "^1.5.7",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.6",
+    "sharp": "^0.35.4",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=22.18"
+  }
+}

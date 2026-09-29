@@ -1,0 +1,60 @@
+/**
+ * Product videos from the Plusmark Drive: re-encoded from the 1920×1080 masters to 1080p H.264
+ * (CRF 21, ≤4.5 Mbps, faststart) in /public/videos, with a full-HD poster frame alongside. Only products that have their own footage get a product video; every wall
+ * board also shows the installation guide.
+ */
+export interface Video {
+  src: string;
+  poster: string;
+  title: string;
+  caption: string;
+}
+
+const v = (file: string, title: string, caption: string): Video => ({
+  src: `/videos/${file}.mp4`,
+  poster: `/videos/${file}.jpg`,
+  title,
+  caption,
+});
+
+export const videos = {
+  ecoWhite: v("eco-premium-white-board", "Eco Premium White Board", "High Gloss HPL writing surface, aluminium anodised frame and ABS dual-tone corners."),
+  ecoChalk: v("eco-premium-chalk-board", "Eco Premium Chalk Board", "Hardcore Chalk Grade HPL surface in the Eco Premium frame."),
+  ecoNotice: v("eco-premium-notice-board", "Eco Premium Notice Board", "Velvet pin-up surface with a soft, pin-friendly core."),
+  ecoBothSide: v("eco-premium-both-side", "Eco Premium Both Side Board", "White board on one side, chalk board on the other."),
+  metallicWhite: v("metallic-premium-white-board", "Metallic Premium White Board", "Heavy-duty aluminium framing with Signature Dual-Tone Corners."),
+  metallicChalk: v("metallic-premium-chalk-board", "Metallic Premium Chalk Board", "Non-reflective, glare-free Hardcore Chalk Grade HPL surface."),
+  metallicNotice: v("metallic-premium-notice-board", "Metallic Premium Notice Board", "2 mm blazer cloth with long-lasting colour retention."),
+  metallicBothSide: v("metallic-premium-both-side", "Metallic Premium Both Side Board", "White board and chalk board in one Metallic Premium frame."),
+  installation: v("board-installation", "Board Installation", "How a Plusmark board is mounted on the wall, step by step."),
+  retailInstallation: v("retail-board-installation", "Plusmark Retail Board Installation", "Installing a Plusmark Retail board with the supplied hangers."),
+} satisfies Record<string, Video>;
+
+/** Product slug → its own product videos (first one is the headline video). */
+const productVideoMap: Record<string, Video[]> = {
+  "eco-premium-white-board": [videos.ecoWhite, videos.ecoBothSide],
+  "eco-premium-chalk-board": [videos.ecoChalk, videos.ecoBothSide],
+  "eco-premium-notice-board": [videos.ecoNotice],
+  "metallic-premium-white-board": [videos.metallicWhite, videos.metallicBothSide],
+  "metallic-premium-chalk-board": [videos.metallicChalk, videos.metallicBothSide],
+  "metallic-premium-notice-board": [videos.metallicNotice],
+};
+
+/** Wall boards that get the installation guide video. */
+const WALL_BOARD_CATEGORIES = new Set(["white-boards", "chalk-boards", "notice-boards", "magnetic-boards", "ceramic-boards", "specialty-boards"]);
+
+export function getProductVideos(slug: string, categorySlug: string): Video[] {
+  const own = productVideoMap[slug] ?? [];
+  if (!WALL_BOARD_CATEGORIES.has(categorySlug)) return own;
+  return [...own, videos.installation];
+}
+
+/** Videos featured on the home page. */
+export const homeVideos: Video[] = [
+  videos.metallicWhite,
+  videos.ecoWhite,
+  videos.metallicNotice,
+  videos.ecoChalk,
+  videos.installation,
+  videos.retailInstallation,
+];
