@@ -18,7 +18,11 @@ export function VideoRing({ videos }: { videos: Video[] }) {
   const { scrollYProgress } = useScroll({ target: section, offset: ["start start", "end end"] });
   const p = useSpring(scrollYProgress, { stiffness: 90, damping: 24, mass: 0.5 });
   const rotate = useTransform(p, [0, 1], [18, -342]);
-  const tilt = useTransform(p, [0, 0.5, 1], [-8, -3, -8]);
+  const tilt = useTransform(p, [0, 0.5, 1], [-6, -2, -6]);
+  // cinematic entrance: the reel settles from 90% to 100% as the section arrives
+  const { scrollYProgress: arrive } = useScroll({ target: section, offset: ["start end", "start start"] });
+  const enter = useTransform(arrive, [0, 1], [0.9, 1]);
+  const enterO = useTransform(arrive, [0, 0.6], [0.4, 1]);
 
   const n = videos.length;
   useEffect(() => {
@@ -44,12 +48,12 @@ export function VideoRing({ videos }: { videos: Video[] }) {
       <div className="sticky top-0 flex h-[100svh] flex-col items-center justify-center overflow-hidden">
         <div className="relative z-10 px-5 text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">On camera · 1080p</p>
-          <h2 id="xd-films-title" className="mt-3 font-display text-[clamp(1.8rem,4vw,3.6rem)] font-semibold leading-[1.02] text-graphite">
+          <h2 id="xd-films-title" className="mt-4 font-display text-[clamp(2.25rem,4.4vw,4.5rem)] font-semibold leading-[1.02] tracking-[-0.035em] text-graphite">
             Spin the <span className="xd-grad-text">film reel.</span>
           </h2>
         </div>
 
-        <div className="relative mt-10 h-[46vh] w-full [perspective:1800px] sm:h-[52vh]">
+        <motion.div style={{ scale: enter, opacity: enterO }} className="relative mt-10 h-[46vh] w-full [perspective:1800px] sm:h-[52vh]">
           <motion.ul
             className="absolute left-1/2 top-1/2 [transform-style:preserve-3d]"
             style={{ rotateY: rotate, rotateX: tilt }}
@@ -63,13 +67,13 @@ export function VideoRing({ videos }: { videos: Video[] }) {
                 <button
                   type="button"
                   onClick={() => openVideo(v)}
-                  className="group block w-[220px] overflow-hidden rounded-2xl bg-white text-left shadow-[0_30px_60px_-25px_rgb(91_61_245/0.6)] ring-1 ring-[#6d4aff]/15 sm:w-[320px]"
+                  className="group block w-[220px] overflow-hidden rounded-xl bg-white text-left shadow-[0_1px_2px_rgb(27_23_64/0.06),0_30px_60px_-30px_rgb(27_23_64/0.5)] ring-1 ring-[rgb(27_23_64/0.08)] transition-transform duration-300 hover:-translate-y-1 sm:w-[320px]"
                 >
                   <span className="relative block aspect-video overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={v.poster} alt="" loading="lazy" className="size-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                    <span className="absolute inset-0 flex items-center justify-center bg-gradient-to-t from-[#2a1f6e]/50 to-transparent">
-                      <span className="flex size-12 items-center justify-center rounded-full bg-white/90 text-accent shadow-lg transition-transform group-hover:scale-110">
+                    <img src={v.poster} alt="" loading="lazy" className="size-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" />
+                    <span className="absolute inset-0 flex items-center justify-center bg-gradient-to-t from-[#15123a]/55 via-transparent to-transparent">
+                      <span className="flex size-11 items-center justify-center rounded-full bg-white/90 text-graphite shadow-[0_8px_20px_-8px_rgb(27_23_64/0.5)] backdrop-blur transition-transform duration-300 group-hover:scale-105">
                         <Play aria-hidden className="size-5 translate-x-0.5 fill-current" />
                       </span>
                     </span>
@@ -82,7 +86,7 @@ export function VideoRing({ videos }: { videos: Video[] }) {
               </li>
             ))}
           </motion.ul>
-        </div>
+        </motion.div>
       </div>
 
       <dialog
@@ -90,11 +94,11 @@ export function VideoRing({ videos }: { videos: Video[] }) {
         onClose={() => setPlaying(null)}
         onClick={(e) => e.target === dialog.current && close()}
         aria-label={playing?.title ?? "Video"}
-        className="m-auto w-[min(92vw,72rem)] overflow-hidden rounded-3xl bg-white p-0 shadow-2xl backdrop:bg-[#2a1f6e]/70 backdrop:backdrop-blur-sm"
+        className="m-auto w-[min(92vw,72rem)] overflow-hidden rounded-xl bg-white p-0 shadow-2xl backdrop:bg-[#15123a]/75 backdrop:backdrop-blur-sm"
       >
         {playing && (
           <div>
-            <div className="relative aspect-video bg-[#2a1f6e]">
+            <div className="relative aspect-video bg-[#15123a]">
               <video key={playing.src} className="size-full" src={playing.src} poster={playing.poster} controls autoPlay playsInline />
             </div>
             <div className="flex items-start justify-between gap-4 p-5 md:p-6">

@@ -4,14 +4,15 @@ import { AboutSection } from "@/components/sections/AboutSection";
 import { QualityStory } from "@/components/sections/QualityStory";
 import { IndustriesSection } from "@/components/sections/IndustriesSection";
 import { TrustSection } from "@/components/sections/TrustSection";
-import { ReviewsSection } from "@/components/sections/ReviewsSection";
+import { ReviewWall } from "@/components/experience/ReviewWall";
 import { CustomTeaser } from "@/components/sections/CustomTeaser";
 import { EnquirySection } from "@/components/sections/EnquirySection";
 import { StatsBand } from "@/components/sections/StatsBand";
-import { VideoSection } from "@/components/sections/VideoSection";
+import { VideoRing } from "@/components/experience/VideoRing";
+import { allVideos } from "@/data/media";
 import { ProcessSection } from "@/components/sections/ProcessSection";
 import { FaqSection } from "@/components/sections/FaqSection";
-import { AplusSection } from "@/components/sections/AplusSection";
+import { TrustedBySection } from "@/components/sections/TrustedBySection";
 import { DesignHomeRedirect } from "@/components/ui/DesignHomeRedirect";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/animations/Reveal";
@@ -32,8 +33,9 @@ export default function HomePage() {
       <Hero />
       <StatsBand />
       <CollectionSection />
-      <VideoSection />
-      <AplusSection />
+      {/* Same "Spin the film reel" section as design D, with every product and installation film */}
+      <VideoRing videos={allVideos} />
+      <TrustedBySection />
       <AboutSection />
       {/* No overflow-hidden here: it would break the sticky 3D assembly inside QualityStory. */}
       <section aria-labelledby="quality-title" className="relative bg-white py-24 md:py-32">
@@ -56,7 +58,9 @@ export default function HomePage() {
       <IndustriesSection />
       <ProcessSection />
       <TrustSection />
-      <ReviewsSection />
+      {/* Same Google review wall as designs D and E */}
+      <ReviewWall id="reviews" />
+
       <CustomTeaser />
       <FaqSection />
       <EnquirySection />

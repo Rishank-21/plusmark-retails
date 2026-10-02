@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Manrope, Sora, JetBrains_Mono, Plus_Jakarta_Sans, Fraunces, DM_Sans, Outfit, Unbounded } from "next/font/google";
 import { ThemeSwitcher } from "@/components/ui/ThemeSwitcher";
-import { designBootScript, EXPERIENCE_PATH } from "@/lib/design";
+import { CUSTOM_HOME_PATHS, designBootScript } from "@/lib/design";
 import "./globals.css";
 import { Navbar } from "@/components/navbar/Navbar";
 import { Footer } from "@/components/footer/Footer";
@@ -74,6 +74,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         {/* Applies the chosen design variant (?design=b / stored choice) before first paint. */}
         <script dangerouslySetInnerHTML={{ __html: designBootScript }} />
+        {/* Without JavaScript there is no 3D: show the product photos that stand in for it. */}
+        <noscript>
+          <style>{`.xd-poster,[data-3d-photo]{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
       </head>
       <body className="min-h-dvh bg-paper text-graphite antialiased">
         {/* Runs before content paints: enables scroll-reveal styles only when JS is available. */}
@@ -86,7 +90,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </a>
         <JsonLd data={[organizationSchema(), websiteSchema()]} />
         <MotionProvider>
-          <SiteChrome hideOn={[EXPERIENCE_PATH]}>
+          <SiteChrome hideOn={CUSTOM_HOME_PATHS}>
             <Navbar />
           </SiteChrome>
           <main id="main">{children}</main>

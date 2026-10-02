@@ -13,9 +13,8 @@ import { ProductViewer3D } from "./ProductViewer3D";
 import { ProductCard } from "./ProductCard";
 import { SizeEnquiryButton, SizePicker, SizeProvider } from "./SizeSelection";
 import { EnquiryBand } from "@/components/sections/EnquiryBand";
-import { getAplus } from "@/data/aplus";
-import { getProductVideos } from "@/data/media";
-import { ProductHighlights, ProductVideos } from "./ProductMedia";
+import { getProductAplus } from "@/data/aplus";
+import { AplusDescription } from "./AplusDescription";
 
 /** Display-only swatch hints for catalog colour names. The name is always shown. */
 const SWATCH: Record<string, string[]> = {
@@ -40,15 +39,15 @@ function Swatch({ name }: { name: string }) {
           <span className="h-full flex-1 bg-[conic-gradient(#a3222a,#d8c7a3,#23452f,#2b4fa3,#6b1f2a,#a3222a)]" />
         )}
       </span>
-      <span className="text-sm font-medium">{name}</span>
+      <span className="text-[0.9375rem] font-medium">{name}</span>
     </li>
   );
 }
 
 function Block({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
   return (
-    <Reveal as="section" aria-labelledby={id} className="grid gap-6 border-t border-fog py-12 md:grid-cols-[14rem_1fr] md:gap-12">
-      <h2 id={id} className="font-display text-xl font-semibold">
+    <Reveal as="section" aria-labelledby={id} className="grid gap-6 border-t border-fog py-12 md:grid-cols-[15rem_1fr] md:gap-12">
+      <h2 id={id} className="font-display text-2xl font-semibold md:text-[1.75rem]">
         {title}
       </h2>
       <div>{children}</div>
@@ -60,6 +59,7 @@ export function ProductDetail({ product }: { product: Product }) {
   const category = categoryMap[product.categorySlug];
   const related = getRelatedProducts(product, 4);
   const listing = product.catalogDetail === "listing";
+  const aplusSets = getProductAplus(product.slug);
 
   return (
     <article>
@@ -73,7 +73,8 @@ export function ProductDetail({ product }: { product: Product }) {
             ]}
           />
           <SizeProvider options={product.sizeOptions}>
-          <div className="mt-8 grid gap-10 lg:grid-cols-[1.25fr_1fr] lg:items-center lg:gap-16">
+          {/* Copy left, viewer right; the viewer takes the wider column so the product reads large. */}
+          <div className="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] lg:items-center lg:gap-12">
             <div className="min-w-0 animate-fade lg:order-1">
               <ProductViewer3D
                 model={product.model}
@@ -86,21 +87,21 @@ export function ProductDetail({ product }: { product: Product }) {
               />
             </div>
             <div className="animate-rise">
-              <p className="eyebrow">
+              <p className="eyebrow text-[0.75rem]">
                 <Link href={`/products/${category.slug}`} className="link-underline hover:text-graphite">
                   {category.name}
                 </Link>
                 <span aria-hidden> · </span>
                 {product.series}
               </p>
-              <h1 className="mt-4 font-display text-[clamp(2.1rem,4.4vw,3.6rem)] font-semibold leading-[1.03]">
+              <h1 className="mt-4 font-display text-[clamp(2.35rem,4.4vw,3.75rem)] font-semibold leading-[1.03]">
                 {product.name}
               </h1>
-              <p className="mt-6 text-base leading-relaxed text-steel md:text-lg">{product.shortDescription}</p>
+              <p className="mt-6 text-[1.0625rem] leading-relaxed text-steel md:text-[1.1875rem]">{product.shortDescription}</p>
               {product.highlights.length > 0 && (
                 <ul className="mt-6 flex flex-wrap gap-2" aria-label="Highlights">
                   {product.highlights.map((h) => (
-                    <li key={h} className="bg-white px-3 py-1.5 font-mono text-[0.62rem] uppercase tracking-[0.12em] text-graphite ring-1 ring-line">
+                    <li key={h} className="bg-white px-3 py-1.5 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-graphite ring-1 ring-line">
                       {h}
                     </li>
                   ))}
@@ -122,22 +123,27 @@ export function ProductDetail({ product }: { product: Product }) {
 
       <div className="container-x pb-8 pt-4">
         <Block id="description" title="Description">
-          <p className="max-w-3xl text-base leading-relaxed text-graphite md:text-lg">{product.description}</p>
+          <p className="max-w-3xl text-[1.0625rem] leading-relaxed text-graphite md:text-[1.1875rem]">{product.description}</p>
           {listing && (
-            <p className="mt-5 flex max-w-2xl items-start gap-3 text-sm text-steel">
-              <Info aria-hidden className="mt-0.5 size-4 shrink-0 text-accent" />
+            <p className="mt-5 flex max-w-2xl items-start gap-3 text-[0.9375rem] leading-relaxed text-steel md:text-base">
+              <Info aria-hidden className="mt-1 size-4 shrink-0 text-accent" />
               Detailed specifications for this model are not published in the catalog. Request an enquiry and the
               Plusmark team will share current details.
             </p>
           )}
         </Block>
+      </div>
 
+      {/* A+ banners break out of the container so they run full width, like Amazon */}
+      {aplusSets.length > 0 && <AplusDescription sets={aplusSets} productName={product.name} />}
+
+      <div className="container-x pb-8">
         {product.features.length > 0 && (
           <Block id="features" title="Key Features">
             <ul className="grid gap-3 sm:grid-cols-2">
               {product.features.map((f) => (
-                <li key={f} className="flex items-start gap-3 bg-mist px-4 py-3.5 text-sm leading-relaxed">
-                  <Check aria-hidden className="mt-0.5 size-4 shrink-0 text-verdant" />
+                <li key={f} className="flex items-start gap-3.5 bg-mist px-5 py-4 text-base leading-relaxed md:text-[1.125rem]">
+                  <Check aria-hidden className="mt-1 size-5 shrink-0 text-verdant" />
                   {f}
                 </li>
               ))}
@@ -149,9 +155,9 @@ export function ProductDetail({ product }: { product: Product }) {
           <Block id="specifications" title="Specifications">
             <dl className="divide-y divide-fog border-y border-fog">
               {product.specifications.map((s) => (
-                <div key={s.label + s.value} className="grid gap-1 py-4 sm:grid-cols-[12rem_1fr] sm:gap-6">
-                  <dt className="font-mono text-[0.68rem] uppercase tracking-[0.14em] text-steel">{s.label}</dt>
-                  <dd className="text-sm leading-relaxed text-graphite">{s.value}</dd>
+                <div key={s.label + s.value} className="grid gap-1.5 py-5 sm:grid-cols-[14rem_1fr] sm:gap-6">
+                  <dt className="font-mono text-[0.8rem] uppercase tracking-[0.14em] text-steel sm:pt-1">{s.label}</dt>
+                  <dd className="text-base leading-relaxed text-graphite md:text-[1.125rem]">{s.value}</dd>
                 </div>
               ))}
             </dl>
@@ -162,7 +168,7 @@ export function ProductDetail({ product }: { product: Product }) {
           <Block id="variants" title="Variants">
             <ul className="flex flex-wrap gap-2">
               {product.variants.map((v) => (
-                <li key={v} className="bg-white px-4 py-2.5 text-sm font-medium ring-1 ring-line">
+                <li key={v} className="bg-white px-4 py-2.5 text-[0.9375rem] font-medium ring-1 ring-line">
                   {v}
                 </li>
               ))}
@@ -174,7 +180,7 @@ export function ProductDetail({ product }: { product: Product }) {
           <Block id="sizes" title="Available Sizes">
             <ul className="flex flex-wrap gap-2">
               {product.sizes.map((s) => (
-                <li key={s} className="bg-graphite px-4 py-2.5 font-mono text-xs text-white">
+                <li key={s} className="bg-graphite px-4 py-2.5 font-mono text-[0.8125rem] text-white">
                   {s}
                 </li>
               ))}
@@ -189,7 +195,7 @@ export function ProductDetail({ product }: { product: Product }) {
                 <Swatch key={c} name={c} />
               ))}
             </ul>
-            <p className="mt-3 text-xs text-steel">Swatches are indicative; confirm the exact shade at enquiry.</p>
+            <p className="mt-3 text-sm text-steel">Swatches are indicative; confirm the exact shade at enquiry.</p>
           </Block>
         )}
 
@@ -197,7 +203,7 @@ export function ProductDetail({ product }: { product: Product }) {
           <Block id="applications" title="Applications">
             <ul className="flex flex-wrap gap-x-8 gap-y-3">
               {product.applications.map((a) => (
-                <li key={a} className="flex items-center gap-2.5 text-sm font-medium">
+                <li key={a} className="flex items-center gap-2.5 text-base font-medium md:text-[1.0625rem]">
                   <span aria-hidden className="size-1.5 bg-accent" />
                   {a}
                 </li>
@@ -209,7 +215,7 @@ export function ProductDetail({ product }: { product: Product }) {
         {product.notes.length > 0 && (
           <Block id="guidance" title="Selection Guidance">
             {product.notes.map((n) => (
-              <p key={n} className="max-w-3xl border-l-2 border-accent bg-accent-soft/50 px-5 py-4 text-sm leading-relaxed">
+              <p key={n} className="max-w-3xl border-l-2 border-accent bg-accent-soft/50 px-5 py-4 text-base leading-relaxed md:text-[1.0625rem]">
                 {n}
               </p>
             ))}
@@ -217,15 +223,12 @@ export function ProductDetail({ product }: { product: Product }) {
         )}
 
         <Block id="warranty" title="Warranty">
-          <p className="flex max-w-3xl items-start gap-3 text-sm leading-relaxed text-steel">
-            <ShieldCheck aria-hidden className="mt-0.5 size-4 shrink-0 text-verdant" />
+          <p className="flex max-w-3xl items-start gap-3.5 text-base leading-relaxed text-steel md:text-[1.125rem]">
+            <ShieldCheck aria-hidden className="mt-1 size-5 shrink-0 text-verdant" />
             {company.warranty}
           </p>
         </Block>
       </div>
-
-      <ProductHighlights images={getAplus(product.slug)} name={product.name} />
-      <ProductVideos videos={getProductVideos(product.slug, product.categorySlug)} />
 
       {related.length > 0 && (
         <section className="border-t border-fog bg-mist py-16 md:py-20" aria-labelledby="related-title">
@@ -250,7 +253,7 @@ export function ProductDetail({ product }: { product: Product }) {
         </section>
       )}
 
-      <EnquiryBand title={`Request an enquiry for the ${product.name}`} product={product.slug} />
+      <EnquiryBand title={`Request an enquiry for the ${product.name}`} product={product.slug} productName={product.name} />
       <JsonLd data={productSchema(product)} />
     </article>
   );

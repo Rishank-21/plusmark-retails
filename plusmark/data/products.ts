@@ -136,6 +136,36 @@ const whiteBoards: Product[] = [
     ],
     applications: ["Schools", "Institutes", "Corporate environments"],
   }),
+  // Not in the printed catalog: copy is taken from the product's own listing photos and its
+  // Amazon A+ banners (data/aplus.ts), which use the same Eco Premium frame and corners.
+  define({
+    slug: "eco-premium-both-side-board",
+    name: "Eco Premium Both Side Board",
+    categorySlug: "white-boards",
+    series: "Eco Premium",
+    highlights: ["2-in-1 Writing Surface", "ABS Dual-Tone Corner Design", "Aluminium Anodized Frame"],
+    shortDescription:
+      "2-in-1 writing surface — write with marker on one side and chalk on the other — in a premium aluminium anodised frame with ABS dual-tone edges.",
+    description:
+      "The Eco Premium Both Side Board puts two writing surfaces in one frame: a white board on the front for marker and a chalk board on the back for chalk. The non-magnetic, easy-to-clean surfaces sit in a premium aluminium anodised frame with ABS dual-tone edges, and quick wall-mount installation lets the board hang horizontally or vertically.",
+    features: [
+      "2-in-1 writing surface — write with marker on one side and chalk on the other",
+      "Front: white board · Back: chalk board",
+      "Non-magnetic surface",
+      "Premium aluminium anodised frame",
+      "ABS dual-tone edge",
+      "Easy-to-clean surface",
+      "Quick wall-mount installation — hangs horizontally or vertically",
+    ],
+    specifications: [
+      { label: "Type", value: "Non-Magnetic Both Side Board" },
+      { label: "Surfaces", value: "Front: White Board (marker writing) · Back: Chalk Board (chalk writing)" },
+      { label: "Frame", value: "Premium Aluminium Anodised Frame" },
+      { label: "Design", value: "ABS Dual-Tone Edge" },
+      { label: "Installation", value: "Quick wall-mount installation, horizontal or vertical" },
+    ],
+    applications: ["Offices", "Classrooms", "Home", "Restaurants & cafés"],
+  }),
   define({
     slug: "deluxe-standard-white-board",
     name: "Deluxe Standard White Board",
@@ -822,30 +852,36 @@ const essentials: Product[] = [
     ],
     applications: ["Offices", "Companies", "Workshops"],
   }),
+  // Listed in the catalog as the Student Study Table (slug kept so existing links keep working).
+  // Height, Table Top Clip and "Adjust Your Height" are printed on the product's own photos.
   define({
     slug: "student-study-table",
-    name: "Student Study Table",
+    name: "Homework Table",
     categorySlug: "board-study-essentials",
     series: "Essentials",
-    highlights: ["Foldable", "White Board Writing Surface"],
+    highlights: ["Foldable", "White Board Writing Surface", "Table Top Clip"],
     shortDescription:
-      "Foldable, space-saving study table with a smooth white board writing surface — for study, reading and laptop use.",
+      "Foldable homework and study table with a smooth white board writing top, a table top clip and an adjustable tilting top — for study, reading and laptop use.",
     description:
-      "The Student Study Table is ideal for daily study and homework. It has a smooth white board writing surface that is easy to clean and maintain, a foldable and space-saving design, and multipurpose use as a study, reading and laptop table. Writing area size: 16 × 24 inches.",
+      "The Plusmark Homework Table is a foldable student study table, ideal for daily study and homework. Its smooth white board writing surface is easy to clean and maintain, a table top clip holds papers in place, and the top tilts up on a support stand to adjust the writing height. Foldable and space-saving, it doubles as a reading and laptop table. Writing area: 16 × 24 inches; height: 9.5 inches.",
     features: [
       "Ideal for Daily Study & Homework",
       "Smooth White Board Writing Surface",
       "Easy to Clean & Maintain",
+      "Table Top Clip",
+      "Adjust Your Height — tilting top with a support stand",
       "Multipurpose Use – Study, Reading & Laptop Table",
       "Foldable & Space-Saving Design",
     ],
     specifications: [
       { label: "Writing Area Size", value: "16 × 24 inches" },
+      { label: "Height", value: "9.5 inches" },
       { label: "Surface", value: "Smooth White Board Writing Surface" },
+      { label: "Top", value: "Tilting top with support stand (Adjust Your Height) and Table Top Clip" },
       { label: "Design", value: "Foldable & Space-Saving Design" },
     ],
-    sizes: ["Writing area 16 × 24 inches"],
-    applications: ["Study", "Reading", "Laptop table", "Homework"],
+    sizes: ["Writing area 16 × 24 inches", "Height 9.5 inches"],
+    applications: ["Study", "Homework", "Reading", "Laptop table"],
   }),
 ];
 

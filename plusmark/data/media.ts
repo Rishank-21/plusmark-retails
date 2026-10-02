@@ -33,6 +33,7 @@ export const videos = {
 /** Product slug → its own product videos (first one is the headline video). */
 const productVideoMap: Record<string, Video[]> = {
   "eco-premium-white-board": [videos.ecoWhite, videos.ecoBothSide],
+  "eco-premium-both-side-board": [videos.ecoBothSide],
   "eco-premium-chalk-board": [videos.ecoChalk, videos.ecoBothSide],
   "eco-premium-notice-board": [videos.ecoNotice],
   "metallic-premium-white-board": [videos.metallicWhite, videos.metallicBothSide],
@@ -49,12 +50,5 @@ export function getProductVideos(slug: string, categorySlug: string): Video[] {
   return [...own, videos.installation];
 }
 
-/** Videos featured on the home page. */
-export const homeVideos: Video[] = [
-  videos.metallicWhite,
-  videos.ecoWhite,
-  videos.metallicNotice,
-  videos.ecoChalk,
-  videos.installation,
-  videos.retailInstallation,
-];
+/** Every film once, for the "Spin the film reel" section on every home page variant. */
+export const allVideos: Video[] = Object.values(videos);

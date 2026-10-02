@@ -2,9 +2,12 @@
  * Generates Draco-compressed GLB models for products that have an entry in data/visuals.ts.
  *
  * Boards are built to match the real Plusmark product photos (public/images/products):
- *  - Metallic Premium ("signature"): tubular aluminium profile, red rounded caps with a black insert.
+ *  - Metallic Premium ("signature"): two-lobe tubular aluminium rail with a side channel, red
+ *    moulded caps (PLUSMARK embossed) over the black corner connector, whose arms and Phillips
+ *    screws show in the channel (corner, rail and edge close-up photos).
  *  - Eco Premium ("abs"): flat grooved profile, grey ABS caps with a black insert, raised wire hangers.
- *  - Deluxe Standard ("chrome"): flat profile with electroplated chrome corners.
+ *  - Deluxe Standard ("chrome"): two-groove aluminium profile, moulded grey elbow corners with a
+ *    double-ridge collar near each seam, Phillips pan-head screws on the rail sides (corner photos).
  *  - Eco Regular ("plastic"): light flat profile with grey plastic corners, raised wire hangers.
  * Surface grain (chalk, blazer cloth) is cropped from the real photos and tinted with the sampled
  * photo colour. The back (every board except double-sided) uses the real back-panel photo in
@@ -274,31 +277,15 @@ function mirrorXY(g: Geo, sx: number, sy: number): Geo {
   return out;
 }
 
-/** Closed rounded-rectangle profile (CCW) with outward normals, half-sizes a × b, corner radius r. */
-function roundedProfile(a: number, b: number, r: number, seg = 6) {
-  r = Math.min(r, a - 1e-4, b - 1e-4);
-  const pts: Array<{ u: number; v: number; nu: number; nv: number }> = [];
-  const corners: Array<[number, number, number]> = [
-    [a - r, b - r, 0],
-    [-a + r, b - r, Math.PI / 2],
-    [-a + r, -b + r, Math.PI],
-    [a - r, -b + r, (3 * Math.PI) / 2],
-  ];
-  for (const [cu, cv, a0] of corners) {
-    for (let s = 0; s <= seg; s++) {
-      const t = a0 + (s / seg) * (Math.PI / 2);
-      pts.push({ u: cu + Math.cos(t) * r, v: cv + Math.sin(t) * r, nu: Math.cos(t), nv: Math.sin(t) });
-    }
-  }
-  return pts;
-}
+/** Point of a closed (u, v) profile, counter-clockwise, with its outward normal. */
+type ProfilePoint = { u: number; v: number; nu: number; nv: number };
 
 /**
  * Sweeps a (u, v) profile along a path in the XY plane. Each frame gives a position and the
  * in-plane direction the profile's u axis points along; v maps to +Z. Frames must advance so that
  * (tangent) = Z × n, i.e. counter-clockwise around the profile's u side. Ends are capped.
  */
-function sweep(profile: ReturnType<typeof roundedProfile>, frames: Array<{ p: [number, number]; n: [number, number] }>): Geo {
+function sweep(profile: ProfilePoint[], frames: Array<{ p: [number, number]; n: [number, number] }>): Geo {
   const g = empty();
   const m = profile.length;
   frames.forEach((f, k) => {
@@ -333,37 +320,6 @@ function sweep(profile: ReturnType<typeof roundedProfile>, frames: Array<{ p: [n
   };
   cap(frames[0], -1);
   cap(frames[frames.length - 1], 1);
-  return g;
-}
-
-/**
- * Flat band between two polylines (same point count) in XY, extruded from z0 to z1, with the
- * front face (+Z) and the wall along the `inner` polyline. Used for the black corner insert.
- */
-function band(outer: Array<[number, number]>, inner: Array<[number, number]>, innerNormal: (p: [number, number]) => [number, number], z0: number, z1: number): Geo {
-  const g = empty();
-  const n = outer.length;
-  const base = 0;
-  for (let k = 0; k < n; k++) {
-    g.p.push(outer[k][0], outer[k][1], z1, inner[k][0], inner[k][1], z1);
-    g.n.push(0, 0, 1, 0, 0, 1);
-    g.uv.push(k / (n - 1), 0, k / (n - 1), 1);
-  }
-  for (let k = 0; k < n - 1; k++) {
-    const o0 = base + k * 2, i0 = o0 + 1, o1 = o0 + 2, i1 = o0 + 3;
-    g.i.push(i0, o0, o1, i0, o1, i1);
-  }
-  const wall = g.p.length / 3;
-  for (let k = 0; k < n; k++) {
-    const nn = innerNormal(inner[k]);
-    g.p.push(inner[k][0], inner[k][1], z1, inner[k][0], inner[k][1], z0);
-    g.n.push(nn[0], nn[1], 0, nn[0], nn[1], 0);
-    g.uv.push(k / (n - 1), 0, k / (n - 1), 1);
-  }
-  for (let k = 0; k < n - 1; k++) {
-    const A = wall + k * 2, B = A + 1, D = A + 2, C = A + 3;
-    g.i.push(A, C, B, A, D, C);
-  }
   return g;
 }
 
@@ -564,10 +520,17 @@ async function loadTextures() {
     mime: "image/png",
   });
   TEXTURES.set("board-back", { data: await readFile(path.resolve("scripts/assets/board-back.jpg")), mime: "image/jpeg" });
-  // Chalk grade HPL grain — straight-on Metallic Premium chalk board photo.
-  TEXTURES.set("grain-chalk", await grain("metallic-premium-chalk-board/7.webp", 840, 480, 320, 16));
-  // 2 mm blazer cloth weave — straight-on Metallic Premium notice board photo.
-  TEXTURES.set("grain-fabric", await grain("metallic-premium-notice-board/4.webp", 672, 480, 256, 34));
+  // Grain maps made by grain() from straight-on product photos, kept as fixed assets so that
+  // re-importing a product gallery (which renumbers the photos) never changes the models:
+  //  - chalk grade HPL: grain("metallic-premium-chalk-board/7.webp", 840, 480, 320, 16)
+  //  - 2 mm blazer cloth weave: grain("metallic-premium-notice-board/4.webp", 672, 480, 256, 34)
+  const asset = async (file: string): Promise<Tex> => ({
+    data: await readFile(path.resolve("scripts/assets", file)),
+    mime: "image/jpeg",
+    mean: GRAIN_MEAN / 255,
+  });
+  TEXTURES.set("grain-chalk", await asset("grain-chalk.jpg"));
+  TEXTURES.set("grain-fabric", await asset("grain-fabric.jpg"));
   TEXTURES.set("brushed-mr", await brushedMR());
   // Laminate MDF clipboard: the real walnut HPL face, cropped straight from the product photo
   // (below the clip, inside the board edge).
@@ -582,6 +545,7 @@ async function loadTextures() {
   });
   // Bench laminate: same wood grain, turned so it runs along the plank length, tinted per material.
   TEXTURES.set("grain-wood", await grain("laminate-mdf-base-clipboard/1.webp", 720, 460, 520, 20, 90));
+  TEXTURES.set("cap-emboss", await embossMap(FRAME.heavy.w));
   TEXTURES.set("decal-clip", await svg(CLIP_SVG));
   TEXTURES.set("decal-retail", await svg(RETAIL_SVG));
   TEXTURES.set("decal-badge", await svg(BADGE_SVG));
@@ -604,6 +568,9 @@ type MatDef = {
   tile?: number;
   /** Key in TEXTURES used as metallic/roughness map (repeat-wrapped). */
   mr?: string;
+  /** Key in TEXTURES used as tangent-space normal map (clamped), and its strength. */
+  normal?: string;
+  normalScale?: number;
 };
 
 const MATERIALS: Record<string, MatDef> = {
@@ -629,14 +596,25 @@ const MATERIALS: Record<string, MatDef> = {
   "magnetic-white": { color: "#f1f3f4", rough: 0.2, clearcoat: [0.5, 0.1] },
   "ceramic-white": { color: "#fcfcfc", rough: 0.07, clearcoat: [1, 0.02] },
   cork: { color: "#8a6440", rough: 0.96, map: "grain-fabric", tile: 0.12 },
-  // Metallic Premium signature corners (red cap + black insert).
-  "cap-red": { color: "#a50b16", rough: 0.32 },
-  // Glossy moulded plastic: a tight highlight instead of a broad grey sheen over the whole part.
-  "cap-black": { color: "#08090a", rough: 0.3 },
+  // Metallic Premium signature corners: satin red moulded cap with PLUSMARK embossed (normal map)
+  // over the black connector.
+  "cap-red": { color: "#a50b16", rough: 0.42, normal: "cap-emboss" },
+  // Moulded plastic with a soft sheen; rough enough that grazing views don't turn it silver.
+  "cap-black": { color: "#08090a", rough: 0.46 },
+  // The connector's arms seen in the rail's side channel: matte black plastic.
+  "connector-black": { color: "#111214", rough: 0.62 },
+  // Floor of the signature rail's side channel, in shadow.
+  "rail-channel": { color: "#6f757c", metal: 0.85, rough: 0.5 },
   // Eco ABS corners (light silver-grey L cap + matte black insert, as in the Eco close-up photo).
   "abs-gray": { color: "#7c8085", metal: 0.15, rough: 0.45 },
   "abs-dark": { color: "#050506", rough: 0.85 },
   chrome: { color: "#eceef0", metal: 1, rough: 0.07 },
+  // Deluxe Standard moulded corner elbow: mid grey satin plastic (close-up photos of the corner).
+  "deluxe-corner": { color: "#5f6368", rough: 0.36 },
+  // Zinc-plated pan-head screws: a touch darker than the anodised rails so they read against them.
+  "screw-zinc": { color: "#a9adb2", metal: 1, rough: 0.18 },
+  // Phillips recess on the pan-head screws.
+  "screw-recess": { color: "#1d1f22", metal: 0.5, rough: 0.55 },
   "plastic-gray": { color: "#6f7378", rough: 0.6 },
   // Printed vinyl sticker / anodised badge. The viewer renders decal-* materials un-tone-mapped
   // (components/three/ProductModel.tsx) so the brand colours stay true.
@@ -710,74 +688,715 @@ const CAP: Record<Corner, { size: number; radius: number; round: boolean }> = {
   plastic: { size: 2.15, radius: 0.4, round: true },
 };
 
-/**
- * Metallic Premium "Signature Dual-Tone" corner, modelled on the product photos: a red tubular
- * elbow (the rail profile, slightly oversized, swept around a quarter circle with short sleeves
- * over the rail ends) plus a black curved insert filling the inside of the bend.
- */
-const ELBOW = {
-  /** Centre-line radius of the bend, × frame width (wide sweep, like the reference corner). */
-  bend: 2.0,
-  /** Elbow profile oversize vs. the rail (so it reads as a cap sleeved over the rail). */
-  grow: 1.12,
-  /** Short sleeve along each rail, × frame width; red and black end flush here. */
-  sleeve: 0.18,
-  /** Width of the visible black band inside the red, × frame width. */
-  insert: 0.62,
-};
-const elbowBend = (fw: number) => fw * ELBOW.bend;
-/** Distance from the board edge to where the straight rails end (inside the elbow sleeves). */
-const elbowClear = (fw: number) => fw / 2 + elbowBend(fw);
-
-function addSignatureCorners(b: ModelBuilder, W: number, H: number, fw: number, fd: number) {
-  const Rc = elbowBend(fw);
-  const a = (fw / 2) * ELBOW.grow, bz = (fd / 2) * ELBOW.grow;
-  const profile = roundedProfile(a, bz, Math.min(a, bz) * 0.72, 8);
-  const cx = W / 2 - fw / 2 - Rc, cy = H / 2 - fw / 2 - Rc;
-  const Ls = fw * ELBOW.sleeve;
-  const frames: Array<{ p: [number, number]; n: [number, number] }> = [{ p: [cx + Rc, cy - Ls], n: [1, 0] }];
-  const N = 20;
-  for (let k = 0; k <= N; k++) {
-    const t = (k / N) * (Math.PI / 2);
-    frames.push({ p: [cx + Rc * Math.cos(t), cy + Rc * Math.sin(t)], n: [Math.cos(t), Math.sin(t)] });
-  }
-  frames.push({ p: [cx - Ls, cy + Rc], n: [0, 1] });
-  const elbow = sweep(profile, frames);
-
-  // Black insert, as in the reference close-up: a band concentric with the red bend, directly
-  // inside it, ending flush with the red ends. Inside the black the writing surface shows through.
-  const rOut = Rc - fw / 2 + 0.002; // just past the rail inner edge, tucked under the elbow
-  // The elbow's rounded flank only rises above the insert at ≈ 0.74·a inside the centre line,
-  // so measure the visible black band from there.
-  const rIn = Math.max(0.004, Rc - a * 0.74 - fw * ELBOW.insert);
-  const ring = (r: number): Array<[number, number]> => {
-    const pts: Array<[number, number]> = [[cx + r, cy - Ls]];
-    for (let k = 0; k <= N; k++) {
-      const t = (k / N) * (Math.PI / 2);
-      pts.push([cx + r * Math.cos(t), cy + r * Math.sin(t)]);
+/** Smooth vertex normals from area-weighted face normals (meshes with shared vertices). */
+function computeNormals(g: Geo): Geo {
+  const n = new Float64Array(g.p.length);
+  for (let k = 0; k < g.i.length; k += 3) {
+    const a = g.i[k] * 3, b = g.i[k + 1] * 3, c = g.i[k + 2] * 3;
+    const ux = g.p[b] - g.p[a], uy = g.p[b + 1] - g.p[a + 1], uz = g.p[b + 2] - g.p[a + 2];
+    const vx = g.p[c] - g.p[a], vy = g.p[c + 1] - g.p[a + 1], vz = g.p[c + 2] - g.p[a + 2];
+    const nx = uy * vz - uz * vy, ny = uz * vx - ux * vz, nz = ux * vy - uy * vx;
+    for (const v of [a, b, c]) {
+      n[v] += nx;
+      n[v + 1] += ny;
+      n[v + 2] += nz;
     }
-    pts.push([cx - Ls, cy + r]);
-    return pts;
-  };
-  const zSurf = fd / 2 - 0.0015;
-  const insert = band(ring(rOut), ring(rIn), ([x, y]) => {
-    if (y < cy) return [-1, 0];
-    if (x < cx) return [0, -1];
-    const l = Math.hypot(x - cx, y - cy) || 1;
-    return [-(x - cx) / l, -(y - cy) / l];
-  }, zSurf - 0.001, fd / 2 - 0.0005);
+  }
+  const out: number[] = [];
+  for (let k = 0; k < n.length; k += 3) {
+    const l = Math.hypot(n[k], n[k + 1], n[k + 2]) || 1;
+    out.push(n[k] / l, n[k + 1] / l, n[k + 2] / l);
+  }
+  return { ...g, n: out };
+}
 
-  for (const sx of [1, -1]) {
-    for (const sy of [1, -1]) {
-      b.add("cap-red", mirrorXY(elbow, sx, sy));
-      b.add("cap-black", mirrorXY(insert, sx, sy));
+/**
+ * Closed section (CCW, outward normals) spanning u ∈ [−aIn, aOut], v ∈ [−bBack, bFront], with its
+ * own radius per corner: outer-front, inner-front, inner-back, outer-back. Same point count for
+ * any sizes, so sections can vary along a sweepVar() path.
+ */
+function roundedSection(aIn: number, aOut: number, bFront: number, bBack: number, radii: [number, number, number, number], seg = 8) {
+  const pts: Array<{ u: number; v: number; nu: number; nv: number }> = [];
+  const lim = (r: number) => Math.max(1e-5, Math.min(r, (aIn + aOut) / 2 - 1e-5, (bFront + bBack) / 2 - 1e-5));
+  const [rOF, rIF, rIB, rOB] = radii.map(lim);
+  const corners: Array<[number, number, number, number]> = [
+    [aOut - rOF, bFront - rOF, rOF, 0],
+    [-aIn + rIF, bFront - rIF, rIF, Math.PI / 2],
+    [-aIn + rIB, -bBack + rIB, rIB, Math.PI],
+    [aOut - rOB, -bBack + rOB, rOB, (3 * Math.PI) / 2],
+  ];
+  for (const [cu, cv, r, a0] of corners) {
+    for (let s = 0; s <= seg; s++) {
+      const t = a0 + (s / seg) * (Math.PI / 2);
+      pts.push({ u: cu + Math.cos(t) * r, v: cv + Math.sin(t) * r, nu: Math.cos(t), nv: Math.sin(t) });
+    }
+  }
+  return pts;
+}
+
+/**
+ * sweep() with its own section per frame (all sections with the same point count), for parts
+ * whose section changes along the path. Smooth normals come from the mesh itself, so swellings
+ * along the path (ridges, grooves) shade correctly; the flat end caps keep crisp edges.
+ */
+function sweepVar(
+  frames: Array<{ p: [number, number]; n: [number, number]; section: ReturnType<typeof roundedSection> }>,
+  /** Optional UVs per frame k / section point j, and for the end caps (default: path fraction). */
+  uv?: { at: (k: number, j: number) => [number, number]; cap: [number, number] },
+): Geo {
+  const g = empty();
+  const m = frames[0].section.length;
+  frames.forEach((f, k) => {
+    f.section.forEach((q, j) => {
+      g.p.push(f.p[0] + f.n[0] * q.u, f.p[1] + f.n[1] * q.u, q.v);
+      g.n.push(0, 0, 1);
+      g.uv.push(...(uv ? uv.at(k, j) : [k / (frames.length - 1), 0]));
+    });
+  });
+  for (let k = 0; k < frames.length - 1; k++) {
+    for (let j = 0; j < m; j++) {
+      const a = k * m + j, b = k * m + ((j + 1) % m), c = (k + 1) * m + ((j + 1) % m), d = (k + 1) * m + j;
+      g.i.push(a, d, c, a, c, b);
+    }
+  }
+  const body = computeNormals(g);
+  const cap = (f: (typeof frames)[number], sign: 1 | -1) => {
+    const t: [number, number] = [-f.n[1] * sign, f.n[0] * sign]; // tangent = Z × n
+    const base = body.p.length / 3;
+    const [cu, cv] = uv?.cap ?? [0.5, 0.5];
+    body.p.push(f.p[0], f.p[1], 0);
+    body.n.push(t[0], t[1], 0);
+    body.uv.push(cu, cv);
+    for (const q of f.section) {
+      body.p.push(f.p[0] + f.n[0] * q.u, f.p[1] + f.n[1] * q.u, q.v);
+      body.n.push(t[0], t[1], 0);
+      body.uv.push(cu, cv);
+    }
+    for (let j = 0; j < m; j++) {
+      const a = base + 1 + j, b = base + 1 + ((j + 1) % m);
+      if (sign === -1) body.i.push(base, a, b);
+      else body.i.push(base, b, a);
+    }
+  };
+  cap(frames[0], -1);
+  cap(frames[frames.length - 1], 1);
+  return body;
+}
+
+/**
+ * Phillips pan-head screw along +Y, base centred on the origin: a short skirt and a domed head
+ * (radius r, total height h), plus the cross recess as a thin dark strip pair hugging the dome.
+ */
+function panHeadScrew(r: number, h: number): { head: Geo; cross: Geo } {
+  const skirt = h * 0.28, cap = h - skirt;
+  const R = (r * r + cap * cap) / (2 * cap); // sphere through the rim and the apex
+  const domeY = (rho: number) => skirt + Math.sqrt(Math.max(0, R * R - rho * rho)) - (R - cap);
+  const seg = 28;
+  const rings: Array<[number, number]> = [[0, 0], [r, 0], [r, skirt]];
+  const phiMax = Math.asin(Math.min(1, r / R));
+  for (let k = 9; k >= 0; k--) {
+    const rho = R * Math.sin((k / 9) * phiMax);
+    rings.push([rho, domeY(rho)]);
+  }
+  const head = empty();
+  rings.forEach(([rho, y]) => {
+    for (let j = 0; j < seg; j++) {
+      const t = (j / seg) * Math.PI * 2;
+      head.p.push(Math.cos(t) * rho, y, Math.sin(t) * rho);
+      head.n.push(0, 1, 0);
+      head.uv.push(j / seg, y / h);
+    }
+  });
+  for (let k = 0; k < rings.length - 1; k++) {
+    for (let j = 0; j < seg; j++) {
+      const a = k * seg + j, b = k * seg + ((j + 1) % seg), c = (k + 1) * seg + ((j + 1) % seg), d = (k + 1) * seg + j;
+      head.i.push(a, c, d, a, b, c);
+    }
+  }
+  // cross recess: two strips (length 2·l, width w) draped 0.05 mm above the dome
+  const cross = empty();
+  const l = r * 0.62, w = r * 0.2, steps = 12;
+  for (const axis of [0, 1]) {
+    const base = cross.p.length / 3;
+    for (let s = 0; s <= steps; s++) {
+      const along = -l + (2 * l * s) / steps;
+      for (const across of [-w / 2, w / 2]) {
+        const x = axis === 0 ? along : across, z = axis === 0 ? across : along;
+        cross.p.push(x, domeY(Math.hypot(x, z)) + 0.00005, z);
+        cross.n.push(0, 1, 0);
+        cross.uv.push(s / steps, across > 0 ? 1 : 0);
+      }
+    }
+    for (let s = 0; s < steps; s++) {
+      const a = base + s * 2, b = a + 1, c = a + 3, d = a + 2;
+      if (axis === 0) cross.i.push(a, b, c, a, c, d);
+      else cross.i.push(a, c, b, a, d, c);
+    }
+  }
+  return { head: computeNormals(head), cross: computeNormals(cross) };
+}
+
+/**
+ * Deluxe Standard frame (visual key "chrome"), modelled on close-up photos of the real corner
+ * and the Deluxe studio photo (public/images/products/deluxe-standard-white-board.webp):
+ *  - rail: front face with two fine grooves — a wide flat inner band (a touch lower), a narrow
+ *    flat band and a rounded outer band — a flat outer side with a centre line, chamfered inner edge;
+ *  - corner: a moulded elbow sleeved over the rail ends, its oval section widening around the
+ *    bend between a rounded outer contour and a rounded inner (writing surface) corner, with a
+ *    groove and a double-ridge collar near each seam;
+ *  - Phillips pan-head screws on the outer side of every rail, just past each corner;
+ *  - the anodised PLUSMARK badge plate on the bottom rail (no RETAIL sticker on this series).
+ */
+const DELUXE = {
+  /** The corner stands proud of the rail's outer edge, and overlaps the writing surface, by this (× fw). */
+  overhang: 0.04,
+  /** Radius of the corner's outer contour and of the writing surface's corner, × fw. */
+  outerRadius: 0.95,
+  innerRadius: 0.35,
+  /** Seam between corner and rail, measured from the board's outer corner, × fw. */
+  seam: 1.5,
+  /** Corner depth vs. the rail (stands proud at front and back, as chunky as in the photos). */
+  depth: 1.18,
+  /** Section corner radii, × the front half-depth: outer-front (rounded like the rail's outer
+   *  band), inner-front (meets the writing surface squarely), inner-back, outer-back. */
+  radii: [0.8, 0.3, 0.25, 0.25] as const,
+  /** The bend is slimmer than the end collars that sleeve over the rails: its scale (outer side and
+   *  front only) blends in between `from` and `to` (× fw from the seam)… */
+  waist: { scale: 0.93, from: 0.24, to: 0.44 },
+  /** …with two fine ridges on that step, as on the real part (position / half-width × fw, height). */
+  ridges: [
+    { at: 0.28, w: 0.035, h: 0.035 },
+    { at: 0.37, w: 0.035, h: 0.035 },
+  ],
+  /** Front grooves, offset from the rail centre-line (× fw, + = outer edge). */
+  grooves: [-0.05, 0.14] as const,
+  /** Screws: distance past the corner seam along the rail (× fw), head radius / height (m). */
+  screw: { past: 0.6, r: 0.004, h: 0.0026 },
+};
+/** Rails stop where the corner's bend starts (hidden inside its sleeve). */
+const deluxeClear = (fw: number) => fw * (1 + DELUXE.overhang + DELUXE.innerRadius);
+const deluxeSeam = (fw: number) => fw * DELUXE.seam;
+
+/** Deluxe rail cross-section (u across the rail, + = outer edge; v = depth, + = front), CCW. */
+function deluxeRailProfile(fw: number, fd: number) {
+  const a = fw / 2, b = fd / 2;
+  const [g1, g2] = DELUXE.grooves.map((g) => g * fw);
+  const step = 0.0004; // the wide inner band sits this much below the rest of the front
+  const gw = 0.0006, gd = 0.0009; // groove half-width / depth
+  const ch = 0.0008; // inner edge chamfer
+  const ru = a - (g2 + gw), rv = 0.006; // elliptical outer band: from the outer groove to the side
+  const rb = 0.0015; // back outer edge
+  const pts: Array<{ u: number; v: number; nu: number; nv: number }> = [];
+  const P = (u: number, v: number, nu: number, nv: number) => {
+    const l = Math.hypot(nu, nv) || 1;
+    pts.push({ u, v, nu: nu / l, nv: nv / l });
+  };
+  /** V groove between a lip at height v0 (outer side) and v1 (inner side); hard edges. */
+  const groove = (g: number, v0: number, v1: number) => {
+    P(g + gw, v0, 0, 1);
+    P(g + gw, v0, -gd, gw);
+    P(g, b - gd, -gd, gw);
+    P(g, b - gd, gd - (b - v1), gw);
+    P(g - gw, v1, gd - (b - v1), gw);
+    P(g - gw, v1, 0, 1);
+  };
+  P(-a, -b, 0, -1);
+  for (let k = 0; k <= 4; k++) {
+    const t = -Math.PI / 2 + (k / 4) * (Math.PI / 2);
+    P(a - rb + rb * Math.cos(t), -b + rb + rb * Math.sin(t), Math.cos(t), Math.sin(t));
+  }
+  for (let k = 0; k <= 14; k++) {
+    const t = (k / 14) * (Math.PI / 2);
+    P(a - ru + ru * Math.cos(t), b - rv + rv * Math.sin(t), Math.cos(t) / ru, Math.sin(t) / rv);
+  }
+  groove(g2, b, b); // outer band | narrow band
+  groove(g1, b, b - step); // narrow band | inner band
+  P(-a + ch, b - step, 0, 1);
+  P(-a + ch, b - step, -1, 1);
+  P(-a, b - step - ch, -1, 1);
+  P(-a, b - step - ch, -1, 0);
+  P(-a, -b, -1, 0);
+  return { pts, grooves: [g1, g2], gd, sideMid: (rb - rv) / 2 };
+}
+
+/** Straight Deluxe rails (both directions shortened by `clear`), grooves, side lines, back ribs. */
+function addDeluxeFrame(b: ModelBuilder, W: number, H: number, fw: number, fd: number, clear: number) {
+  const prof = deluxeRailProfile(fw, fd);
+  const hl = W / 2 - clear, vl = H / 2 - clear;
+  const xr = W / 2 - fw / 2, yt = H / 2 - fw / 2;
+  // frames advance along Z × n (see sweep)
+  const rails: Array<{ f: Array<{ p: [number, number]; n: [number, number] }>; h: boolean }> = [
+    { f: [{ p: [hl, yt], n: [0, 1] }, { p: [-hl, yt], n: [0, 1] }], h: true },
+    { f: [{ p: [-hl, -yt], n: [0, -1] }, { p: [hl, -yt], n: [0, -1] }], h: true },
+    { f: [{ p: [xr, -vl], n: [1, 0] }, { p: [xr, vl], n: [1, 0] }], h: false },
+    { f: [{ p: [-xr, vl], n: [-1, 0] }, { p: [-xr, -vl], n: [-1, 0] }], h: false },
+  ];
+  for (const r of rails) b.add("aluminium", brushUV(sweep(prof.pts, r.f), r.h));
+
+  const dark = (len: number, horizontal: boolean, across: number, depth: number, pos: Vec3) =>
+    b.add("aluminium-dark", place(horizontal ? box(len, across, depth) : box(across, len, depth), pos));
+  // dark line in each front groove (the grooves alone are sub-pixel at viewing distance)
+  const gz = fd / 2 - prof.gd + 0.0003;
+  for (const g of prof.grooves) {
+    for (const s of [1, -1]) {
+      dark(2 * hl, true, 0.0008, 0.0004, [0, s * (yt + g), gz]);
+      dark(2 * vl, false, 0.0008, 0.0004, [s * (xr + g), 0, gz]);
+    }
+  }
+  // centre line along the outer side face
+  for (const s of [1, -1]) {
+    b.add("aluminium-dark", place(box(2 * hl, 0.0003, 0.0007), [0, s * (H / 2 + 0.00012), prof.sideMid]));
+    b.add("aluminium-dark", place(box(0.0003, 2 * vl, 0.0007), [s * (W / 2 + 0.00012), 0, prof.sideMid]));
+  }
+  // back ribs, as on the other profiles
+  const zb = -fd / 2 - 0.0003;
+  for (const o of [-fw * 0.28, 0, fw * 0.28]) {
+    for (const s of [1, -1]) {
+      dark(2 * hl, true, 0.0012, 0.0006, [0, s * (yt - o), zb]);
+      dark(2 * vl, false, 0.0012, 0.0006, [s * (xr - o), 0, zb]);
     }
   }
 }
 
+function addDeluxeCorners(b: ModelBuilder, W: number, H: number, fw: number, fd: number) {
+  const e = fw * DELUXE.overhang;
+  const Ri = fw * DELUXE.innerRadius, Ro = fw * DELUXE.outerRadius;
+  const bz = (fd / 2) * DELUXE.depth;
+  // Top-right corner. Outer contour: board edges + e with a rounded corner (radius Ro). Inner
+  // contour: the rails' inner edges − e with a rounded corner (radius Ri) — the writing surface's
+  // corner. The bend is built from rays out of the inner rounding's centre, so the section is as
+  // wide as the rail at both ends and widens towards 45°, as on the real part.
+  const xo = W / 2 + e, yo = H / 2 + e;
+  const xi = W / 2 - fw - e, yi = H / 2 - fw - e;
+  const ox = xi - Ri, oy = yi - Ri;
+  const cox = xo - Ro, coy = yo - Ro;
+  const outer = (t: number) => {
+    const c = Math.cos(t), s = Math.sin(t);
+    const px = ox - cox, py = oy - coy;
+    const B = px * c + py * s, C = px * px + py * py - Ro * Ro;
+    const k = -B + Math.sqrt(Math.max(0, B * B - C));
+    if (ox + k * c >= cox - 1e-9 && oy + k * s >= coy - 1e-9) return k;
+    return Math.min(c > 1e-9 ? (xo - ox) / c : Infinity, s > 1e-9 ? (yo - oy) / s : Infinity);
+  };
+  type Frame = { p: [number, number]; n: [number, number]; a: number };
+  const path: Frame[] = [];
+  const seam = W / 2 - deluxeSeam(fw), seamY = H / 2 - deluxeSeam(fw);
+  const half = fw / 2 + e, SL = 4, N = 40;
+  // sleeve over the vertical rail (seam → bend), the bend, sleeve over the top rail (bend → seam)
+  for (let k = 0; k < SL; k++) path.push({ p: [W / 2 - fw / 2, seamY + ((oy - seamY) * k) / SL], n: [1, 0], a: half });
+  for (let k = 0; k <= N; k++) {
+    const t = (k / N) * (Math.PI / 2);
+    const c = Math.cos(t), s = Math.sin(t), ko = outer(t), mid = (Ri + ko) / 2;
+    path.push({ p: [ox + mid * c, oy + mid * s], n: [c, s], a: (ko - Ri) / 2 });
+  }
+  for (let k = SL - 1; k >= 0; k--) path.push({ p: [seam + ((ox - seam) * k) / SL, H / 2 - fw / 2], n: [0, 1], a: half });
+
+  // Section scale along the corner, by distance from the nearer seam: full-size end collars,
+  // a step down (with two fine ridges) into the slimmer bend. Only the outer side and the front
+  // scale, so the inner edge keeps covering the rail / writing-surface joint.
+  const dist = [0];
+  for (let k = 1; k < path.length; k++) dist.push(dist[k - 1] + Math.hypot(path[k].p[0] - path[k - 1].p[0], path[k].p[1] - path[k - 1].p[1]));
+  const total = dist[dist.length - 1];
+  const smooth = (x: number) => (x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x));
+  const scaleAt = (d: number) => {
+    const u = d / fw;
+    const { scale, from, to } = DELUXE.waist;
+    let s = 1 + (scale - 1) * smooth((u - from) / (to - from));
+    for (const { at, w, h } of DELUXE.ridges) if (Math.abs(u - at) < w) s += h * 0.5 * (1 + Math.cos((Math.PI * (u - at)) / w));
+    return s;
+  };
+  const [kOF, kIF, kIB, kOB] = DELUXE.radii;
+  const elbow = sweepVar(
+    path.map((f, k) => {
+      const s = scaleAt(Math.min(dist[k], total - dist[k]));
+      const bf = bz * s;
+      return { p: f.p, n: f.n, section: roundedSection(f.a, f.a * s, bf, bz, [kOF * bf, kIF * bf, kIB * bz, kOB * bz]) };
+    }),
+  );
+
+  // Pan-head screws on the outer sides of both rails, just past the seam.
+  const { head, cross } = panHeadScrew(DELUXE.screw.r, DELUXE.screw.h);
+  const along = deluxeSeam(fw) + fw * DELUXE.screw.past;
+  const zs = deluxeRailProfile(fw, fd).sideMid;
+  const screws: Array<{ pos: Vec3; rot: Vec3 }> = [
+    { pos: [W / 2 - along, H / 2 - 0.0002, zs], rot: [0, 0, 0] },
+    { pos: [W / 2 - 0.0002, H / 2 - along, zs], rot: [0, 0, -Math.PI / 2] },
+  ];
+
+  for (const sx of [1, -1]) {
+    for (const sy of [1, -1]) {
+      b.add("deluxe-corner", mirrorXY(elbow, sx, sy));
+      for (const { pos, rot } of screws) {
+        b.add("screw-zinc", mirrorXY(place(head, pos, rot), sx, sy));
+        b.add("screw-recess", mirrorXY(place(cross, pos, rot), sx, sy));
+      }
+    }
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Metallic Premium frame ("signature")                                 */
+/* ------------------------------------------------------------------ */
+/**
+ * Metallic Premium frame, modelled on close-up photos of the real board (corners, rails, edges):
+ *  - rail: a tubular two-lobe extrusion — a narrow inner band (a touch lower) and a wider, fully
+ *    rounded outer band split by a groove — with a channel along its outer side;
+ *  - corner: the red moulded cap over the outer band, butted against the rail ends and standing a
+ *    little proud of them, its pillow-shaped section swept round a quarter circle, PLUSMARK
+ *    embossed along it. Inside it the black connector: a lower band whose inner edge rounds off
+ *    the writing surface's corner, with a raised flange at each seam and a small rounded tab
+ *    where the cap is notched on the groove line;
+ *  - the connector's arms show in the side channel just past each cap, held by Phillips screws.
+ */
+const SIG = {
+  /** Cap/rail seam, from the board's outer edge (× fw). */
+  seam: 1.58,
+  /** Straight run of the cap from each seam before the bend (× fw). */
+  run: 0.12,
+  /** The cap stands proud of the rail's outer edge (× fw), and of its front / back (m). */
+  overhang: 0.035,
+  proud: 0.0016,
+  back: 0.0008,
+  /** Rail groove (inner band | outer band) and the cap's red/black split, from the outer edge (× fw). */
+  groove: 0.57,
+  split: 0.55,
+  /** Black band front vs. the rail crown (m): round the bend / at the thin seam flanges. */
+  blackFront: -0.0004,
+  flangeFront: 0.0001,
+  /** Flange length from each seam, then the blend down to the band (× fw). */
+  flange: 0.04,
+  flangeBlend: 0.05,
+  /** Rounded tab filling the cap's notch at each seam: depth into the red, length along the cap (× fw). */
+  tab: { w: 0.13, l: 0.21 },
+  /** Red cap section rounding (m): outer-front (the pillow), inner-front, inner-back, outer-back. */
+  capRadii: [0.0085, 0.0028, 0.001, 0.003] as [number, number, number, number],
+  /** Black band: a gentle crown rounding down to the writing surface (elliptical, across × depth, m). */
+  blackRadius: [0.007, 0.0022] as [number, number],
+  /** Side channel: centre (× fd from the middle, + = front), width (× fd), depth (m). */
+  slot: { at: -0.04, w: 0.38, depth: 0.003 },
+  /** Connector arm showing in the side channel past each cap (× fw); its screw (× fw past the seam; m). */
+  arm: 1.25,
+  screw: { at: 0.45, r: 0.0042, h: 0.0022 },
+  /** Embossed PLUSMARK: line across the cap (fraction from its inner edge), cap height, spacing, relief (m). */
+  text: { at: 0.42, size: 0.0034, spacing: 0.0015, relief: 0.00018 },
+};
+
+/** Signature corner layout for frame width fw: radii about the bend centre and lengths (m). */
+function sigLayout(fw: number) {
+  const seam = SIG.seam * fw, run = SIG.run * fw;
+  const arc = seam - run; // bend centre → the board's outer edges
+  const Ro = arc + SIG.overhang * fw; // cap outer contour
+  const Rs = arc - SIG.split * fw; // red/black split
+  const Ri = arc - fw; // writing-surface corner (the rails' inner edge line)
+  const Rt = Rs + SIG.text.at * (Ro - Rs); // embossed text line
+  const quarter = (r: number) => (r * Math.PI) / 2;
+  return { seam, run, arc, Ro, Rs, Ri, Rt, band: Ro - Rs, Ls: 2 * run + quarter(Rs), Lt: 2 * run + quarter(Rt) };
+}
+
+/**
+ * Signature rail cross-section (u across the rail, + = outer edge; v = depth, + = front), CCW.
+ * Also returns the front surface height front(u) and the surface a sticker rests on.
+ */
+function signatureRailProfile(fw: number, fd: number) {
+  const a = fw / 2, b = fd / 2;
+  const g = -a + (1 - SIG.groove) * fw; // groove centre: inner band | outer band
+  const gw = 0.0007, gBottom = b - 0.0024; // groove half-width at the lips, groove bottom
+  // Outer band: crown at the full depth, a lip 1.1 mm lower at the groove, rounded far down the side.
+  const oLip = b - 0.0011, rv = 0.0065;
+  const uo = g + gw + 0.42 * (a - g - gw);
+  const ruA = a - uo, ruB = uo - g - gw, rvB = b - oLip;
+  // Inner band: crown 0.5 mm lower, a lip 1.1 mm below it at the groove, rounded down at the inner edge.
+  const iCrown = b - 0.0005, iLip = iCrown - 0.0011, rvD = 0.0026;
+  const ui = -a + 0.55 * (g - gw + a);
+  const ruC = g - gw - ui, rvC = iCrown - iLip, ruD = ui + a;
+  const rb = 0.0015; // outer back edge
+  const sv = SIG.slot.at * fd, sw = SIG.slot.w * fd, sd = SIG.slot.depth;
+  const s0 = sv - sw / 2, s1 = sv + sw / 2;
+
+  const pts: Array<{ u: number; v: number; nu: number; nv: number }> = [];
+  const P = (u: number, v: number, nu: number, nv: number) => {
+    const l = Math.hypot(nu, nv) || 1;
+    pts.push({ u, v, nu: nu / l, nv: nv / l });
+  };
+  /** Elliptical arc, centre (cu, cv), radii (ru, rr), angles t0 → t1. */
+  const arc = (cu: number, cv: number, ru: number, rr: number, t0: number, t1: number, n: number) => {
+    for (let k = 0; k <= n; k++) {
+      const t = t0 + ((t1 - t0) * k) / n;
+      P(cu + ru * Math.cos(t), cv + rr * Math.sin(t), Math.cos(t) / ru, Math.sin(t) / rr);
+    }
+  };
+  P(-a, -b, 0, -1); // back
+  arc(a - rb, -b + rb, rb, rb, -Math.PI / 2, 0, 4);
+  // outer side with the channel (hard edges)
+  P(a, s0, 1, 0);
+  P(a, s0, 0, 1);
+  P(a - sd, s0, 0, 1);
+  P(a - sd, s0, 1, 0);
+  P(a - sd, s1, 1, 0);
+  P(a - sd, s1, 0, -1);
+  P(a, s1, 0, -1);
+  P(a, s1, 1, 0);
+  // outer band: side → crown → groove lip
+  arc(uo, b - rv, ruA, rv, 0, Math.PI / 2, 14);
+  arc(uo, oLip, ruB, rvB, Math.PI / 2, Math.PI, 8);
+  // V groove (hard edges)
+  P(g + gw, oLip, gBottom - oLip, gw);
+  P(g, gBottom, gBottom - oLip, gw);
+  P(g, gBottom, iLip - gBottom, gw);
+  P(g - gw, iLip, iLip - gBottom, gw);
+  // inner band: groove lip → crown → inner edge, then the inner side
+  arc(ui, iLip, ruC, rvC, 0, Math.PI / 2, 8);
+  arc(ui, iCrown - rvD, ruD, rvD, Math.PI / 2, Math.PI, 10);
+  P(-a, -b, -1, 0);
+
+  const ell = (u: number, cu: number, ru: number, cv: number, rr: number) =>
+    cv + rr * Math.sqrt(Math.max(0, 1 - ((u - cu) / ru) ** 2));
+  /** Front surface height at u (groove bridged lip to lip). */
+  const front = (u: number) =>
+    u >= uo ? ell(u, uo, ruA, b - rv, rv)
+    : u >= g + gw ? ell(u, uo, ruB, oLip, rvB)
+    : u > g - gw ? iLip + ((oLip - iLip) * (u - (g - gw))) / (2 * gw)
+    : u >= ui ? ell(u, ui, ruC, iLip, rvC)
+    : ell(u, ui, ruD, iCrown - rvD, rvD);
+  /** A sticker stretched across the rail rests on both crowns and bridges the groove between them. */
+  const sticker = (u: number) =>
+    u > ui && u < uo ? Math.max(front(u), iCrown + ((b - iCrown) * (u - ui)) / (uo - ui)) : front(u);
+  return { pts, front, sticker, groove: g, gBottom, slot: { s0, s1, depth: sd } };
+}
+
+/** Signature rails, stopping `clear` short of each outer corner (inside the caps), with groove and channel shading. */
+function addSignatureFrame(b: ModelBuilder, W: number, H: number, fw: number, fd: number, clear: number) {
+  const prof = signatureRailProfile(fw, fd);
+  const hl = W / 2 - clear, vl = H / 2 - clear;
+  const xr = W / 2 - fw / 2, yt = H / 2 - fw / 2;
+  // frames advance along Z × n (see sweep)
+  const rails: Array<{ f: Array<{ p: [number, number]; n: [number, number] }>; h: boolean }> = [
+    { f: [{ p: [hl, yt], n: [0, 1] }, { p: [-hl, yt], n: [0, 1] }], h: true },
+    { f: [{ p: [-hl, -yt], n: [0, -1] }, { p: [hl, -yt], n: [0, -1] }], h: true },
+    { f: [{ p: [xr, -vl], n: [1, 0] }, { p: [xr, vl], n: [1, 0] }], h: false },
+    { f: [{ p: [-xr, vl], n: [-1, 0] }, { p: [-xr, -vl], n: [-1, 0] }], h: false },
+  ];
+  for (const r of rails) b.add("aluminium", brushUV(sweep(prof.pts, r.f), r.h));
+
+  // Shading strips between the caps; u = offset from the rail's centre line (+ = outer edge).
+  const seam = SIG.seam * fw;
+  const strip = (mat: string, across: number, depth: number, u: number, z: number) => {
+    for (const s of [1, -1]) {
+      b.add(mat, place(box(W - 2 * seam, across, depth), [0, s * (yt + u), z]));
+      b.add(mat, place(box(across, H - 2 * seam, depth), [s * (xr + u), 0, z]));
+    }
+  };
+  // dark line at the bottom of the front groove (the groove alone is sub-pixel at viewing distance)
+  strip("aluminium-dark", 0.0006, 0.0005, prof.groove, prof.gBottom + 0.00045);
+  // the side channel's floor, in shadow
+  const { s0, s1, depth } = prof.slot;
+  strip("rail-channel", 0.0008, s1 - s0 - 0.0002, fw / 2 - depth + 0.0004, (s0 + s1) / 2);
+  // back ribs, as on the other profiles
+  for (const o of [-fw * 0.28, 0, fw * 0.28]) strip("aluminium-dark", 0.0012, 0.0006, o, -fd / 2 - 0.0003);
+}
+
+type CornerRadius = number | [number, number];
+
+/**
+ * Like roundedSection(), but each corner (outer-front, inner-front, inner-back, outer-back) can
+ * be elliptical ([across, depth]) and is only limited by the room it actually needs.
+ */
+function capSection(aIn: number, aOut: number, bFront: number, bBack: number, radii: [CornerRadius, CornerRadius, CornerRadius, CornerRadius], seg = 8) {
+  const w = aIn + aOut, h = bFront + bBack, e = 1e-5;
+  const fit = (r: number, room: number) => Math.max(e, Math.min(r, room - e));
+  const [OF, IF, IB, OB] = radii.map((r) => (typeof r === "number" ? [r, r] : r));
+  const of: [number, number] = [fit(OF[0], w), fit(OF[1], h)];
+  const iF: [number, number] = [fit(IF[0], w - of[0]), fit(IF[1], h)];
+  const ob: [number, number] = [fit(OB[0], w), fit(OB[1], h - of[1])];
+  const ib: [number, number] = [fit(IB[0], w - ob[0]), fit(IB[1], h - iF[1])];
+  const pts: Array<{ u: number; v: number; nu: number; nv: number }> = [];
+  const corners: Array<[number, number, [number, number], number]> = [
+    [aOut - of[0], bFront - of[1], of, 0],
+    [-aIn + iF[0], bFront - iF[1], iF, Math.PI / 2],
+    [-aIn + ib[0], -bBack + ib[1], ib, Math.PI],
+    [aOut - ob[0], -bBack + ob[1], ob, (3 * Math.PI) / 2],
+  ];
+  for (const [cu, cv, [ru, rv], a0] of corners) {
+    for (let s = 0; s <= seg; s++) {
+      const t = a0 + (s / seg) * (Math.PI / 2);
+      const nu = Math.cos(t) / ru, nv = Math.sin(t) / rv, l = Math.hypot(nu, nv);
+      pts.push({ u: cu + Math.cos(t) * ru, v: cv + Math.sin(t) * rv, nu: nu / l, nv: nv / l });
+    }
+  }
+  return pts;
+}
+
+function addSignatureCorners(b: ModelBuilder, W: number, H: number, fw: number, fd: number) {
+  const L = sigLayout(fw);
+  const { run, Ls, Lt, Rs, Ro, Ri, Rt } = L;
+  const bz = fd / 2;
+  const cx = W / 2 - L.arc, cy = H / 2 - L.arc; // bend centre, top-right corner (mirrored below)
+
+  // Stations: distance d from the first seam along the split line — fine near the seams (flange,
+  // notch), coarse round the bend. Both parts use the same stations so the notch and tab match.
+  const near = Math.max(SIG.tab.l, SIG.flange + SIG.flangeBlend) * fw;
+  const fine = 0.0005, steps = 28;
+  const raw = [0, run, Ls - run, Ls];
+  for (let d = fine; d < near; d += fine) raw.push(d, Ls - d);
+  for (let k = 1; k < steps; k++) raw.push(run + ((Ls - 2 * run) * k) / steps);
+  const stations = raw
+    .filter((d) => d >= 0 && d <= Ls)
+    .sort((p, q) => p - q)
+    .filter((d, k, all) => k === 0 || d - all[k - 1] > 1e-6);
+  const frameAt = (d: number, r: number): { p: [number, number]; n: [number, number] } => {
+    if (d <= run) return { p: [cx + r, cy - run + d], n: [1, 0] }; // up the right rail
+    if (d >= Ls - run) return { p: [cx - (d - (Ls - run)), cy + r], n: [0, 1] }; // along the top rail
+    const t = (d - run) / Rs;
+    return { p: [cx + r * Math.cos(t), cy + r * Math.sin(t)], n: [Math.cos(t), Math.sin(t)] };
+  };
+  /** The same station measured along the text line (emboss UVs). */
+  const alongText = (d: number) => (d <= run ? d : d >= Ls - run ? Lt - (Ls - d) : run + ((d - run) / Rs) * Rt);
+
+  // Notch in the red cap (= the black tab) and the black flange, by distance e from the nearer seam.
+  const tw = SIG.tab.w * fw, tl = SIG.tab.l * fw;
+  const notch = (e: number) => {
+    if (e <= tl / 2) return tw;
+    const x = (e - tl / 2) / (tl / 2);
+    return x >= 1 ? 0 : tw * Math.sqrt(1 - x * x);
+  };
+  const smooth = (x: number) => (x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x));
+  const blackTop = (e: number) =>
+    bz + SIG.blackFront + (SIG.flangeFront - SIG.blackFront) * (1 - smooth((e - SIG.flange * fw) / (SIG.flangeBlend * fw)));
+
+  // Red cap over the outer band: pillow section, notched at the seams.
+  const aR = (Ro - Rs) / 2, rR = (Ro + Rs) / 2;
+  const seg = 8, frontPts = 2 * (seg + 1); // section points 0…frontPts-1: outer-front + inner-front corners
+  const redFrames = stations.map((d) => ({
+    ...frameAt(d, rR),
+    section: capSection(aR - notch(Math.min(d, Ls - d)), aR, bz + SIG.proud, bz + SIG.back, SIG.capRadii, seg),
+  }));
+  const red = sweepVar(redFrames, {
+    // Front: u along the text line, v across the cap (0 = inner edge). Sides, back and end faces
+    // sample the flat border of the emboss map.
+    at: (k, j) => (j < frontPts ? [alongText(stations[k]) / Lt, (redFrames[k].section[j].u + aR) / (2 * aR)] : [-1, 0]),
+    cap: [-1, 0],
+  });
+
+  // Black connector: from the writing-surface corner to just under the red, with the tab and flanges.
+  const aB = (Rs - Ri) / 2, rB = (Rs + Ri) / 2;
+  const black = sweepVar(
+    stations.map((d) => {
+      const e = Math.min(d, Ls - d);
+      return {
+        ...frameAt(d, rB),
+        section: capSection(aB + 0.0003, aB + 0.0015 + notch(e), blackTop(e), bz - 0.0006, [0.0005, SIG.blackRadius, 0.0003, 0.0003], 6),
+      };
+    }),
+  );
+
+  // Connector arms in the side channels just past the cap, each with a Phillips pan-head screw.
+  const { s0, s1, depth } = signatureRailProfile(fw, fd).slot;
+  const zc = (s0 + s1) / 2, sw = s1 - s0 - 0.0001;
+  const face = 0.0018; // arm face, below the rail's outer side
+  const t = depth - face, len = SIG.arm * fw + 0.002; // runs 2 mm into the cap
+  const mid = L.seam - 0.002 + len / 2; // arm centre, from the outer edge
+  const arms = [
+    place(box(t, len, sw), [W / 2 - depth + t / 2, H / 2 - mid, zc]), // right rail
+    place(box(len, t, sw), [W / 2 - mid, H / 2 - depth + t / 2, zc]), // top rail
+  ];
+  const { head, cross } = panHeadScrew(SIG.screw.r, SIG.screw.h);
+  const at = L.seam + SIG.screw.at * fw;
+  const screws: Array<{ pos: Vec3; rot: Vec3 }> = [
+    { pos: [W / 2 - face, H / 2 - at, zc], rot: [0, 0, -Math.PI / 2] },
+    { pos: [W / 2 - at, H / 2 - face, zc], rot: [0, 0, 0] },
+  ];
+
+  // One moulding rotated onto every corner: on the mirrored copies the emboss UVs run backwards
+  // so PLUSMARK still reads the right way round.
+  const redFlipped: Geo = { ...red, uv: red.uv.map((x, k) => (k % 2 === 0 && x >= 0 ? 1 - x : x)) };
+  for (const sx of [1, -1]) {
+    for (const sy of [1, -1]) {
+      b.add("cap-red", mirrorXY(sx * sy < 0 ? redFlipped : red, sx, sy));
+      b.add("cap-black", mirrorXY(black, sx, sy));
+      for (const arm of arms) b.add("connector-black", mirrorXY(arm, sx, sy));
+      for (const { pos, rot } of screws) {
+        b.add("screw-zinc", mirrorXY(place(head, pos, rot), sx, sy));
+        b.add("screw-recess", mirrorXY(place(cross, pos, rot), sx, sy));
+      }
+    }
+  }
+}
+
+/**
+ * Sticker strip for a bottom rail that follows `surface` (height over u, + u = the rail's outer
+ * edge, i.e. downwards on the bottom rail), relative to the rail front `zf`.
+ */
+function railDecal(w: number, h: number, surface: (u: number) => number, zf: number, rows = 24): Geo {
+  const g = empty();
+  const eps = 0.0004;
+  for (let j = 0; j <= rows; j++) {
+    const s = -h / 2 + (j / rows) * h;
+    const u = -s;
+    const slope = (surface(u + 1e-5) - surface(u - 1e-5)) / 2e-5;
+    const l = Math.hypot(slope, 1);
+    const ny = slope / l, nz = 1 / l;
+    const z = surface(u) - zf;
+    for (const x of [-w / 2, w / 2]) {
+      g.p.push(x, s + ny * eps, z + nz * eps);
+      g.n.push(0, ny, nz);
+      g.uv.push(x < 0 ? 0 : 1, 1 - j / rows);
+    }
+  }
+  for (let j = 0; j < rows; j++) {
+    const a = j * 2, b = a + 1, c = a + 3, d = a + 2;
+    g.i.push(a, b, c, a, c, d);
+  }
+  return g;
+}
+
+/**
+ * Normal map for the PLUSMARK name embossed along the red signature cap, laid out in the cap's
+ * UVs (addSignatureCorners): u along the text line, v across the cap from its inner edge. All
+ * signature boards use the heavy frame, so the map is drawn to that cap's size.
+ */
+async function embossMap(fw: number): Promise<Tex> {
+  const L = sigLayout(fw);
+  const W = 1024, H = 256;
+  const mmU = (L.Lt * 1000) / W, mmV = (L.band * 1000) / H; // mm per pixel
+  const size = SIG.text.size * 1000;
+  // Lettering in mm, turned 180° so it reads clockwise round the corner with the letter tops
+  // towards the cap's outer edge — as moulded on the real cap.
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">
+  <rect width="100%" height="100%" fill="#000"/>
+  <g transform="translate(${W / 2} ${SIG.text.at * H}) rotate(180) scale(${1 / mmU} ${1 / mmV})">
+    <text x="0" y="${size / 2}" text-anchor="middle" font-family="${FONT}" font-size="${size / 0.72}" font-weight="700" letter-spacing="${SIG.text.spacing * 1000}" fill="#fff">PLUSMARK</text>
+  </g>
+</svg>`;
+  const { data, info } = await sharp(Buffer.from(svg))
+    .flatten({ background: "#000000" })
+    .greyscale()
+    .blur(1.1)
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+  const relief = SIG.text.relief * 1000; // mm
+  const hAt = (x: number, y: number) =>
+    (data[(Math.min(H - 1, Math.max(0, y)) * W + Math.min(W - 1, Math.max(0, x))) * info.channels] / 255) * relief;
+  const px = Buffer.alloc(W * H * 3);
+  for (let y = 0; y < H; y++) {
+    for (let x = 0; x < W; x++) {
+      // tangent space, glTF convention: +X along +u, +Y towards the top of the image (−v)
+      const nx = -(hAt(x + 1, y) - hAt(x - 1, y)) / (2 * mmU);
+      const ny = (hAt(x, y + 1) - hAt(x, y - 1)) / (2 * mmV);
+      const l = Math.hypot(nx, ny, 1);
+      const k = (y * W + x) * 3;
+      px[k] = Math.round((nx / l / 2 + 0.5) * 255);
+      px[k + 1] = Math.round((ny / l / 2 + 0.5) * 255);
+      px[k + 2] = Math.round((1 / l / 2 + 0.5) * 255);
+    }
+  }
+  return { data: await sharp(px, { raw: { width: W, height: H, channels: 3 } }).png({ compressionLevel: 9 }).toBuffer(), mime: "image/png" };
+}
+
 /** How far rails must stop short of the outer corner so they stay hidden inside the cap. */
 function railClearance(corner: Corner, fw: number) {
-  if (corner === "signature") return elbowClear(fw);
+  // Signature: rails butt against the caps, reaching half the cap's straight run inside them.
+  if (corner === "signature") return (SIG.seam - SIG.run / 2) * fw;
+  if (corner === "chrome") return deluxeClear(fw);
   const { size, radius, round } = CAP[corner];
   const r = fw * size * radius, inset = CAP_INSET;
   // The top rail's outer corner sits `inset` inside the cap's outer edge; shorten the rail by c so
@@ -796,7 +1415,7 @@ function surfaceSlab(mat: string, w: number, h: number, t: number): Geo {
 /** `clear`: shorten the horizontal rails at both ends so they stay hidden inside corner caps. */
 /**
  * `clear`: shorten the horizontal rails at both ends so they stay hidden inside corner caps.
- * `vclear`: same for the vertical rails (the signature elbow needs both shortened).
+ * `vclear`: same for the vertical rails, for caps that need both shortened.
  */
 function addFrame(b: ModelBuilder, W: number, H: number, fw: number, fd: number, corner: Corner, mat = "aluminium", z = 0, x = 0, clear = 0, vclear = 0) {
   const { radius, grooves } = PROFILE[corner];
@@ -849,10 +1468,10 @@ function addBack(b: ModelBuilder, W: number, H: number, fw: number, fd: number, 
   const L = 0.085, arm = Math.max(0.036, fw + 0.008), t = 0.0024;
   // Outer corner follows the front cap's outline so the plate never peeks out from the front.
   const cap = corner ? CAP[corner] : undefined;
-  // Signature elbow: round the plate a little more than the elbow's outer radius so it stays
-  // tucked behind the bend.
+  // Signature cap: round the plate a touch more than the cap's bend so it stays tucked behind it.
   const r =
-    corner === "signature" ? Math.min((elbowBend(fw) + fw / 2) * 1.15, L * 0.95)
+    corner === "signature" ? Math.min(sigLayout(fw).arc + 0.0012, L * 0.95)
+    : corner === "chrome" ? Math.min(fw * DELUXE.outerRadius * 1.25, L * 0.95)
     : cap ? Math.min(fw * cap.size * cap.radius - CAP_INSET, L * 0.7)
     : 0.006;
   const outline = cornerOutline(L, Math.max(r, 0.004), corner === "signature" || (cap?.round ?? false), 1, 1);
@@ -908,6 +1527,7 @@ function addHangers(b: ModelBuilder, W: number, H: number, fd: number, raised: b
 
 function addCorners(b: ModelBuilder, corner: Corner, W: number, H: number, fw: number, fd: number) {
   if (corner === "signature") return addSignatureCorners(b, W, H, fw, fd);
+  if (corner === "chrome") return addDeluxeCorners(b, W, H, fw, fd);
   const back = -fd / 2 + 0.001; // caps stop at the back so the grey back plates show there
   for (const sx of [1, -1]) {
     for (const sy of [1, -1]) {
@@ -977,8 +1597,26 @@ function addCorners(b: ModelBuilder, corner: Corner, W: number, H: number, fw: n
 function addDecals(b: ModelBuilder, W: number, H: number, fw: number, fd: number, corner: Corner) {
   const y = -H / 2 + fw / 2;
   const z = fd / 2;
-  // Corner zone to keep clear of (elbow / cap), then a small gap — as in the photos.
-  const cs = corner === "signature" ? elbowClear(fw) + fw * ELBOW.sleeve : fw * 2.4;
+  if (corner === "chrome") {
+    // Deluxe (studio photo): only the PLUSMARK badge, a thin pill-shaped plate across the rail.
+    const bh = fw * 0.5, bw = bh * (480 / 96), t = 0.0006;
+    const x = W / 2 - fw * 2.4 - bw / 2 - 0.012;
+    b.add("aluminium", place(roundedRect(bw, bh, t, bh / 2, 8), [x, y, z + t / 2]));
+    b.add("decal-badge", place(quad(bw, bh), [x, y, z + t + 0.0001]));
+    return;
+  }
+  if (corner === "signature") {
+    // Just past each cap, stretched over the two-lobe rail (resting on both crowns).
+    const { sticker } = signatureRailProfile(fw, fd);
+    const cs = SIG.seam * fw;
+    const rh = fw * 0.84, rw = rh * (600 / 120);
+    const bh = rh * 0.92, bw = bh * (480 / 96);
+    b.add("decal-retail", place(railDecal(rw, rh, sticker, z), [-W / 2 + cs + rw / 2 + 0.012, y, z]));
+    b.add("decal-badge", place(railDecal(bw, bh, sticker, z), [W / 2 - cs - bw / 2 - 0.012, y, z]));
+    return;
+  }
+  // Corner zone to keep clear of (cap), then a small gap — as in the photos.
+  const cs = fw * 2.4;
   // Stickers fill ~90% of the rail height and wrap the rounded rail edges (decalStrip), so the
   // plusmark name is large and legible without floating off tubular profiles.
   const fill = 0.9;
@@ -999,7 +1637,9 @@ function buildBoard(v: Extract<Visual, { kind: "board" }>): ModelBuilder {
   addSurface(b, v.surface, W, H, fw, fd);
   addBack(b, W, H, fw, fd, v.corner);
   const clear = railClearance(v.corner, fw);
-  addFrame(b, W, H, fw, fd, v.corner, "aluminium", 0, 0, clear, v.corner === "signature" ? clear : 0);
+  if (v.corner === "chrome") addDeluxeFrame(b, W, H, fw, fd, clear);
+  else if (v.corner === "signature") addSignatureFrame(b, W, H, fw, fd, clear);
+  else addFrame(b, W, H, fw, fd, v.corner, "aluminium", 0, 0, clear);
   addCorners(b, v.corner, W, H, fw, fd);
   addHangers(b, W, H, fd, v.corner === "abs" || v.corner === "plastic");
   addDecals(b, W, H, fw, fd, v.corner);
@@ -1163,6 +1803,12 @@ async function writeGLB(slug: string, builder: ModelBuilder, io: NodeIO, outDir:
       m.getMetallicRoughnessTextureInfo()!
         .setWrapS(TextureInfo.WrapMode.REPEAT)
         .setWrapT(TextureInfo.WrapMode.REPEAT);
+    }
+    if (def.normal) {
+      m.setNormalTexture(getTex(def.normal)).setNormalScale(def.normalScale ?? 1);
+      m.getNormalTextureInfo()!
+        .setWrapS(TextureInfo.WrapMode.CLAMP_TO_EDGE)
+        .setWrapT(TextureInfo.WrapMode.CLAMP_TO_EDGE);
     }
     if (def.clearcoat) {
       m.setExtension(

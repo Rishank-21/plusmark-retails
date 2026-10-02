@@ -2,16 +2,17 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { EXPERIENCE_PATH } from "@/lib/design";
+import { DESIGN_HOMES, type DesignId } from "@/lib/design";
 
 /**
- * Design D has its own home page. The pre-paint script handles full page loads of "/";
- * this covers client-side navigation (logo / Home link) while design D is active.
+ * Designs D and E have their own home pages. The pre-paint script handles full page loads of
+ * "/"; this covers client-side navigation (logo / Home link) while one of them is active.
  */
 export function DesignHomeRedirect() {
   const router = useRouter();
   useEffect(() => {
-    if (document.documentElement.dataset.theme === "d") router.replace(EXPERIENCE_PATH);
+    const home = DESIGN_HOMES[document.documentElement.dataset.theme as DesignId];
+    if (home) router.replace(home);
   }, [router]);
   return null;
 }

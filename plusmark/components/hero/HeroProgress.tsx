@@ -8,13 +8,15 @@ interface HeroProgressProps {
   active: number;
   barRef: React.RefObject<HTMLDivElement | null>;
   onSelect: (index: number) => void;
+  /** Announce product changes. Off while the carousel advances on its own, so it doesn't chatter. */
+  live: boolean;
 }
 
-export function HeroProgress({ products, active, barRef, onSelect }: HeroProgressProps) {
+export function HeroProgress({ products, active, barRef, onSelect, live }: HeroProgressProps) {
   const n = products.length;
   return (
     <div className="flex items-center gap-4 lg:gap-8">
-      <p className="shrink-0 font-mono text-[0.7rem] tracking-[0.14em] text-graphite" aria-live="polite">
+      <p className="shrink-0 font-mono text-[0.7rem] tracking-[0.14em] text-graphite" aria-live={live ? "polite" : "off"}>
         <span className="text-sm font-medium">{pad2(active + 1)}</span>
         <span className="text-alu-dark"> / {pad2(n)}</span>
         <span className="sr-only">: {products[active]?.name}</span>

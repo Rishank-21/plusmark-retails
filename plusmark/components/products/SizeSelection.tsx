@@ -32,7 +32,7 @@ export function SizePicker({ className }: { className?: string }) {
   const { options, selected, select } = ctx;
   return (
     <fieldset className={className}>
-      <legend className="eyebrow mb-3">
+      <legend className="eyebrow mb-3 text-[0.75rem]">
         Size <span className="normal-case tracking-normal text-steel">{selected ? `· ${selected.label}` : "· select to preview"}</span>
       </legend>
       <div className="flex flex-wrap gap-2">
@@ -45,7 +45,7 @@ export function SizePicker({ className }: { className?: string }) {
               aria-pressed={on}
               onClick={() => select(s)}
               className={cn(
-                "min-h-10 px-3.5 py-2 font-mono text-xs transition-colors focus-visible:outline-offset-2",
+                "min-h-10 px-3.5 py-2 font-mono text-[0.8125rem] transition-colors focus-visible:outline-offset-2",
                 on ? "bg-graphite text-white" : "bg-white text-graphite ring-1 ring-line hover:ring-graphite",
               )}
             >

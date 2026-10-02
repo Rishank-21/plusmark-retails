@@ -1,17 +1,17 @@
 "use client";
 
 import { useEffect } from "react";
-import { DESIGN_STORAGE_KEY } from "@/lib/design";
+import { DESIGN_STORAGE_KEY, type DesignId } from "@/lib/design";
 
-/** The design D home always renders in the D palette (also after client-side navigation). */
-export function ThemeLock() {
+/** A design's own home page always renders in that design's palette (also after client-side navigation). */
+export function ThemeLock({ id = "d" }: { id?: DesignId }) {
   useEffect(() => {
-    document.documentElement.dataset.theme = "d";
+    document.documentElement.dataset.theme = id;
     try {
-      localStorage.setItem(DESIGN_STORAGE_KEY, "d");
+      localStorage.setItem(DESIGN_STORAGE_KEY, id);
     } catch {
       /* private mode */
     }
-  }, []);
+  }, [id]);
   return null;
 }

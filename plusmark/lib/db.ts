@@ -143,3 +143,22 @@ export async function enquiryStats(): Promise<Record<EnquiryStatus | "total" | "
   }
   return out;
 }
+
+/* ---------------- Demo kit payments ---------------- */
+
+/** /demoKits/{razorpayOrderId} = { orderId, paymentId, purpose, product, name, phone, …, createdAt } */
+const DEMO_KITS = "demoKits";
+
+/**
+ * Stores a confirmed demo kit payment under its Razorpay order id, once: returns false when the
+ * order was already recorded (a refreshed page or a retried request), so it is only announced once.
+ */
+export async function recordDemoKitPayment(
+  p: { orderId: string; paymentId: string } & Record<string, string>,
+): Promise<boolean> {
+  if (!/^order_[A-Za-z0-9]{6,40}$/.test(p.orderId)) throw new Error("Invalid order id");
+  const res = await adminDb()
+    .ref(`${DEMO_KITS}/${p.orderId}`)
+    .transaction((current) => (current === null ? { ...p, createdAt: Date.now() } : undefined));
+  return res.committed;
+}

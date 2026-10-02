@@ -14,6 +14,8 @@ interface ProductModelProps {
   opacityRef?: RefObject<number>;
   onReady?: () => void;
   envMapIntensity?: number;
+  /** Called with the normalised bounding-box size once the model is ready. */
+  onSize?: (size: THREE.Vector3) => void;
 }
 
 type FadeMaterial = THREE.MeshStandardMaterial & { userData: { baseOpacity: number; baseTransparent: boolean } };
@@ -22,11 +24,11 @@ type FadeMaterial = THREE.MeshStandardMaterial & { userData: { baseOpacity: numb
  * Data-driven GLB model. Clones the cached scene so the same model can be used
  * in multiple canvases, normalises size/centre, and prepares materials for fading.
  */
-export function ProductModel({ url, fitSize = 2.2, opacityRef, onReady, envMapIntensity = 1 }: ProductModelProps) {
+export function ProductModel({ url, fitSize = 2.2, opacityRef, onReady, envMapIntensity = 1, onSize }: ProductModelProps) {
   const { scene } = useGLTF(url, DRACO_PATH);
   const maxAnisotropy = useThree((s) => s.gl.capabilities.getMaxAnisotropy());
 
-  const { object, materials } = useMemo(() => {
+  const { object, materials, fitted } = useMemo(() => {
     const object = scene.clone(true);
     const materials: FadeMaterial[] = [];
     const anisotropy = Math.min(maxAnisotropy, 8);
@@ -40,8 +42,9 @@ export function ProductModel({ url, fitSize = 2.2, opacityRef, onReady, envMapIn
       // signature red stays saturated instead of turning grey / pink under the softboxes.
       if (mat.name === "cap-black" || mat.name === "abs-dark") mat.envMapIntensity = envMapIntensity * 0.3;
       else if (mat.name === "cap-red") mat.envMapIntensity = envMapIntensity * 0.6;
-      // Sharper textures at grazing angles (brand stickers on the rail, fabric/chalk grain).
-      for (const tex of [mat.map, mat.roughnessMap, mat.metalnessMap]) {
+      // Sharper textures at grazing angles (brand stickers on the rail, fabric/chalk grain,
+      // the PLUSMARK emboss on the Metallic Premium corner caps).
+      for (const tex of [mat.map, mat.roughnessMap, mat.metalnessMap, mat.normalMap]) {
         if (tex && tex.anisotropy !== anisotropy) {
           tex.anisotropy = anisotropy;
           tex.needsUpdate = true;
@@ -69,10 +72,10 @@ export function ProductModel({ url, fitSize = 2.2, opacityRef, onReady, envMapIn
     const s = fitSize / Math.max(size.x, size.y, size.z * 1.4);
     object.position.sub(center.multiplyScalar(s));
     object.scale.setScalar(s);
-    return { object, materials };
+    return { object, materials, fitted: size.clone().multiplyScalar(s) };
   }, [scene, fitSize, envMapIntensity, maxAnisotropy]);
-
   useLayoutEffect(() => {
+    onSize?.(fitted);
     onReady?.();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [object]);

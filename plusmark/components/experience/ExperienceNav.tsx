@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
@@ -13,21 +14,37 @@ export interface ChapterLink {
   label: string;
 }
 
+const EASE = [0.22, 1, 0.36, 1] as const;
+
 /**
- * Design D navigation: floating logo + menu capsules, a gradient scroll-progress line, a
- * full-screen menu overlay and a chapter rail on the right that tracks the current section.
+ * Design D navigation: a compact bar that starts transparent and turns into a light blurred
+ * surface once you scroll, a full-page menu overlay, and a "01 / 08" chapter indicator on the
+ * right with a thin vertical progress line.
  */
-export function ExperienceNav({ chapters }: { chapters: ChapterLink[] }) {
+export function ExperienceNav({
+  chapters,
+  home = "/experience",
+  rail = true,
+}: {
+  chapters: ChapterLink[];
+  /** this variant's home page */
+  home?: string;
+  /** show the right-hand "01 / 08" chapter rail */
+  rail?: boolean;
+}) {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [current, setCurrent] = useState(chapters[0]?.id);
+  const [scrolled, setScrolled] = useState(false);
+  const [current, setCurrent] = useState(0);
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 140, damping: 30, mass: 0.3 });
+  const menuBtn = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const els = chapters.map((c) => document.getElementById(c.id)).filter(Boolean) as HTMLElement[];
     const io = new IntersectionObserver(
       (entries) => {
-        for (const e of entries) if (e.isIntersecting) setCurrent(e.target.id);
+        for (const e of entries) if (e.isIntersecting) setCurrent(Math.max(0, chapters.findIndex((c) => c.id === e.target.id)));
       },
       { rootMargin: "-45% 0px -50% 0px" },
     );
@@ -36,8 +53,20 @@ export function ExperienceNav({ chapters }: { chapters: ChapterLink[] }) {
   }, [chapters]);
 
   useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+        menuBtn.current?.focus();
+      }
+    };
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
     return () => {
@@ -46,89 +75,169 @@ export function ExperienceNav({ chapters }: { chapters: ChapterLink[] }) {
     };
   }, [open]);
 
+  // every page inline on desktop (same list as designs A–C); "/" is this variant's own home
+  const links = navLinks.map((l) => ({ ...l, href: l.href === "/" ? home : l.href }));
+  const chapter = chapters[current];
+
   return (
     <>
-      <motion.div
-        aria-hidden
-        className="fixed inset-x-0 top-0 z-[60] h-[3px] origin-left bg-gradient-to-r from-[#6d4aff] via-[#12c2e9] to-[#ff7a45]"
-        style={{ scaleX: progress }}
-      />
-      <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4">
-        <div className="mx-auto flex max-w-[110rem] items-center justify-between gap-3">
-          <Link href="/experience" aria-label="Plusmark Display System — Home" className="xd-glass rounded-full px-5 py-2.5">
-            <Logo className="h-8 sm:h-9" />
+      <header
+        className={cn(
+          "fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,backdrop-filter] duration-300",
+          scrolled && !open
+            ? "bg-[rgb(252_252_254/0.78)] shadow-[inset_0_-1px_0_rgb(27_23_64/0.07)] backdrop-blur-md"
+            : "bg-transparent",
+        )}
+      >
+        <div className="mx-auto flex h-[4.5rem] max-w-[110rem] items-center justify-between gap-4 px-5 sm:h-20 sm:px-10 xl:gap-6">
+          <Link
+            href={home}
+            aria-label="Plusmark Display System — Home"
+            className={cn("relative z-[46] shrink-0 rounded-md transition-[filter]", open && "brightness-0 invert")}
+          >
+            <Logo className="h-9 sm:h-11 lg:h-9 xl:h-10 2xl:h-12" />
           </Link>
-          <div className="flex items-center gap-2">
-            <Link href="/contact#enquiry" className="xd-btn hidden !h-12 sm:inline-flex">
-              Request Enquiry <ArrowUpRight aria-hidden className="size-4" />
+
+          <nav aria-label="Primary" className="hidden min-w-0 lg:block">
+            <ul className="flex items-center">
+              {links.map((l) => {
+                const current = l.href === home ? pathname === home : pathname.startsWith(l.href);
+                return (
+                  <li key={l.href}>
+                    <Link
+                      href={l.href}
+                      aria-current={current ? "page" : undefined}
+                      className={cn(
+                        "group relative block whitespace-nowrap px-1.5 py-2 text-[0.86rem] font-medium transition-colors hover:text-graphite xl:px-2 xl:text-[0.94rem] 2xl:px-3 2xl:text-[1.02rem]",
+                        current ? "text-graphite" : "text-steel",
+                      )}
+                    >
+                      {l.label}
+                      <span
+                        aria-hidden
+                        className={cn(
+                          "absolute inset-x-1.5 bottom-1 h-px origin-left bg-accent transition-transform duration-300 ease-out group-hover:scale-x-100 group-focus-visible:scale-x-100 xl:inset-x-2 2xl:inset-x-3",
+                          current ? "scale-x-100" : "scale-x-0",
+                        )}
+                      />
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+
+          <div className="relative z-[46] flex shrink-0 items-center gap-2">
+            {/* the quote button needs room: shown on phones/tablets and wide desktops, not squeezed in at lg */}
+            <Link href="/contact#enquiry" className={cn("xd-btn !hidden !h-11 !px-4 !text-[0.92rem] sm:!inline-flex lg:!hidden xl:!inline-flex", open && "invisible")}>
+              Request a Quote <ArrowUpRight aria-hidden className="size-4" />
             </Link>
             <button
+              ref={menuBtn}
               type="button"
               onClick={() => setOpen((v) => !v)}
               aria-expanded={open}
               aria-controls="xd-menu"
               aria-label={open ? "Close menu" : "Open menu"}
-              className="xd-glass inline-flex h-12 items-center gap-2 rounded-full px-5 text-sm font-semibold text-graphite"
+              className={cn(
+                "inline-flex size-11 items-center justify-center rounded-lg transition-colors lg:hidden",
+                open ? "text-white hover:bg-white/10" : "text-graphite shadow-[inset_0_0_0_1px_rgb(27_23_64/0.12)] hover:bg-white",
+              )}
             >
               {open ? <X className="size-4" aria-hidden /> : <Menu className="size-4" aria-hidden />}
-              <span className="hidden sm:inline">{open ? "Close" : "Menu"}</span>
             </button>
           </div>
         </div>
+        <motion.div aria-hidden className="absolute inset-x-0 bottom-0 h-px origin-left bg-accent/70" style={{ scaleX: progress }} />
       </header>
 
-      <nav aria-label="Page chapters" className="fixed right-4 top-1/2 z-40 hidden -translate-y-1/2 lg:block">
-        <ul className="xd-glass flex flex-col gap-1 rounded-full p-1.5">
-          {chapters.map((c) => (
-            <li key={c.id}>
-              <a
-                href={`#${c.id}`}
-                aria-current={current === c.id ? "true" : undefined}
-                className="group relative flex size-8 items-center justify-center rounded-full"
-              >
-                <span
-                  className={cn(
-                    "block rounded-full transition-all duration-500",
-                    current === c.id ? "size-3 bg-gradient-to-br from-[#6d4aff] to-[#12c2e9]" : "size-1.5 bg-alu-dark/60 group-hover:bg-accent",
-                  )}
-                />
-                <span className="pointer-events-none absolute right-10 whitespace-nowrap rounded-full bg-white/90 px-3 py-1 text-xs font-medium text-graphite opacity-0 shadow-[var(--shadow-soft)] transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
-                  {c.label}
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
+      {/* Chapter indicator: 01 / 08 · label, with a vertical progress line */}
+      {rail && (
+      <nav aria-label="Page chapters" className="group/rail fixed right-5 top-1/2 z-40 hidden -translate-y-1/2 lg:block">
+        {/* glass backing keeps the rail readable when a dark board passes behind it */}
+        <div className="xd-glass flex items-stretch gap-3 rounded-xl !bg-white/90 px-2.5 py-3">
+          <div className="flex flex-col items-end justify-between py-1 text-right">
+            <p className="font-mono text-[0.7rem] tabular-nums text-graphite" aria-hidden>
+              <AnimatePresence mode="popLayout" initial={false}>
+                <motion.span
+                  key={current}
+                  className="inline-block"
+                  initial={{ y: 8, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -8, opacity: 0 }}
+                  transition={{ duration: 0.35, ease: EASE }}
+                >
+                  {String(current + 1).padStart(2, "0")}
+                </motion.span>
+              </AnimatePresence>
+              <span className="text-alu-dark"> / {String(chapters.length).padStart(2, "0")}</span>
+            </p>
+            <p className="max-w-[7rem] text-[0.62rem] font-medium uppercase leading-tight tracking-[0.18em] text-alu-dark [writing-mode:vertical-rl] rotate-180">
+              {chapter?.label}
+            </p>
+          </div>
+          <ul className="relative flex flex-col gap-2 py-1">
+            <span aria-hidden className="absolute bottom-1 left-1/2 top-1 w-px -translate-x-1/2 bg-line" />
+            <motion.span
+              aria-hidden
+              className="absolute left-1/2 top-1 w-px origin-top -translate-x-1/2 bg-graphite"
+              style={{ scaleY: progress, height: "calc(100% - 0.5rem)" }}
+            />
+            {chapters.map((c, i) => (
+              <li key={c.id} className="relative">
+                <a
+                  href={`#${c.id}`}
+                  aria-current={current === i ? "true" : undefined}
+                  className="group relative flex h-5 w-5 items-center justify-center"
+                >
+                  <span
+                    className={cn(
+                      "block rounded-full transition-all duration-300",
+                      current === i ? "size-2 bg-accent ring-4 ring-accent/10" : "size-1 bg-alu group-hover:bg-graphite",
+                    )}
+                  />
+                  <span className="pointer-events-none absolute right-8 whitespace-nowrap rounded-md bg-white px-2.5 py-1 text-[0.72rem] font-medium text-graphite opacity-0 shadow-[var(--shadow-soft)] ring-1 ring-line transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
+                    <span className="mr-1.5 font-mono text-alu-dark">{String(i + 1).padStart(2, "0")}</span>
+                    {c.label}
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       </nav>
+      )}
 
       <AnimatePresence>
         {open && (
           <motion.div
             id="xd-menu"
             key="xd-menu"
-            initial={{ clipPath: "circle(0% at 95% 4%)" }}
-            animate={{ clipPath: "circle(150% at 95% 4%)" }}
-            exit={{ clipPath: "circle(0% at 95% 4%)" }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="xd-stage fixed inset-0 z-[45] overflow-y-auto"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Site menu"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.35, ease: EASE }}
+            className="xd-stage xd-on-dark fixed inset-0 z-[45] overflow-y-auto"
           >
-            <div className="mx-auto grid min-h-full max-w-[110rem] content-center gap-10 px-6 pb-16 pt-28 md:grid-cols-[1.4fr_1fr] md:px-12">
+            <div className="mx-auto grid min-h-full max-w-[110rem] content-center gap-10 px-6 pb-16 pt-24 md:grid-cols-[1.4fr_1fr] md:px-12">
               <ul>
-                {navLinks.map((l, i) => (
+                {links.map((l, i) => (
                   <motion.li
                     key={l.href}
-                    initial={{ opacity: 0, y: 40, rotateX: -40 }}
-                    animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                    transition={{ delay: 0.15 + i * 0.05, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                    style={{ transformPerspective: 800 }}
+                    initial={{ opacity: 0, y: 18 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.06 + i * 0.035, duration: 0.5, ease: EASE }}
                   >
                     <Link
-                      href={l.href === "/" ? "/experience" : l.href}
+                      href={l.href}
                       onClick={() => setOpen(false)}
-                      className="group flex items-baseline gap-4 py-1.5 font-display text-[clamp(1.8rem,5vw,4rem)] font-semibold leading-tight text-white/90 transition-colors hover:text-white"
+                      className="group flex items-baseline gap-4 py-1 font-display text-[clamp(1.6rem,4vw,3.25rem)] font-semibold leading-tight tracking-[-0.03em] text-white/80 transition-colors hover:text-white"
                     >
-                      <span className="font-mono text-xs text-white/50">{String(i + 1).padStart(2, "0")}</span>
-                      <span className="bg-gradient-to-r from-white to-white bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 group-hover:bg-[length:100%_2px]">
+                      <span className="font-mono text-xs font-normal text-white/40">{String(i + 1).padStart(2, "0")}</span>
+                      <span className="bg-gradient-to-r from-white to-white bg-[length:0%_1px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 group-hover:bg-[length:100%_1px]">
                         {l.label}
                       </span>
                     </Link>
@@ -136,18 +245,18 @@ export function ExperienceNav({ chapters }: { chapters: ChapterLink[] }) {
                 ))}
               </ul>
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.45, duration: 0.6 }}
-                className="xd-glass-dark self-end rounded-3xl p-8 text-white"
+                transition={{ delay: 0.3, duration: 0.5, ease: EASE }}
+                className="xd-glass-dark self-end rounded-xl p-7 text-white"
               >
-                <p className="font-mono text-xs uppercase tracking-[0.2em] text-white/60">Made in India · Since 2015</p>
-                <p className="mt-4 font-display text-2xl font-semibold leading-snug">Quality Jo Pehchaan Ban Jaaye.</p>
-                <p className="mt-3 text-sm leading-relaxed text-white/75">
+                <p className="text-[0.7rem] font-medium uppercase tracking-[0.2em] text-white/55">Made in India · Since 2015</p>
+                <p className="mt-4 font-display text-2xl font-semibold leading-snug tracking-[-0.02em]">Quality Jo Pehchaan Ban Jaaye.</p>
+                <p className="mt-3 text-sm leading-relaxed text-white/70">
                   White, chalk, notice, magnetic and ceramic boards, stands, clipboards and school benches.
                 </p>
                 <Link href="/contact#enquiry" onClick={() => setOpen(false)} className="xd-btn mt-6">
-                  Request Enquiry <ArrowUpRight aria-hidden className="size-4" />
+                  Request a Quote <ArrowUpRight aria-hidden className="size-4" />
                 </Link>
               </motion.div>
             </div>

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { DESIGNS, DESIGN_STORAGE_KEY, EXPERIENCE_PATH, type DesignId } from "@/lib/design";
+import { CUSTOM_HOME_PATHS, DESIGNS, DESIGN_STORAGE_KEY, homeFor, type DesignId } from "@/lib/design";
 
 /**
  * Floating "Design A / B / C / D" picker so the client can compare the site variants.
@@ -37,9 +37,10 @@ export function ThemeSwitcher() {
   const choose = (id: DesignId) => {
     setCurrent(id);
     applyDesign(id);
-    // Home pages differ between D and A–C: jump to the matching one.
-    if (id === "d" && pathname === "/") return router.push(EXPERIENCE_PATH);
-    if (id !== "d" && pathname === EXPERIENCE_PATH) return router.push(`/?design=${id}`);
+    // Home pages differ between A–C, D and E: when on a home page, jump to the chosen design's home.
+    const onHome = pathname === "/" || CUSTOM_HOME_PATHS.includes(pathname);
+    const target = homeFor(id);
+    if (onHome && pathname !== target) return router.push(target === "/" ? `/?design=${id}` : target);
     const url = new URL(window.location.href);
     url.searchParams.set("design", id);
     window.history.replaceState(window.history.state, "", url);

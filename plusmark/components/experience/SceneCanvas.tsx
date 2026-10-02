@@ -1,18 +1,20 @@
 "use client";
 
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { PerformanceMonitor } from "@react-three/drei";
+import { PerformanceMonitor, useProgress } from "@react-three/drei";
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import { Lighting } from "@/components/three/Lighting";
 import { ProductModel } from "@/components/three/ProductModel";
 import { ModelErrorBoundary } from "@/components/three/ModelErrorBoundary";
 import { dprForTier, type DeviceTier } from "@/components/three/capabilities";
-import { lerp, smooth, type SceneScroll } from "./scroll";
+import { ANCHORS, lerp, sceneInput, showroomState, smooth, type AnchorName, type SceneScroll, type Slot } from "./scroll";
 
 export interface SceneBoard {
   slug: string;
   model: string;
+  /** part of the board the camera closes in on during this product's detail beat */
+  detail: AnchorName;
 }
 
 interface Pose {
@@ -22,152 +24,301 @@ interface Pose {
   ry: number;
   rx: number;
   s: number;
+  o: number;
 }
 
-/** Hero composition: a loose, floating cluster on the right (centred behind the copy on phones). */
-const HERO: Pose[] = [
-  { x: 1.75, y: 0.1, z: 0, ry: -0.5, rx: 0.04, s: 1 },
-  { x: 3.1, y: -1.05, z: -1.8, ry: -0.75, rx: 0.1, s: 0.9 },
-  { x: 0.55, y: -1.35, z: -2.6, ry: -0.2, rx: -0.06, s: 0.85 },
-  { x: 3.0, y: 1.35, z: -3.0, ry: -0.65, rx: 0.12, s: 0.85 },
-];
-const HERO_NARROW: Pose[] = [
-  { x: 0.25, y: -1.25, z: -0.6, ry: -0.35, rx: 0.08, s: 0.72 },
-  { x: 1.25, y: -2.2, z: -2.4, ry: -0.6, rx: 0.1, s: 0.6 },
-  { x: -1.1, y: -2.3, z: -2.8, ry: 0.35, rx: 0.06, s: 0.6 },
-  { x: 1.0, y: 1.9, z: -3.6, ry: -0.5, rx: 0.12, s: 0.55 },
-];
+/** Per-board runtime info shared between the boards, the camera and the DOM anchor projector. */
+interface BoardInfo {
+  group: THREE.Group | null;
+  size: THREE.Vector3;
+  appear: number;
+  ready: boolean;
+  opacity: number;
+}
 
-const RING_R = 2.5;
-const RING_Z = -2.5;
+const CAM_Z = 7;
+const FOV = 30;
+const VIEW_H = 2 * CAM_Z * Math.tan(THREE.MathUtils.degToRad(FOV / 2));
+/** Lean of the hero board towards a hovered hotspot (frame / corner / surface). */
+const HOTSPOT_LEAN: Record<AnchorName, number> = { frame: 0.06, corner: -0.14, surface: 0.03 };
+const HOTSPOT_ORDER: AnchorName[] = ["frame", "surface", "corner"];
+
+/** Viewport-fraction slot → world position on the z = 0 plane (for the resting camera). */
+function slotToWorld(slot: Slot, aspect: number) {
+  const W = VIEW_H * aspect;
+  return { x: (slot.cx - 0.5) * W, y: (0.5 - slot.cy) * VIEW_H, w: slot.w * W, h: slot.h * VIEW_H };
+}
+
+const tmp = new THREE.Vector3();
+
+function anchorWorld(info: BoardInfo, name: AnchorName, out: THREE.Vector3) {
+  const a = ANCHORS[name];
+  out.set(a[0] * info.size.x, a[1] * info.size.y, a[2] * info.size.z);
+  if (!info.group) return out;
+  info.group.updateMatrixWorld(true);
+  return info.group.localToWorld(out);
+}
+
+/** DOM writes for anchor elements (kept out of the frame loop body). */
+function placeAnchor(el: HTMLElement, x: number, y: number) {
+  el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0)`;
+}
+function showAnchor(el: HTMLElement, o: number) {
+  el.style.opacity = o.toFixed(3);
+  el.style.visibility = o > 0.02 ? "visible" : "hidden";
+  const on = o > 0.55 ? "1" : "0";
+  if (el.dataset.on !== on) el.dataset.on = on;
+}
+
+const makeInfos = (n: number): BoardInfo[] =>
+  Array.from({ length: n }, () => ({ group: null, size: new THREE.Vector3(2, 1.45, 0.08), appear: 0, ready: false, opacity: 0 }));
+
+/** Soft radial texture for the contact shadow under each board (no shadow maps needed). */
+function useShadowTexture() {
+  const tex = useMemo(() => {
+    const c = document.createElement("canvas");
+    c.width = c.height = 128;
+    const g = c.getContext("2d")!;
+    const grad = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+    grad.addColorStop(0, "rgba(27,23,64,0.55)");
+    grad.addColorStop(0.45, "rgba(27,23,64,0.22)");
+    grad.addColorStop(1, "rgba(27,23,64,0)");
+    g.fillStyle = grad;
+    g.fillRect(0, 0, 128, 128);
+    const t = new THREE.CanvasTexture(c);
+    t.colorSpace = THREE.SRGBColorSpace;
+    return t;
+  }, []);
+  useEffect(() => () => tex.dispose(), [tex]);
+  return tex;
+}
 
 function Board({
   board,
   index,
   count,
   scroll,
+  infosRef,
+  shadowTex,
+  onFirstReady,
+  onFail,
 }: {
   board: SceneBoard;
   index: number;
   count: number;
   scroll: React.RefObject<SceneScroll>;
+  infosRef: React.RefObject<BoardInfo[]>;
+  shadowTex: THREE.Texture;
+  onFirstReady: () => void;
+  onFail: () => void;
 }) {
   const group = useRef<THREE.Group>(null);
+  const shadow = useRef<THREE.Mesh>(null);
+  const shadowMat = useRef<THREE.MeshBasicMaterial>(null);
   const pose = useRef<Pose | null>(null);
+  const opacityRef = useRef(0);
+  const aspect = useThree((s) => s.size.width / Math.max(1, s.size.height));
 
   useFrame(({ clock }, dt) => {
     const g = group.current;
     const s = scroll.current;
-    if (!g || !s) return;
+    const info = infosRef.current[index];
+    if (!g || !s || !info) return;
+    info.group = g;
     const t = clock.elapsedTime;
     const idle = s.reduced ? 0 : 1;
-    const h = (s.narrow ? HERO_NARROW : HERO)[index % 4];
+    const step = Math.min(dt, 0.1);
+    if (info.ready) info.appear = Math.min(1, info.appear + step / 0.9);
 
-    // Hero pose, drifting up/around as the hero scrolls away
-    const e = s.heroExit;
-    const hero: Pose = {
-      x: h.x + e * (s.narrow ? 0 : -0.6 + index * 0.3),
-      y: h.y + e * (0.9 + index * 0.25) + Math.sin(t * 0.7 + index * 1.7) * 0.06 * idle,
-      z: h.z + e * 0.6,
-      ry: h.ry + e * (0.9 + index * 0.3) + Math.sin(t * 0.35 + index) * 0.06 * idle,
-      rx: h.rx + Math.sin(t * 0.5 + index * 2) * 0.03 * idle,
-      s: h.s,
-    };
-
-    // Ring pose: boards sit on a turntable ring; scroll turns the ring so each one comes to the front
-    const a = (index / count) * Math.PI * 2 - s.orbit * ((count - 1) / count) * Math.PI * 2;
-    const front = Math.cos(a); // 1 = facing camera at the front of the ring
-    const ring: Pose = {
-      x: Math.sin(a) * RING_R * (s.narrow ? 0.6 : 1) + (s.narrow ? 0 : 1.1),
-      // phones: the copy panel sits at the bottom, so the ring rides higher
-      y: (s.narrow ? 1.05 : -0.15) + Math.sin(t * 0.8 + index) * 0.04 * idle,
-      z: RING_Z + Math.cos(a) * RING_R,
-      ry: a * 0.85,
-      rx: 0.02,
-      s: (s.narrow ? 0.62 : 0.95) * (0.8 + 0.2 * Math.max(0, front)),
-    };
-
+    const st = showroomState(s.orbit, count);
     const w = smooth(0, 1, s.orbitEnter);
-    const target: Pose = {
-      x: lerp(hero.x, ring.x, w),
-      y: lerp(hero.y, ring.y, w),
-      z: lerp(hero.z, ring.z, w),
-      ry: lerp(hero.ry, ring.ry, w),
-      rx: lerp(hero.rx, ring.rx, w),
-      s: lerp(hero.s, ring.s, w),
+    const i = Math.min(count - 1, Math.floor(st.c + 1e-4));
+    // this board's own story beat: 0 = three-quarter overview, 1 = turned to face you
+    const own = index < i ? 1 : index > i ? 0 : smooth(0, 0.3, st.local);
+    const heroS = slotToWorld(s.heroSlot, aspect);
+    const showS = slotToWorld(s.orbitSlot, aspect);
+    const slot = {
+      x: lerp(heroS.x, showS.x, w),
+      y: lerp(heroS.y, showS.y, w),
+      w: lerp(heroS.w, showS.w, w),
+      h: lerp(heroS.h, showS.h, w),
     };
-    // Critically damped follow, so fast scrolling still moves the boards smoothly
-    const k = 1 - Math.exp(-dt * 5);
+    const fit = Math.min(slot.w / info.size.x, slot.h / info.size.y) * 0.98;
+
+    // distance from focus: 0 = hero of the frame, >0 = waiting in depth, <0 = leaving
+    const d = index - st.c;
+    const ad = Math.min(1.4, Math.abs(d));
+    const lean = index === 0 && sceneInput.hotspot >= 0 ? HOTSPOT_LEAN[HOTSPOT_ORDER[sceneInput.hotspot]] ?? 0 : 0;
+    const focusDrag = Math.abs(d) < 0.5 ? sceneInput.dragRY : 0;
+    const target: Pose = {
+      x: slot.x + (d > 0 ? d * 1.9 : d * 1.5),
+      y: slot.y + Math.sin(t * 0.55 + index * 1.3) * 0.03 * idle - ad * 0.1,
+      z: -ad * 3.2,
+      ry:
+        lerp(-0.36, lerp(-0.5, -0.14, own), w) +
+        (d > 0 ? -d * 0.75 : d * 0.6) +
+        Math.sin(t * 0.3 + index) * 0.015 * idle +
+        lean +
+        focusDrag,
+      rx: 0.03 + Math.sin(t * 0.4 + index * 2) * 0.01 * idle,
+      s: fit * (1 - Math.min(1, ad) * 0.16) * (0.94 + 0.06 * info.appear),
+      o: (1 - smooth(0.05, 0.9, ad)) * info.appear,
+    };
+
+    // critically damped follow → no jumps even on fast scrolls
+    const k = 1 - Math.exp(-step * 4.2);
+    const kr = sceneInput.dragging ? 1 - Math.exp(-step * 14) : k;
     const p = (pose.current ??= { ...target });
-    (Object.keys(p) as (keyof Pose)[]).forEach((key) => (p[key] += (target[key] - p[key]) * k));
+    p.x += (target.x - p.x) * k;
+    p.y += (target.y - p.y) * k;
+    p.z += (target.z - p.z) * k;
+    p.ry += (target.ry - p.ry) * kr;
+    p.rx += (target.rx - p.rx) * k;
+    p.s += (target.s - p.s) * k;
+    p.o += (target.o - p.o) * k;
+
+    const pointer = s.reduced ? 0 : 1;
     g.position.set(p.x, p.y, p.z);
-    g.rotation.set(p.rx - s.py * 0.05, p.ry + s.px * 0.12, 0);
-    g.scale.setScalar(p.s);
+    g.rotation.set(p.rx - s.py * 0.035 * pointer, p.ry + s.px * 0.07 * pointer, 0);
+    g.scale.setScalar(Math.max(0.001, p.s));
+    g.visible = p.o > 0.004;
+    opacityRef.current = Math.min(1, p.o);
+    info.opacity = p.o;
+
+    // contact shadow breathes with the float height
+    if (shadow.current && shadowMat.current) {
+      shadow.current.position.set(0, -info.size.y / 2 - 0.12, 0.05);
+      shadow.current.scale.set(info.size.x * 1.25, info.size.x * 0.34, 1);
+      shadowMat.current.opacity = 0.42 * p.o * (0.9 - Math.sin(t * 0.55 + index * 1.3) * 0.08 * idle);
+    }
   });
 
   return (
     <group ref={group}>
-      <ModelErrorBoundary>
+      <ModelErrorBoundary onError={onFail}>
         <Suspense fallback={null}>
-          <ProductModel url={board.model} fitSize={2} envMapIntensity={1.1} />
+          <ProductModel
+            url={board.model}
+            fitSize={2}
+            envMapIntensity={1.05}
+            opacityRef={opacityRef}
+            onSize={(v) => infosRef.current[index]?.size.copy(v)}
+            onReady={() => {
+              const info = infosRef.current[index];
+              if (info) info.ready = true;
+              onFirstReady();
+            }}
+          />
         </Suspense>
       </ModelErrorBoundary>
+      <mesh ref={shadow} rotation-x={-Math.PI / 2} renderOrder={-1}>
+        <planeGeometry args={[1, 1]} />
+        <meshBasicMaterial ref={shadowMat} map={shadowTex} transparent depthWrite={false} opacity={0} toneMapped={false} />
+      </mesh>
     </group>
   );
 }
 
-/** Soft violet / cyan particle field that spins with the scroll. */
-function Particles({ scroll, count }: { scroll: React.RefObject<SceneScroll>; count: number }) {
-  const ref = useRef<THREE.Points>(null);
-  const geometry = useMemo(() => {
-    const g = new THREE.BufferGeometry();
-    const pos = new Float32Array(count * 3);
-    const col = new Float32Array(count * 3);
-    const palette = [new THREE.Color("#6d4aff"), new THREE.Color("#12c2e9"), new THREE.Color("#ff7a45"), new THREE.Color("#a996ff")];
-    // deterministic pseudo-random so renders are stable
-    let seed = 7;
-    const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
-    for (let i = 0; i < count; i++) {
-      pos[i * 3] = (rnd() - 0.5) * 16;
-      pos[i * 3 + 1] = (rnd() - 0.5) * 10;
-      pos[i * 3 + 2] = -rnd() * 10 + 1.5;
-      const c = palette[i % palette.length];
-      col.set([c.r, c.g, c.b], i * 3);
-    }
-    g.setAttribute("position", new THREE.BufferAttribute(pos, 3));
-    g.setAttribute("color", new THREE.BufferAttribute(col, 3));
-    return g;
-  }, [count]);
-  useEffect(() => () => geometry.dispose(), [geometry]);
-  useFrame(({ clock }) => {
-    const p = ref.current;
-    const s = scroll.current;
-    if (!p || !s) return;
-    p.rotation.y = clock.elapsedTime * 0.02 * (s.reduced ? 0 : 1) + (s.heroExit + s.orbit) * 0.6;
-    p.rotation.x = s.py * 0.04;
-    p.position.y = s.heroExit * 0.8;
-  });
-  return (
-    <points ref={ref} geometry={geometry}>
-      <pointsMaterial size={0.045} vertexColors transparent opacity={0.75} sizeAttenuation depthWrite={false} />
-    </points>
-  );
-}
-
-function CameraRig({ scroll }: { scroll: React.RefObject<SceneScroll> }) {
+/**
+ * Camera: resting at z = 7, nudged by the pointer, leaning towards a hovered hotspot and
+ * dollying in on the current product's detail beat so the part lands in the product slot.
+ */
+function CameraRig({ scroll, infosRef, boards }: { scroll: React.RefObject<SceneScroll>; infosRef: React.RefObject<BoardInfo[]>; boards: SceneBoard[] }) {
+  const aspect = useThree((s) => s.size.width / Math.max(1, s.size.height));
+  const a = useMemo(() => new THREE.Vector3(), []);
+  const look = useMemo(() => new THREE.Vector3(), []);
   useFrame(({ camera }, dt) => {
     const s = scroll.current;
     if (!s) return;
-    const k = 1 - Math.exp(-dt * 3);
-    const w = smooth(0, 1, s.orbitEnter);
-    const tx = s.px * 0.25;
-    const ty = 0.1 - s.py * 0.15 + w * 0.35;
-    const tz = (s.narrow ? 8.6 : 7) + w * 0.6;
+    const k = 1 - Math.exp(-Math.min(dt, 0.1) * 3);
+    const pointer = s.reduced ? 0 : 1;
+    const bx = s.px * 0.12 * pointer;
+    const by = -s.py * 0.08 * pointer;
+    let tx = bx;
+    let ty = by;
+    let tz = CAM_Z;
+
+    const st = showroomState(s.orbit, boards.length);
+    const w = smooth(0.6, 1, s.orbitEnter);
+    const list = infosRef.current;
+    const focus = list[st.index];
+    const detail = st.detail * w * (s.narrow ? 0.6 : 1) * (s.reduced ? 0.5 : 1);
+    if (focus?.ready && detail > 0.001) {
+      anchorWorld(focus, boards[st.index].detail, a);
+      const S = slotToWorld(s.orbitSlot, aspect);
+      const z = CAM_Z - 2.4 * detail;
+      const dist = z - a.z;
+      tx = lerp(bx, a.x - S.x * (dist / CAM_Z), detail);
+      ty = lerp(by, a.y - S.y * (dist / CAM_Z), detail);
+      tz = z;
+    } else if (sceneInput.hotspot >= 0 && list[0]?.ready && s.heroExit < 0.3) {
+      // subtle move towards the hovered feature
+      anchorWorld(list[0], HOTSPOT_ORDER[sceneInput.hotspot], a);
+      tx = lerp(bx, a.x * 0.35, 0.3);
+      ty = lerp(by, a.y * 0.35, 0.3);
+      tz = CAM_Z - 0.35;
+    }
     camera.position.x += (tx - camera.position.x) * k;
     camera.position.y += (ty - camera.position.y) * k;
     camera.position.z += (tz - camera.position.z) * k;
-    camera.lookAt(s.narrow ? 0 : w * 0.9, w * -0.2, -1);
+    // look straight ahead (minus the pointer nudge) so the slot mapping stays true
+    look.set(camera.position.x - bx * 0.6, camera.position.y - by * 0.6, 0);
+    camera.lookAt(look);
   });
+  return null;
+}
+
+/** Soft key that trails the camera so highlights slide across the aluminium as you move. */
+function KeyFollow() {
+  const light = useRef<THREE.DirectionalLight>(null);
+  useFrame(({ camera }) => {
+    light.current?.position.set(camera.position.x * 0.8 + 2.5, 3.5 + camera.position.y * 0.5, 6);
+  });
+  return <directionalLight ref={light} intensity={0.35} color="#f6f4ff" />;
+}
+
+/**
+ * Projects 3D anchor points on the boards to screen space and positions the DOM hotspots /
+ * annotations ([data-xd-anchor]) there, so the labels stay glued to the product.
+ */
+function AnchorProjector({ scroll, infosRef, count }: { scroll: React.RefObject<SceneScroll>; infosRef: React.RefObject<BoardInfo[]>; count: number }) {
+  const els = useRef<HTMLElement[]>([]);
+  const size = useThree((s) => s.size);
+  useEffect(() => {
+    els.current = Array.from(document.querySelectorAll<HTMLElement>("[data-xd-anchor]"));
+  }, []);
+  useFrame(({ camera }) => {
+    const s = scroll.current;
+    if (!s || !els.current.length) return;
+    camera.updateMatrixWorld();
+    const st = showroomState(s.orbit, count);
+    const showroomIn = smooth(0.85, 1, s.orbitEnter);
+    for (const el of els.current) {
+      const b = Number(el.dataset.xdBoard ?? 0);
+      const info = infosRef.current[b];
+      const name = el.dataset.xdAnchor as AnchorName;
+      let o = 0;
+      if (info?.ready && ANCHORS[name]) {
+        if (el.dataset.xdKind === "hotspot") o = s.narrow ? 0 : info.opacity * info.appear * (1 - smooth(0.02, 0.18, s.heroExit));
+        else o = s.narrow ? 0 : b === st.index ? st.detail * showroomIn * s.visible : 0;
+      }
+      if (o > 0.01) {
+        anchorWorld(info, name, tmp).project(camera);
+        if (tmp.z > 1) o = 0;
+        const x = ((tmp.x + 1) / 2) * size.width;
+        const y = ((1 - tmp.y) / 2) * size.height;
+        placeAnchor(el, x, y);
+      }
+      showAnchor(el, o);
+    }
+  });
+  return null;
+}
+
+/** Reports GLB download progress to the DOM loader (no React state outside the canvas). */
+function ProgressReporter({ onProgress }: { onProgress: (p: number) => void }) {
+  const { progress } = useProgress();
+  useEffect(() => onProgress(progress), [progress, onProgress]);
   return null;
 }
 
@@ -193,37 +344,60 @@ export default function SceneCanvas({
   tier,
   active,
   onReady,
+  onProgress,
+  onFail,
 }: {
   boards: SceneBoard[];
   scroll: React.RefObject<SceneScroll>;
   tier: Exclude<DeviceTier, "none">;
   active: boolean;
+  /** first product model is on screen */
   onReady: () => void;
+  onProgress: (p: number) => void;
+  /** the hero model failed or WebGL was lost → show product photos instead */
+  onFail: () => void;
 }) {
   const [dpr, setDpr] = useState<[number, number]>(dprForTier(tier));
+  const infosRef = useRef<BoardInfo[]>(makeInfos(boards.length));
+  const shadowTex = useShadowTexture();
   return (
     <Canvas
       aria-hidden
       frameloop="demand"
       dpr={dpr}
-      camera={{ fov: 30, near: 0.1, far: 60, position: [0, 0.1, 7] }}
+      camera={{ fov: FOV, near: 0.1, far: 60, position: [0, 0, CAM_Z] }}
       gl={{ antialias: tier !== "low", alpha: true, powerPreference: "high-performance" }}
       onCreated={({ gl }) => {
         gl.toneMapping = THREE.ACESFilmicToneMapping;
-        gl.toneMappingExposure = 1.15;
-        onReady();
+        gl.toneMappingExposure = 1.1;
+        gl.domElement.addEventListener("webglcontextlost", (e) => {
+          e.preventDefault();
+          onFail();
+        });
       }}
     >
       <PerformanceMonitor onDecline={() => setDpr([1, 1])} onIncline={() => setDpr(dprForTier(tier))} />
       <Driver scroll={scroll} active={active} />
+      <ProgressReporter onProgress={onProgress} />
       <Lighting quality={tier} />
-      <pointLight position={[-4, 2, 3]} intensity={18} color="#8f73ff" distance={14} />
-      <pointLight position={[5, -2, 2]} intensity={14} color="#3fd0f0" distance={14} />
-      <CameraRig scroll={scroll} />
-      <Particles scroll={scroll} count={tier === "high" ? 900 : tier === "mid" ? 500 : 250} />
+      {/* faint blue-violet rim from behind: separation from the white page, no glow */}
+      <directionalLight position={[-3, 2.5, -4]} intensity={0.55} color="#c4bbff" />
+      <KeyFollow />
+      <CameraRig scroll={scroll} infosRef={infosRef} boards={boards} />
       {boards.map((b, i) => (
-        <Board key={b.slug} board={b} index={i} count={boards.length} scroll={scroll} />
+        <Board
+          key={b.slug}
+          board={b}
+          index={i}
+          count={boards.length}
+          scroll={scroll}
+          infosRef={infosRef}
+          shadowTex={shadowTex}
+          onFirstReady={i === 0 ? onReady : () => {}}
+          onFail={i === 0 ? onFail : () => {}}
+        />
       ))}
+      <AnchorProjector scroll={scroll} infosRef={infosRef} count={boards.length} />
     </Canvas>
   );
 }

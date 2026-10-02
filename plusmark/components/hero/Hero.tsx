@@ -6,7 +6,7 @@ import { HeroSpecifications } from "./HeroSpecifications";
 /**
  * Server component. All product copy for the 3D showcase is rendered to HTML here
  * (indexable, usable without JS); the client HeroExperience only orchestrates
- * visibility, scroll progress and the WebGL layer.
+ * visibility, the timed carousel and the WebGL layer.
  */
 export function Hero() {
   const products = featuredProducts;

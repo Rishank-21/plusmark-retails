@@ -9,12 +9,12 @@ import { Lighting } from "@/components/three/Lighting";
 import { ProductModel } from "@/components/three/ProductModel";
 import { ModelErrorBoundary } from "@/components/three/ModelErrorBoundary";
 import { dprForTier, type DeviceTier } from "@/components/three/capabilities";
-import type { HeroState } from "./heroState";
+import { slotOffset, type HeroState } from "./heroState";
 
 interface Hero3DProps {
   products: FeaturedProduct[];
   state: React.RefObject<HeroState>;
-  /** Indices that should currently be mounted (current ±1). */
+  /** Indices that should currently be mounted: the product on show and its neighbour on either side. */
   mounted: number[];
   tier: Exclude<DeviceTier, "none">;
   active: boolean;
@@ -28,11 +28,13 @@ const smooth = (a: number, b: number, x: number) => {
 
 function HeroSlot({
   index,
+  count,
   product,
   state,
   onStatus,
 }: {
   index: number;
+  count: number;
   product: FeaturedProduct;
   state: React.RefObject<HeroState>;
   onStatus: Hero3DProps["onStatus"];
@@ -44,23 +46,26 @@ function HeroSlot({
     const g = group.current;
     const s = state.current;
     if (!g || !s) return;
-    const d = s.e - index; // <0 upcoming, >0 passed
+    // Offset around the loop: <0 waiting on the right (comes next), >0 gone to the left (shown before).
+    const d = slotOffset(s.e, index, count);
     const ad = Math.abs(d);
     g.visible = ad < 1;
     if (!g.visible) return;
     const t = clock.clock.elapsedTime;
     const idle = s.reduced ? 0 : 1;
-    opacity.current = 1 - smooth(0.12, 0.62, ad);
+    // Reduced motion: no swing. The boards cross-fade in place, one out before the next comes in.
+    const swing = s.reduced ? 0 : 1;
+    opacity.current = s.reduced ? 1 - smooth(0.04, 0.46, ad) : 1 - smooth(0.12, 0.62, ad);
     // 3D carousel: outgoing / incoming boards swing along a shallow arc (sideways, back in depth,
     // with a slight tilt), so the change reads as depth rather than a flat slide.
-    const arc = Math.sin(Math.min(ad, 1) * (Math.PI / 2));
-    g.position.x = -d * 1.7;
+    const arc = Math.sin(Math.min(ad, 1) * (Math.PI / 2)) * swing;
+    g.position.x = -d * 1.7 * swing;
     g.position.y = Math.sin(t * 0.8 + index) * 0.025 * idle - arc * 0.16;
     g.position.z = -arc * 1.5;
-    g.rotation.y = product.yaw - d * 0.9 + s.yaw + s.px * 0.12 + Math.sin(t * 0.35) * 0.04 * idle;
+    g.rotation.y = product.yaw - d * 0.9 * swing + s.yaw + s.px * 0.12 + Math.sin(t * 0.35) * 0.04 * idle;
     g.rotation.x = s.pitch - s.py * 0.06 + 0.02 + arc * 0.12;
-    g.rotation.z = -d * 0.05;
-    const sc = 1 - smooth(0, 1, ad) * 0.18;
+    g.rotation.z = -d * 0.05 * swing;
+    const sc = 1 - smooth(0, 1, ad) * 0.18 * swing;
     g.scale.setScalar(sc);
   });
 
@@ -130,7 +135,7 @@ export default function Hero3D({ products, state, mounted, tier, active, onStatu
       <Rig state={state} />
       {products.map((p, i) =>
         p.model && mounted.includes(i) ? (
-          <HeroSlot key={p.slug} index={i} product={p} state={state} onStatus={onStatus} />
+          <HeroSlot key={p.slug} index={i} count={products.length} product={p} state={state} onStatus={onStatus} />
         ) : null,
       )}
       {tier !== "low" && (

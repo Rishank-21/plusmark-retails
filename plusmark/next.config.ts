@@ -16,6 +16,8 @@ const nextConfig: NextConfig = {
     localPatterns: [
       // Product photos carry a content-hash `?v=` cache-buster (see scripts/import-photos.mts).
       { pathname: "/images/products/**" },
+      // A+ banners carry the same kind of `?v=` hash (see data/aplus-versions.ts).
+      { pathname: "/images/aplus/**" },
       { pathname: "/images/**", search: "" },
     ],
   },

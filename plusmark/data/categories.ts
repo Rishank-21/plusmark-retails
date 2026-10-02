@@ -81,12 +81,12 @@ export const categories: Category[] = [
   {
     slug: "board-study-essentials",
     name: "Board & Study Essentials",
-    summary: "Practice boards for handwriting, lockable key hanger boards and a foldable student study table.",
+    summary: "Practice boards for handwriting, lockable key hanger boards and a foldable homework table.",
     intro:
-      "The Board & Study Essentials collection covers the Four Line & Square Line Practice Board for handwriting improvement, the lockable Key Hanger Board and the foldable Student Study Table with a white board writing surface.",
-    seoTitle: "Board & Study Essentials — Practice Boards, Key Hanger Boards & Study Tables",
+      "The Board & Study Essentials collection covers the Four Line & Square Line Practice Board for handwriting improvement, the lockable Key Hanger Board and the foldable Homework Table — a student study table with a white board writing surface.",
+    seoTitle: "Board & Study Essentials — Practice Boards, Key Hanger Boards & Homework Tables",
     seoDescription:
-      "Plusmark Four Line & Square Line Practice Board, lockable Key Hanger Board and foldable Student Study Table with white board writing surface.",
+      "Plusmark Four Line & Square Line Practice Board, lockable Key Hanger Board and foldable Homework Table (student study table) with white board writing surface.",
     coverProduct: "four-line-square-line-practice-board",
   },
   {

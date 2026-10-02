@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Design E hero split layout (copy left, board right). Keep in sync with SPLIT_QUERY in ShowroomStory. */
+@custom-variant xe-split (@media (min-width: 768px) and (min-aspect-ratio: 23/20));
+
 @theme {
   --color-paper: #ffffff;
   --color-mist: #f5f5f2;
@@ -48,6 +51,15 @@
   @keyframes fade {
     from { opacity: 0; }
     to { opacity: 1; }
+  }
+  /* A+ showcase: banner settles in, story segment fills while it is on show */
+  @keyframes aplus-in {
+    from { opacity: 0; transform: scale(1.025); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes aplus-seg {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
   }
 }
 
@@ -103,183 +115,370 @@ html[data-theme="c"] {
   --font-display: var(--font-fraunces), Georgia, serif;
   --card-radius: 0.75rem;
 }
-/* Design D "Hyper 3D": lavender glass, electric violet + cyan + coral. No black: the deep
-   tone is an indigo (#2a1f6e) and dark stages use a violet-indigo gradient. */
-html[data-theme="d"] {
-  --color-paper: #fbfaff;
-  --color-mist: #f3f1ff;
-  --color-fog: #e9e5fc;
-  --color-line: #dad4f6;
-  --color-alu: #bfb6ea;
-  --color-alu-dark: #8b82c2;
-  --color-steel: #5b548a;
-  --color-graphite: #2a1f6e;
-  --color-ink: #231a63;
-  --color-accent: #6d4aff;
-  --color-accent-soft: #efeaff;
-  --color-brand: #5b3df5;
-  --color-brand-deep: #2a1f6e;
-  --color-flame: #ff7a45;
-  --color-flame-soft: #fff0e8;
-  --color-verdant: #0fae9e;
-  --color-verdant-soft: #e0f7f4;
-  --shadow-soft: 0 1px 2px rgb(91 61 245 / 0.06), 0 12px 32px -10px rgb(91 61 245 / 0.18);
-  --shadow-lift: 0 2px 6px rgb(91 61 245 / 0.08), 0 30px 60px -18px rgb(91 61 245 / 0.35);
-  --shadow-glow: 0 0 0 1px rgb(109 74 255 / 0.12), 0 18px 50px -12px rgb(109 74 255 / 0.55);
+/* Design D "Spatial": a premium product showroom. White / soft off-white / faint lavender
+   surfaces, a deep indigo for type and dark stages, and a controlled blue-violet accent used
+   for interaction only. No black, no neon: depth comes from light, hairlines and layering. */
+html:is([data-theme="d"], [data-theme="e"]) {
+  --color-paper: #fcfcfe;
+  --color-mist: #f5f4fb;
+  --color-fog: #ecebf6;
+  --color-line: #e2e0ef;
+  --color-alu: #c4c1da;
+  --color-alu-dark: #8c88a8;
+  --color-steel: #57536f;
+  --color-graphite: #1b1740;
+  --color-ink: #120f30;
+  --color-accent: #4f3fd9;
+  --color-accent-soft: #efedfc;
+  --color-brand: #3f31c4;
+  --color-brand-deep: #1b1740;
+  --color-flame: #e8773f;
+  --color-flame-soft: #fdf1ea;
+  --color-verdant: #13917f;
+  --color-verdant-soft: #e3f4f1;
+  --shadow-soft: 0 1px 2px rgb(27 23 64 / 0.04), 0 10px 28px -14px rgb(27 23 64 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(27 23 64 / 0.04), 0 28px 56px -24px rgb(27 23 64 / 0.22);
+  --shadow-glow: 0 0 0 1px rgb(79 63 217 / 0.1), 0 16px 40px -18px rgb(79 63 217 / 0.35);
   --font-sans: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-unbounded), var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
-  --card-radius: 1.75rem;
+  --font-display: var(--font-display-face), var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  --card-radius: 0.875rem;
+  --xd-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
-html[data-theme="d"] body {
-  background:
-    radial-gradient(60% 40% at 0% 0%, rgb(109 74 255 / 0.08), transparent 70%),
-    radial-gradient(50% 40% at 100% 10%, rgb(18 194 233 / 0.08), transparent 70%),
-    var(--color-paper);
+html:is([data-theme="d"], [data-theme="e"]) body {
+  background: var(--color-paper);
 }
-html[data-theme="d"] h1,
-html[data-theme="d"] h2,
-html[data-theme="d"] h3 {
-  letter-spacing: -0.035em;
+html:is([data-theme="d"], [data-theme="e"]) h1,
+html:is([data-theme="d"], [data-theme="e"]) h2,
+html:is([data-theme="d"], [data-theme="e"]) h3 {
+  letter-spacing: -0.03em;
   font-weight: 600;
 }
-html[data-theme="d"] .studio-bg {
-  background: radial-gradient(120% 80% at 50% 38%, #ffffff 0%, #f1eeff 55%, #e4defc 100%);
+html:is([data-theme="d"], [data-theme="e"]) .studio-bg {
+  background: radial-gradient(120% 80% at 50% 38%, #ffffff 0%, #f6f5fc 60%, #eceaf7 100%);
 }
-html[data-theme="d"] .grid-lines {
+html:is([data-theme="d"], [data-theme="e"]) .grid-lines {
   background-image:
-    linear-gradient(to right, rgb(109 74 255 / 0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(109 74 255 / 0.06) 1px, transparent 1px);
+    linear-gradient(to right, rgb(27 23 64 / 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(27 23 64 / 0.045) 1px, transparent 1px);
 }
-html[data-theme="d"] .text-gradient {
-  background-image: linear-gradient(100deg, #6d4aff 0%, #12c2e9 55%, #ff7a45 100%);
+html:is([data-theme="d"], [data-theme="e"]) .text-gradient {
+  background-image: linear-gradient(100deg, #1b1740 0%, #4f3fd9 70%, #6f63f0 100%);
 }
-html[data-theme="d"] .aurora {
+html:is([data-theme="d"], [data-theme="e"]) .aurora {
   background:
-    radial-gradient(40% 35% at 18% 20%, rgb(109 74 255 / 0.18), transparent 70%),
-    radial-gradient(35% 30% at 85% 15%, rgb(18 194 233 / 0.16), transparent 70%),
-    radial-gradient(45% 40% at 60% 80%, rgb(255 122 69 / 0.12), transparent 70%);
+    radial-gradient(40% 35% at 18% 20%, rgb(79 63 217 / 0.08), transparent 70%),
+    radial-gradient(35% 30% at 85% 15%, rgb(111 99 240 / 0.06), transparent 70%);
 }
-html[data-theme="d"] .card-premium {
-  background: linear-gradient(160deg, rgb(255 255 255 / 0.9), rgb(246 243 255 / 0.75));
-  box-shadow: inset 0 0 0 1px rgb(109 74 255 / 0.12), var(--shadow-soft);
-  backdrop-filter: blur(14px);
+html:is([data-theme="d"], [data-theme="e"]) .card-premium {
+  background: #fff;
+  box-shadow: inset 0 0 0 1px rgb(27 23 64 / 0.07), var(--shadow-soft);
 }
-html[data-theme="d"] .card-premium:hover {
-  transform: translateY(-6px) rotateX(2deg);
-  box-shadow: inset 0 0 0 1px rgb(109 74 255 / 0.25), var(--shadow-lift);
+html:is([data-theme="d"], [data-theme="e"]) .card-premium:hover {
+  transform: translateY(-4px);
+  box-shadow: inset 0 0 0 1px rgb(79 63 217 / 0.2), var(--shadow-lift);
 }
-html[data-theme="d"] .glass {
-  background: rgb(255 255 255 / 0.7);
-  box-shadow: inset 0 0 0 1px rgb(109 74 255 / 0.12), 0 12px 40px -12px rgb(91 61 245 / 0.3);
+html:is([data-theme="d"], [data-theme="e"]) .glass {
+  background: rgb(255 255 255 / 0.78);
+  box-shadow: inset 0 0 0 1px rgb(27 23 64 / 0.07), 0 12px 32px -18px rgb(27 23 64 / 0.2);
 }
-html[data-theme="d"] ::selection {
+html:is([data-theme="d"], [data-theme="e"]) ::selection {
   background: var(--color-accent);
   color: #fff;
 }
+/* Floating WhatsApp button on D/E: no pulse, soft shadow. */
+html:is([data-theme="d"], [data-theme="e"]) .wa-btn {
+  padding: 0.95rem;
+  box-shadow: 0 1px 2px rgb(27 23 64 / 0.08), 0 14px 30px -10px rgb(27 23 64 / 0.4);
+}
+html:is([data-theme="d"], [data-theme="e"]) .wa-btn:hover { transform: translateY(-2px); }
+html:is([data-theme="d"], [data-theme="e"]) .wa-btn svg { width: 2rem; height: 2rem; }
+@media (min-width: 768px) {
+  html:is([data-theme="d"], [data-theme="e"]) .wa-btn { padding: 1.05rem; }
+  html:is([data-theme="d"], [data-theme="e"]) .wa-btn svg { width: 2.25rem; height: 2.25rem; }
+}
+html:is([data-theme="d"], [data-theme="e"]) .wa-ping,
+html:is([data-theme="d"], [data-theme="e"]) .wa-label { display: none; }
 
 /* ---------- Design D home (/experience) building blocks ---------- */
 .xd-stage {
-  /* Deep "night" stage without black: indigo → violet with cyan glow */
+  /* Deep indigo stage: one controlled key glow, no neon */
   background:
-    radial-gradient(60% 55% at 50% 45%, rgb(109 74 255 / 0.55), transparent 70%),
-    radial-gradient(40% 40% at 85% 85%, rgb(18 194 233 / 0.35), transparent 70%),
-    radial-gradient(35% 35% at 10% 90%, rgb(255 122 69 / 0.25), transparent 70%),
-    linear-gradient(160deg, #2a1f6e 0%, #33218a 50%, #1f2a78 100%);
+    radial-gradient(55% 50% at 50% 42%, rgb(103 88 235 / 0.26), transparent 72%),
+    radial-gradient(90% 60% at 50% 110%, rgb(79 63 217 / 0.18), transparent 70%),
+    linear-gradient(180deg, #17133a 0%, #1c1850 50%, #15123a 100%);
 }
+/* Physical information panel: thin border, faint blur, very soft shadow, small radius. */
 .xd-glass {
-  background: linear-gradient(160deg, rgb(255 255 255 / 0.72), rgb(255 255 255 / 0.42));
-  backdrop-filter: blur(18px) saturate(1.5);
-  -webkit-backdrop-filter: blur(18px) saturate(1.5);
-  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.7), 0 20px 50px -20px rgb(91 61 245 / 0.35);
+  background: rgb(255 255 255 / 0.74);
+  backdrop-filter: blur(12px) saturate(1.2);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  box-shadow: inset 0 0 0 1px rgb(27 23 64 / 0.08), 0 1px 2px rgb(27 23 64 / 0.04), 0 18px 40px -26px rgb(27 23 64 / 0.28);
 }
 .xd-glass-dark {
-  background: linear-gradient(160deg, rgb(255 255 255 / 0.14), rgb(255 255 255 / 0.05));
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.18);
+  background: rgb(255 255 255 / 0.06);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.12);
 }
 .xd-grad-text {
-  background: linear-gradient(100deg, #6d4aff 0%, #12c2e9 50%, #ff7a45 100%);
-  background-size: 200% 100%;
+  background: linear-gradient(100deg, #3f31c4 0%, #6f63f0 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  animation: xd-shift 8s ease-in-out infinite alternate;
 }
+.xd-stage .xd-grad-text,
+.xd-on-dark .xd-grad-text {
+  background-image: linear-gradient(100deg, #ffffff 0%, #c9c2ff 100%);
+}
+/* Kept for markup compatibility: now a static hairline instead of a spinning gradient. */
 .xd-grad-border {
   position: relative;
-  isolation: isolate;
-}
-.xd-grad-border::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  padding: 1px;
-  border-radius: inherit;
-  background: conic-gradient(from var(--xd-angle, 0deg), #6d4aff, #12c2e9, #ff7a45, #6d4aff);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  animation: xd-spin 6s linear infinite;
 }
 .xd-blob {
   position: absolute;
   border-radius: 999px;
-  filter: blur(60px);
-  opacity: 0.55;
+  filter: blur(80px);
+  opacity: 0.18;
   pointer-events: none;
-  animation: xd-float 16s ease-in-out infinite;
 }
-.xd-btn {
+.xd-label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-steel);
+}
+.xd-eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
-  height: 3.25rem;
-  padding: 0 1.6rem;
-  border-radius: 999px;
-  font-weight: 600;
-  font-size: 0.92rem;
-  color: #fff;
-  background: linear-gradient(100deg, #6d4aff, #4f7bff 55%, #12c2e9);
-  background-size: 160% 100%;
-  box-shadow: 0 14px 34px -12px rgb(109 74 255 / 0.7), inset 0 1px 0 rgb(255 255 255 / 0.35);
-  transition: background-position 0.6s var(--ease-premium), transform 0.4s var(--ease-premium);
+  gap: 0.65rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-accent);
 }
-.xd-btn:hover { background-position: 100% 0; transform: translateY(-2px); }
+.xd-eyebrow::before {
+  content: "";
+  width: 1.75rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.6;
+}
+.xd-btn,
 .xd-btn-ghost {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.6rem;
-  height: 3.25rem;
-  padding: 0 1.4rem;
-  border-radius: 999px;
-  font-weight: 600;
-  font-size: 0.92rem;
-  color: #2a1f6e;
-  background: rgb(255 255 255 / 0.65);
-  box-shadow: inset 0 0 0 1px rgb(109 74 255 / 0.25);
-  backdrop-filter: blur(10px);
-  transition: background-color 0.3s;
+  height: 3rem;
+  padding: 0 1.35rem;
+  border-radius: 0.625rem;
+  font-weight: 500;
+  font-size: 0.94rem;
+  letter-spacing: -0.005em;
+  transition:
+    background-color 0.25s var(--xd-ease, ease),
+    color 0.25s var(--xd-ease, ease),
+    box-shadow 0.25s var(--xd-ease, ease),
+    transform 0.25s var(--xd-ease, ease);
 }
-.xd-btn-ghost:hover { background: #fff; }
+.xd-btn {
+  color: #fff;
+  background: #1b1740;
+  box-shadow: 0 1px 2px rgb(27 23 64 / 0.2), 0 10px 24px -14px rgb(27 23 64 / 0.6), inset 0 1px 0 rgb(255 255 255 / 0.08);
+}
+.xd-btn:hover { background: #2a2380; transform: scale(1.02); }
+.xd-btn:active { transform: scale(0.99); }
+.xd-btn-ghost {
+  color: var(--color-graphite, #1b1740);
+  background: rgb(255 255 255 / 0.6);
+  box-shadow: inset 0 0 0 1px rgb(27 23 64 / 0.14);
+}
+.xd-btn-ghost:hover { background: #fff; box-shadow: inset 0 0 0 1px rgb(79 63 217 / 0.45); }
+.xd-stage .xd-btn,
+.xd-on-dark .xd-btn { color: #1b1740; background: #fff; }
+.xd-stage .xd-btn:hover,
+.xd-on-dark .xd-btn:hover { background: #eeebff; }
+.xd-stage .xd-btn-ghost,
+.xd-on-dark .xd-btn-ghost { color: #fff; background: rgb(255 255 255 / 0.04); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.22); }
+.xd-stage .xd-btn-ghost:hover,
+.xd-on-dark .xd-btn-ghost:hover { background: rgb(255 255 255 / 0.1); }
+/* Arrow micro-interaction (3-4px) for buttons and links */
+.xd-btn svg,
+.xd-btn-ghost svg,
+.xd-link svg { transition: transform 0.25s var(--xd-ease, ease); }
+.xd-btn:hover svg,
+.xd-btn-ghost:hover svg,
+.xd-link:hover svg,
+.xd-link:focus-visible svg { transform: translate3d(3px, -3px, 0); }
+.xd-btn:hover .xd-down,
+.xd-btn-ghost:hover .xd-down { transform: translate3d(0, 3px, 0); }
+.xd-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 500;
+  color: var(--color-graphite);
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.35s var(--xd-ease, ease), color 0.2s;
+}
+.xd-link:hover { background-size: 100% 1px; color: var(--color-accent); }
 .xd-noscroll-bar::-webkit-scrollbar { display: none; }
-@property --xd-angle {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
+/* E hero scroll cue: the dot slides down the mouse outline and fades */
+@keyframes xe-scroll-dot {
+  0% { transform: translateY(0); opacity: 0; }
+  20% { opacity: 1; }
+  80% { transform: translateY(12px); opacity: 0; }
+  100% { transform: translateY(12px); opacity: 0; }
 }
-@keyframes xd-spin { to { --xd-angle: 360deg; } }
-@keyframes xd-shift { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
-@keyframes xd-float {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-  33% { transform: translate3d(6%, -8%, 0) scale(1.12); }
-  66% { transform: translate3d(-5%, 6%, 0) scale(0.94); }
+.xe-scroll-dot { animation: xe-scroll-dot 1.8s var(--xd-ease, ease) infinite; }
+
+/* Hero: TEXT | PRODUCT | INFO on desktop; headline → product → CTA → info on phones */
+.xd-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "head" "stage" "body" "info";
+  column-gap: clamp(1.5rem, 3vw, 3rem);
 }
-/* Image stand-ins for the WebGL scene: only shown when 3D is off (no WebGL / low-end / ?no3d). */
-.xd-fallback { display: none !important; }
 @media (min-width: 768px) {
-  html[data-xd3d="off"] .xd-fallback { display: flex !important; }
+  .xd-hero-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas: "head stage" "body stage" "info stage";
+    align-content: center;
+  }
+}
+@media (min-width: 1024px) {
+  .xd-hero-grid {
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.18fr) minmax(0, 15rem);
+    grid-template-areas: "head stage info" "body stage info";
+  }
+}
+
+/* Spatial backdrop (sits beneath the WebGL layer) */
+.xd-backdrop-grid {
+  background-image:
+    linear-gradient(to right, rgb(27 23 64 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(27 23 64 / 0.05) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(60% 55% at var(--xd-hx, 55%) var(--xd-hy, 50%), #000 0%, transparent 75%);
+  -webkit-mask-image: radial-gradient(60% 55% at var(--xd-hx, 55%) var(--xd-hy, 50%), #000 0%, transparent 75%);
+}
+.xd-backdrop-type {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 0.85;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+  color: rgb(27 23 64 / 0.028);
+  user-select: none;
+}
+
+/* Hotspots + annotations positioned from 3D (SceneCanvas writes transform/opacity). */
+.xd-anchor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 20;
+  opacity: 0;
+  visibility: hidden;
+  will-change: transform, opacity;
+}
+.xd-hotspot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  translate: -50% -50%;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  height: 1.9rem;
+  padding: 0 0.7rem 0 0.4rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  color: #1b1740;
+  background: rgb(255 255 255 / 0.86);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: inset 0 0 0 1px rgb(27 23 64 / 0.1), 0 8px 20px -12px rgb(27 23 64 / 0.4);
+  transition: transform 0.25s var(--xd-ease, ease), box-shadow 0.25s, background-color 0.25s;
+}
+.xd-hotspot-dot {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 999px;
+  color: #fff;
+  background: #4f3fd9;
+  font-size: 0.8rem;
+  line-height: 1;
+}
+.xd-hotspot:hover,
+.xd-hotspot:focus-visible,
+.xd-hotspot[aria-pressed="true"] {
+  transform: scale(1.06);
+  box-shadow: inset 0 0 0 1px rgb(79 63 217 / 0.5), 0 10px 24px -12px rgb(79 63 217 / 0.6);
+}
+.xd-annot-line,
+.xd-annot-halo {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 260;
+  stroke-dashoffset: 260;
+  transition: stroke-dashoffset 0.7s var(--xd-ease, ease);
+}
+.xd-annot-line {
+  stroke: #4f3fd9;
+  stroke-width: 1.5;
+}
+/* white halo under the leader line so it stays visible on dark, green and blue boards */
+.xd-annot-halo {
+  stroke: rgb(255 255 255 / 0.9);
+  stroke-width: 4;
+}
+/* Solid light card: the annotation often sits over the board itself (chalk green, notice
+   navy, etc.), so the text needs its own background to stay readable. */
+.xd-annot-card {
+  padding: 0.8rem 0.95rem;
+  border-radius: 0.75rem;
+  background: rgb(255 255 255 / 0.95);
+  backdrop-filter: blur(10px) saturate(1.2);
+  -webkit-backdrop-filter: blur(10px) saturate(1.2);
+  box-shadow: inset 0 0 0 1px rgb(27 23 64 / 0.08), 0 16px 36px -18px rgb(27 23 64 / 0.45);
+  opacity: 0;
+  transform: translate3d(0, 6px, 0);
+  transition: opacity 0.45s var(--xd-ease, ease) 0.25s, transform 0.45s var(--xd-ease, ease) 0.25s;
+}
+.xd-anchor[data-on="1"] .xd-annot-line,
+.xd-anchor[data-on="1"] .xd-annot-halo { stroke-dashoffset: 0; }
+.xd-anchor[data-on="1"] .xd-annot-card { opacity: 1; transform: none; }
+
+/* 3D state: html[data-xd3d] = loading | on | off (set by ExperienceScene).
+   Posters (real product photos) are only the fallback for when 3D is off (no WebGL / low-end /
+   a model fails). They stay hidden while the 3D is starting or loading, so switching designs
+   never flashes a 2D photo before the 3D board; the loader covers the loading moment. */
+.xd-poster { opacity: 0; transform: scale(0.97); pointer-events: none; transition: opacity 0.8s var(--xd-ease, ease), transform 0.8s var(--xd-ease, ease); }
+html[data-xd3d="off"] .xd-poster { opacity: 1; transform: none; pointer-events: auto; }
+.xd-loader { opacity: 0; visibility: hidden; transition: opacity 0.5s, visibility 0.5s; }
+html[data-xd3d="loading"] .xd-loader { opacity: 1; visibility: visible; }
+.xd-3d-only { display: none; }
+html[data-xd3d="on"] .xd-3d-only { display: revert; }
+/* Legacy image stand-ins: only shown when 3D is off (no WebGL / low-end / ?no3d). */
+.xd-fallback { display: none !important; }
+html[data-xd3d="off"] .xd-fallback { display: flex !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .xd-annot-line,
+  .xd-annot-halo { stroke-dashoffset: 0; }
 }
 
 html[data-theme="b"] body { background: var(--color-paper); }
@@ -539,12 +738,18 @@ html[data-theme="c"] ::selection {
   .marquee:hover .marquee-track {
     animation-play-state: paused;
   }
+  /* Trusted-by logo strip (LogoMarquee): waits until it scrolls into view, and stops when paused.
+     Without JavaScript it simply runs. */
+  .js [data-marquee="held"] .marquee-track,
+  [data-marquee="paused"] .marquee-track {
+    animation-play-state: paused;
+  }
   .mask-fade-x {
     mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
   }
 }
 
-/* Scroll reveal — only hidden when JS is running */
+/* Scroll reveal - only hidden when JS is running */
 .js [data-reveal] {
   opacity: 0;
   transform: translate3d(0, 22px, 0);

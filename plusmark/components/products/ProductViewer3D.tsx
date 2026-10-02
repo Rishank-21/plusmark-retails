@@ -23,6 +23,10 @@ interface ProductViewer3DProps {
 
 export type ViewerHandle = { reset: () => void };
 
+/** Hover magnifier: lens size (px) and magnification. */
+const LENS = 200;
+const ZOOM = 2.5;
+
 /**
  * Product page viewer: server-visible image first (LCP-friendly), then the GLB
  * viewer is lazily mounted when in view and WebGL is available.
@@ -76,19 +80,53 @@ export function ProductViewer3D({ model, fallback, alt, name, representative, pr
 
   const use3D = view === "3d" && !!model && tier !== "pending" && tier !== "none" && near && status !== "error";
   const ready = use3D && status === "ready";
+  /** 3D view expected (or loading): keep the photo hidden so it never flashes before the model.
+   *  The photo only shows as a fallback (no WebGL / model error) or when a photo is picked. */
+  const want3D = view === "3d" && !!model && tier !== "none" && status !== "error";
+
+  /* Hover magnifier: only while a photo (not the 3D model) is on the stage, mouse pointers only. */
+  const [loaded, setLoaded] = useState<{ src: string; w: number; h: number } | null>(null);
+  const [lens, setLens] = useState<{ x: number; y: number; bx: number; by: number; bw: number; bh: number } | null>(null);
+  const natural = loaded?.src === photo ? loaded : null;
+  const zoomable = !want3D && !!natural && !fullscreen;
+  useEffect(() => {
+    setLens(null);
+  }, [photo, zoomable]);
+
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!zoomable || e.pointerType !== "mouse" || !natural || !wrap.current) return;
+    const r = wrap.current.getBoundingClientRect();
+    // Rendered image rect inside the stage (object-contain).
+    const scale = Math.min(r.width / natural.w, r.height / natural.h);
+    const iw = natural.w * scale, ih = natural.h * scale;
+    const ix = (r.width - iw) / 2, iy = (r.height - ih) / 2;
+    const x = e.clientX - r.left, y = e.clientY - r.top;
+    const px = x - ix, py = y - iy;
+    if (px < 0 || py < 0 || px > iw || py > ih) return setLens(null);
+    setLens({ x, y, bx: -(px * ZOOM - LENS / 2), by: -(py * ZOOM - LENS / 2), bw: iw * ZOOM, bh: ih * ZOOM });
+  };
 
   return (
     <div className="min-w-0">
     <div
       ref={wrap}
+      onPointerMove={onPointerMove}
+      onPointerLeave={() => setLens(null)}
       className={cn(
-        "group relative aspect-[4/3] w-full overflow-hidden studio-bg",
+        // Plain white stage: product photos and the 3D board show their true colours (a tinted
+        // studio gradient made white boards read beige).
+        "group relative aspect-[4/3] w-full overflow-hidden bg-white ring-1 ring-fog",
         fullscreen && "!aspect-auto h-full",
+        zoomable && "cursor-crosshair",
       )}
     >
-      <div aria-hidden className="grid-lines pointer-events-none absolute inset-0 [mask-image:radial-gradient(70%_60%_at_50%_45%,black,transparent)]" />
       <Image
+        onLoad={(e) => {
+          const img = e.currentTarget;
+          if (img.naturalWidth && img.naturalHeight) setLoaded({ src: photo, w: img.naturalWidth, h: img.naturalHeight });
+        }}
         key={photo}
+        data-3d-photo
         src={photo}
         alt={
           view === "size" && size
@@ -99,9 +137,25 @@ export function ProductViewer3D({ model, fallback, alt, name, representative, pr
         }
         fill
         priority={priority && photo === fallback}
-        sizes="(min-width: 1024px) 55vw, 100vw"
-        className={cn("object-contain mix-blend-multiply transition-opacity duration-700", ready && "opacity-0")}
+        sizes="(min-width: 1024px) 58vw, 100vw"
+        className={cn("object-contain mix-blend-multiply transition-opacity duration-700", want3D && "opacity-0")}
       />
+
+      {lens && (
+        <div
+          aria-hidden
+          className="pointer-events-none absolute z-10 overflow-hidden rounded-md bg-white bg-no-repeat shadow-xl ring-2 ring-white/90"
+          style={{
+            width: LENS,
+            height: LENS,
+            left: lens.x - LENS / 2,
+            top: lens.y - LENS / 2,
+            backgroundImage: `url("${photo}")`,
+            backgroundSize: `${lens.bw}px ${lens.bh}px`,
+            backgroundPosition: `${lens.bx}px ${lens.by}px`,
+          }}
+        />
+      )}
 
       {use3D && (
         <div className={cn("absolute inset-0 transition-opacity duration-700", ready ? "opacity-100" : "opacity-0")}>
@@ -117,7 +171,7 @@ export function ProductViewer3D({ model, fallback, alt, name, representative, pr
         </div>
       )}
 
-      {use3D && status === "idle" && (
+      {want3D && status === "idle" && (
         <div className="pointer-events-none absolute inset-x-0 bottom-5 flex justify-center" aria-live="polite">
           <span className="flex items-center gap-3 bg-white/85 px-4 py-2 font-mono text-[0.65rem] uppercase tracking-[0.14em] text-steel ring-1 ring-line">
             <span className="font-display font-bold tracking-[0.2em] text-graphite">PLUSMARK</span>
@@ -144,7 +198,7 @@ export function ProductViewer3D({ model, fallback, alt, name, representative, pr
         </div>
       )}
 
-      <div className="pointer-events-none absolute bottom-3 left-3 flex items-center gap-2 font-mono text-[0.6rem] uppercase tracking-[0.14em] text-steel">
+      <div className="pointer-events-none absolute bottom-3 left-3 flex items-center gap-2 font-mono text-[0.66rem] uppercase tracking-[0.14em] text-steel">
         {ready ? (
           <>
             <Box aria-hidden className="size-3.5" />
