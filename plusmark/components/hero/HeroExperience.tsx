@@ -19,10 +19,10 @@ const Hero3D = dynamic(() => import("./Hero3D"), { ssr: false });
  * hero moves on to the next one (ms). Counting from the settle (not the start of the transition)
  * keeps the rhythm even on slow devices, where a transition can take longer than planned.
  */
-const AUTO_ADVANCE_MS = 5000;
+const AUTO_ADVANCE_MS = 3000;
 /** Board-to-board transition (s): the timed hand-over, and a step from the arrows or dots. */
-const AUTO_DURATION = 1.6;
-const STEP_DURATION = 1.15;
+const AUTO_DURATION = 0.85;
+const STEP_DURATION = 0.6;
 
 const smooth = (a: number, b: number, x: number) => {
   const t = Math.min(1, Math.max(0, (x - a) / (b - a)));

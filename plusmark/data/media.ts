@@ -1,7 +1,6 @@
 /**
  * Product videos from the Plusmark Drive: re-encoded from the 1920×1080 masters to 1080p H.264
- * (CRF 21, ≤4.5 Mbps, faststart) in Cloudinary, with a full-HD poster frame alongside. Only products that have their own footage get a product video; every wall
- * board also shows the installation guide.
+ * in Cloudinary, with automatically generated Cloudinary video poster frames.
  */
 export interface Video {
   src: string;
@@ -33,12 +32,19 @@ const cloudinaryVideoUrls: Record<string, string> = {
     "https://res.cloudinary.com/drt0rpkn2/video/upload/v1791016507/plusmark/videos/retail-board-installation.mp4",
 };
 
-const v = (file: string, title: string, caption: string): Video => ({
-  src: cloudinaryVideoUrls[file],
-  poster: `/videos/${file}.jpg`,
-  title,
-  caption,
-});
+const v = (file: string, title: string, caption: string): Video => {
+  const src = cloudinaryVideoUrls[file] || "";
+  // Generates Cloudinary video poster frame directly from video URL
+  const poster = src
+    ? src.replace("/video/upload/", "/video/upload/so_1,f_jpg,q_auto/").replace(/\.mp4$/i, ".jpg")
+    : "";
+  return {
+    src,
+    poster,
+    title,
+    caption,
+  };
+};
 
 export const videos = {
   ecoWhite: v("eco-premium-white-board", "Eco Premium White Board", "High Gloss HPL writing surface, aluminium anodised frame and ABS dual-tone corners."),

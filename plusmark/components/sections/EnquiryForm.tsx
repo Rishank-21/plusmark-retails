@@ -78,6 +78,8 @@ export function EnquiryForm({ products, whatsapp }: { products: Option[]; whatsa
     if (errors[k]) setErrors((er) => ({ ...er, [k]: undefined }));
   };
 
+  const [lastSubmitted, setLastSubmitted] = useState<Values | null>(null);
+
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const errs = validate(values);
@@ -102,6 +104,7 @@ export function EnquiryForm({ products, whatsapp }: { products: Option[]; whatsa
         setStatus("error");
         return;
       }
+      setLastSubmitted(values);
       setStatus("sent");
       setValues(initial);
     } catch {
@@ -109,6 +112,12 @@ export function EnquiryForm({ products, whatsapp }: { products: Option[]; whatsa
       setStatus("error");
     }
   };
+
+  const submittedWaHref = whatsapp && lastSubmitted
+    ? `https://wa.me/${whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(
+        `Hello Plusmark, I have submitted an enquiry on your website.\n*Name:* ${lastSubmitted.name}\n*Phone:* ${lastSubmitted.phone}\n*Product:* ${lastSubmitted.product || "General"}\n${lastSubmitted.size ? `*Size:* ${lastSubmitted.size}\n` : ""}${lastSubmitted.quantity ? `*Qty:* ${lastSubmitted.quantity}\n` : ""}${lastSubmitted.requirement ? `*Requirement:* ${lastSubmitted.requirement}\n` : ""}${lastSubmitted.message ? `*Message:* ${lastSubmitted.message}` : ""}`,
+      )}`
+    : null;
 
   const waHref = whatsapp
     ? `https://wa.me/${whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(
@@ -142,7 +151,22 @@ export function EnquiryForm({ products, whatsapp }: { products: Option[]; whatsa
             <CheckCircle2 aria-hidden className="size-8 text-verdant" />
             <h3 className="mt-6 font-display text-3xl font-semibold">Thank you — enquiry received.</h3>
             <p className="mt-3 max-w-md text-steel">The Plusmark team will get back to you shortly with details for your requirement.</p>
-            <button type="button" onClick={() => setStatus("idle")} className="mt-8 text-sm font-semibold text-accent hover:text-graphite">
+            
+            {submittedWaHref && (
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+                <a
+                  href={submittedWaHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-11 items-center justify-center gap-2 bg-[#25D366] px-5 text-sm font-semibold text-white shadow-sm transition-opacity hover:opacity-90"
+                >
+                  <MessageCircle aria-hidden className="size-4" />
+                  Chat on WhatsApp with Admin
+                </a>
+              </div>
+            )}
+
+            <button type="button" onClick={() => { setStatus("idle"); setLastSubmitted(null); }} className="mt-8 text-sm font-semibold text-accent hover:text-graphite">
               Send another enquiry →
             </button>
           </motion.div>

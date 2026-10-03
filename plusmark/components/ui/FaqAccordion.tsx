@@ -1,42 +1,111 @@
+"use client";
+
+import { useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Plus } from "lucide-react";
 import type { FaqItem } from "@/data/faq";
 import { cn } from "@/lib/utils";
 
+const EASE = [0.22, 1, 0.36, 1] as const;
+
 interface FaqAccordionProps {
   items: ReadonlyArray<FaqItem>;
-  /** Open the first item by default. */
+  /** Index of item to open by default, or true to open first, or -1/false for all closed. */
   openFirst?: boolean;
   className?: string;
+  categoryLabel?: string;
 }
 
 /**
- * Accessible accordion built on native <details>/<summary>: keyboard and screen-reader support
- * come for free and the answers stay in the server-rendered HTML (and in FAQPage JSON-LD).
+ * Premium accessible animated FAQ Accordion.
  */
-export function FaqAccordion({ items, openFirst = false, className }: FaqAccordionProps) {
+export function FaqAccordion({ items, openFirst = false, className, categoryLabel }: FaqAccordionProps) {
+  const [openIndex, setOpenIndex] = useState<number | null>(openFirst ? 0 : null);
+  const reduce = !!useReducedMotion();
+
+  const toggle = (i: number) => {
+    setOpenIndex((prev) => (prev === i ? null : i));
+  };
+
   return (
-    <div className={cn("space-y-3", className)}>
-      {items.map((item, i) => (
-        <details
-          key={item.q}
-          open={openFirst && i === 0}
-          className="group card-premium !transform-none overflow-hidden open:shadow-[inset_0_0_0_1px_var(--color-line),var(--shadow-lift)]"
-        >
-          <summary className="flex cursor-pointer list-none items-start justify-between gap-6 px-6 py-5 md:px-7 md:py-6 [&::-webkit-details-marker]:hidden">
-            <span className="font-display text-base font-semibold leading-snug text-graphite md:text-lg">{item.q}</span>
-            <span
-              aria-hidden
-              className="mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-mist text-graphite ring-1 ring-fog transition-[transform,background-color,color] duration-500 ease-[var(--ease-premium)] group-open:rotate-45 group-open:bg-graphite group-open:text-white"
-            >
-              <Plus className="size-4" />
-            </span>
-          </summary>
-          <div className="px-6 pb-6 md:px-7">
-            <div className="hairline mb-5" />
-            <p className="max-w-3xl text-[0.95rem] leading-relaxed text-steel">{item.a}</p>
+    <div className={cn("space-y-3.5", className)}>
+      {items.map((item, i) => {
+        const isOpen = openIndex === i;
+        const qid = `faq-q-${item.q.slice(0, 15).replace(/\W/g, "-")}-${i}`;
+
+        return (
+          <div
+            key={item.q}
+            className={cn(
+              "group overflow-hidden rounded-2xl border bg-white transition-all duration-300",
+              isOpen
+                ? "border-graphite/20 shadow-[0_8px_30px_rgb(27_23_64/0.08)] ring-1 ring-graphite/10"
+                : "border-line/80 hover:border-graphite/30 hover:shadow-[0_4px_20px_rgb(27_23_64/0.04)]",
+            )}
+          >
+            <h3>
+              <button
+                type="button"
+                id={qid}
+                aria-expanded={isOpen}
+                aria-controls={`${qid}-ans`}
+                onClick={() => toggle(i)}
+                className="flex w-full items-start justify-between gap-4 p-5 text-left transition-colors sm:p-6"
+              >
+                <span className="flex items-start gap-3 sm:gap-4">
+                  <span
+                    className={cn(
+                      "mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full font-mono text-[0.68rem] font-medium transition-colors",
+                      isOpen ? "bg-graphite text-white" : "bg-mist text-alu-dark group-hover:text-graphite",
+                    )}
+                  >
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="flex flex-col gap-1">
+                    {categoryLabel && (
+                      <span className="font-mono text-[0.62rem] uppercase tracking-wider text-accent font-semibold">
+                        {categoryLabel}
+                      </span>
+                    )}
+                    <span className="font-display text-base font-semibold leading-snug text-graphite sm:text-lg">
+                      {item.q}
+                    </span>
+                  </span>
+                </span>
+                <span
+                  aria-hidden
+                  className={cn(
+                    "mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-full border transition-all duration-300",
+                    isOpen
+                      ? "rotate-45 border-graphite bg-graphite text-white shadow-sm"
+                      : "border-line bg-mist text-graphite group-hover:border-graphite/40 group-hover:bg-white",
+                  )}
+                >
+                  <Plus className="size-4" />
+                </span>
+              </button>
+            </h3>
+
+            <AnimatePresence initial={false}>
+              {isOpen && (
+                <motion.div
+                  id={`${qid}-ans`}
+                  role="region"
+                  aria-labelledby={qid}
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: reduce ? 0 : 0.35, ease: EASE }}
+                >
+                  <div className="border-t border-line/60 px-5 pb-6 pt-4 sm:px-6 sm:pl-16">
+                    <p className="text-[0.95rem] leading-relaxed text-steel">{item.a}</p>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
-        </details>
-      ))}
+        );
+      })}
     </div>
   );
 }

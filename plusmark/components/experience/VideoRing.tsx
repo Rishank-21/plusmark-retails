@@ -69,9 +69,16 @@ export function VideoRing({ videos }: { videos: Video[] }) {
                   onClick={() => openVideo(v)}
                   className="group block w-[220px] overflow-hidden rounded-xl bg-white text-left shadow-[0_1px_2px_rgb(27_23_64/0.06),0_30px_60px_-30px_rgb(27_23_64/0.5)] ring-1 ring-[rgb(27_23_64/0.08)] transition-transform duration-300 hover:-translate-y-1 sm:w-[320px]"
                 >
-                  <span className="relative block aspect-video overflow-hidden">
+                  <span className="relative block aspect-video overflow-hidden bg-slate-900">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={v.poster} alt="" loading="lazy" className="size-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" />
+                    {v.poster && (
+                      <img
+                        src={v.poster}
+                        alt={v.title}
+                        loading="lazy"
+                        className="size-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                      />
+                    )}
                     <span className="absolute inset-0 flex items-center justify-center bg-gradient-to-t from-[#15123a]/55 via-transparent to-transparent">
                       <span className="flex size-11 items-center justify-center rounded-full bg-white/90 text-graphite shadow-[0_8px_20px_-8px_rgb(27_23_64/0.5)] backdrop-blur transition-transform duration-300 group-hover:scale-105">
                         <Play aria-hidden className="size-5 translate-x-0.5 fill-current" />
