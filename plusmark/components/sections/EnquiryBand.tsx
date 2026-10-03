@@ -36,7 +36,10 @@ export function EnquiryBand({
   const label = "font-mono text-[0.62rem] uppercase tracking-[0.16em] text-alu-dark";
 
   return (
-    <section aria-labelledby="enquiry-band-title" className="border-t border-fog bg-paper">
+    <section
+      aria-labelledby="enquiry-band-title"
+      className="border-t border-fog bg-paper"
+    >
       <div className="container-x grid gap-12 py-16 md:py-24 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-20">
         <Reveal className="flex flex-col">
           <p className="eyebrow flex items-center gap-3">
@@ -49,17 +52,13 @@ export function EnquiryBand({
           >
             {title}
           </h2>
-          <p className="mt-5 max-w-lg leading-relaxed text-steel md:text-[1.0625rem]">{text}</p>
+          <p className="mt-5 max-w-lg leading-relaxed text-steel md:text-[1.0625rem]">
+            {text}
+          </p>
 
           <div className="mt-9 flex flex-wrap items-center gap-x-7 gap-y-4">
             <div className="flex flex-wrap gap-3">
               <ButtonLink href={href}>Request Enquiry</ButtonLink>
-              {/* Product pages only: a refundable demo kit paid online (app/products/[slug]/demo-kit). */}
-              {product && (
-                <ButtonLink href={`/products/${product}/demo-kit`} variant="secondary">
-                  Get a Demo Kit
-                </ButtonLink>
-              )}
             </div>
             <a
               href={whatsappHref(message)}
@@ -72,18 +71,15 @@ export function EnquiryBand({
               <span className="sr-only">(opens in a new tab)</span>
             </a>
           </div>
-          {product && (
-            <p className="mt-4 text-sm text-steel">
-              Demo kit: ₹600 deposit, refunded once your order is confirmed.
-            </p>
-          )}
-
           <dl className="mt-12 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-fog pt-6 text-sm sm:grid-cols-3 lg:mt-auto lg:pt-7">
             {contactChannels.phone && (
               <div>
                 <dt className={label}>Call</dt>
                 <dd className="mt-1.5 font-medium text-graphite">
-                  <a href={`tel:${contactChannels.phone}`} className="link-underline">
+                  <a
+                    href={`tel:${contactChannels.phone}`}
+                    className="link-underline"
+                  >
                     {contactChannels.phoneLabel}
                   </a>
                 </dd>
@@ -93,7 +89,10 @@ export function EnquiryBand({
               <div className="min-w-0">
                 <dt className={label}>Email</dt>
                 <dd className="mt-1.5 truncate font-medium text-graphite">
-                  <a href={`mailto:${contactChannels.email}`} className="link-underline">
+                  <a
+                    href={`mailto:${contactChannels.email}`}
+                    className="link-underline"
+                  >
                     {contactChannels.email}
                   </a>
                 </dd>
@@ -109,7 +108,9 @@ export function EnquiryBand({
             </div>
             <div>
               <dt className={label}>Supply</dt>
-              <dd className="mt-1.5 font-medium text-graphite">Pan India · GEM approved</dd>
+              <dd className="mt-1.5 font-medium text-graphite">
+                Pan India · GEM approved
+              </dd>
             </div>
           </dl>
         </Reveal>
@@ -119,13 +120,21 @@ export function EnquiryBand({
             <h3 className="eyebrow">What to include</h3>
             <ol className="mt-3 divide-y divide-line">
               {checklist.map((c, i) => (
-                <li key={c.label} className="grid grid-cols-[2.25rem_minmax(0,1fr)] gap-x-3 py-4">
-                  <span aria-hidden className="pt-[0.2rem] font-mono text-[0.68rem] text-alu-dark">
+                <li
+                  key={c.label}
+                  className="grid grid-cols-[2.25rem_minmax(0,1fr)] gap-x-3 py-4"
+                >
+                  <span
+                    aria-hidden
+                    className="pt-[0.2rem] font-mono text-[0.68rem] text-alu-dark"
+                  >
                     {pad2(i + 1)}
                   </span>
                   <div>
                     <p className="font-medium text-graphite">{c.label}</p>
-                    <p className="mt-0.5 text-sm leading-relaxed text-steel">{c.hint}</p>
+                    <p className="mt-0.5 text-sm leading-relaxed text-steel">
+                      {c.hint}
+                    </p>
                   </div>
                 </li>
               ))}

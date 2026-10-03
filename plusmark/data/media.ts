@@ -1,6 +1,6 @@
 /**
  * Product videos from the Plusmark Drive: re-encoded from the 1920×1080 masters to 1080p H.264
- * (CRF 21, ≤4.5 Mbps, faststart) in /public/videos, with a full-HD poster frame alongside. Only products that have their own footage get a product video; every wall
+ * (CRF 21, ≤4.5 Mbps, faststart) in Cloudinary, with a full-HD poster frame alongside. Only products that have their own footage get a product video; every wall
  * board also shows the installation guide.
  */
 export interface Video {
@@ -10,8 +10,31 @@ export interface Video {
   caption: string;
 }
 
+const cloudinaryVideoUrls: Record<string, string> = {
+  "board-installation":
+    "https://res.cloudinary.com/drt0rpkn2/video/upload/v1791015552/plusmark/videos/board-installation.mp4",
+  "eco-premium-both-side":
+    "https://res.cloudinary.com/drt0rpkn2/video/upload/v1791015572/plusmark/videos/eco-premium-both-side.mp4",
+  "eco-premium-chalk-board":
+    "https://res.cloudinary.com/drt0rpkn2/video/upload/v1791015594/plusmark/videos/eco-premium-chalk-board.mp4",
+  "eco-premium-notice-board":
+    "https://res.cloudinary.com/drt0rpkn2/video/upload/v1791015611/plusmark/videos/eco-premium-notice-board.mp4",
+  "eco-premium-white-board":
+    "https://res.cloudinary.com/drt0rpkn2/video/upload/v1791015631/plusmark/videos/eco-premium-white-board.mp4",
+  "metallic-premium-both-side":
+    "https://res.cloudinary.com/drt0rpkn2/video/upload/v1791016288/plusmark/videos/metallic-premium-both-side.mp4",
+  "metallic-premium-chalk-board":
+    "https://res.cloudinary.com/drt0rpkn2/video/upload/v1791016355/plusmark/videos/metallic-premium-chalk-board.mp4",
+  "metallic-premium-notice-board":
+    "https://res.cloudinary.com/drt0rpkn2/video/upload/v1791016412/plusmark/videos/metallic-premium-notice-board.mp4",
+  "metallic-premium-white-board":
+    "https://res.cloudinary.com/drt0rpkn2/video/upload/v1791016477/plusmark/videos/metallic-premium-white-board.mp4",
+  "retail-board-installation":
+    "https://res.cloudinary.com/drt0rpkn2/video/upload/v1791016507/plusmark/videos/retail-board-installation.mp4",
+};
+
 const v = (file: string, title: string, caption: string): Video => ({
-  src: `/videos/${file}.mp4`,
+  src: cloudinaryVideoUrls[file],
   poster: `/videos/${file}.jpg`,
   title,
   caption,

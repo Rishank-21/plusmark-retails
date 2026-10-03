@@ -64,57 +64,74 @@ export function Navbar() {
       )}
     >
       <div className="mx-auto w-full max-w-[104rem] px-2 sm:px-4 md:px-6">
-      <nav
-        aria-label="Primary"
-        className={cn(
-          "flex h-[68px] items-center justify-between gap-4 rounded-full px-4 transition-[background-color,box-shadow,backdrop-filter] duration-500 sm:px-6 md:h-[76px] md:px-8",
-          // Always a light glass bar so the logo keeps its contrast over the hero, too.
-          overlay && !open ? "bg-white/55 shadow-[inset_0_0_0_1px_rgb(255_255_255/0.7)] backdrop-blur-md" : "glass",
-        )}
-      >
-        <Link href="/" aria-label="Plusmark Display System — Home" className="shrink-0">
-          <Logo />
-        </Link>
-
-        <ul className="hidden items-center gap-0.5 rounded-full p-1 xl:flex">
-          {navLinks.map((l) => (
-            <li key={l.href}>
-              <Link
-                href={l.href}
-                aria-current={isActive(l.href) ? "page" : undefined}
-                className={cn(
-                  "relative block rounded-full px-3 py-2 text-[0.84rem] font-medium transition-colors duration-300",
-                  isActive(l.href)
-                    ? "bg-graphite text-white shadow-[0_6px_16px_-8px_rgb(15_17_19/0.6)]"
-                    : "text-steel hover:bg-graphite/[0.06] hover:text-graphite",
-                )}
-              >
-                {l.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-
-        <div className="flex items-center gap-2">
+        <nav
+          aria-label="Primary"
+          className={cn(
+            "flex h-[68px] items-center justify-between gap-4 rounded-full px-4 transition-[background-color,box-shadow,backdrop-filter] duration-500 sm:px-6 md:h-[76px] md:px-8",
+            // Always a light glass bar so the logo keeps its contrast over the hero, too.
+            overlay && !open
+              ? "bg-white/55 shadow-[inset_0_0_0_1px_rgb(255_255_255/0.7)] backdrop-blur-md"
+              : "glass",
+          )}
+        >
           <Link
-            href="/contact#enquiry"
-            className="btn-sheen group hidden h-10 items-center gap-2 rounded-full bg-gradient-to-r from-brand to-accent px-5 text-[0.8rem] font-semibold text-white shadow-[var(--shadow-glow)] transition-[filter] hover:brightness-110 sm:inline-flex"
+            href="/"
+            aria-label="Plusmark Display System — Home"
+            className="shrink-0"
           >
-            Request Enquiry
-            <ArrowRight aria-hidden className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+            <Logo />
           </Link>
-          <button
-            type="button"
-            className="inline-flex size-10 items-center justify-center text-graphite xl:hidden"
-            aria-label={open ? "Close menu" : "Open menu"}
-            aria-expanded={open}
-            aria-controls="mobile-menu"
-            onClick={() => setOpen((v) => !v)}
-          >
-            {open ? <X className="size-5" /> : <Menu className="size-5" />}
-          </button>
-        </div>
-      </nav>
+
+          <ul className="hidden items-center gap-0.5 rounded-full p-1 xl:flex">
+            {navLinks.map((l) => (
+              <li key={l.href}>
+                <Link
+                  href={l.href}
+                  aria-current={isActive(l.href) ? "page" : undefined}
+                  className={cn(
+                    "relative block rounded-full px-3 py-2 text-[0.84rem] font-medium transition-colors duration-300",
+                    isActive(l.href)
+                      ? "bg-graphite text-white shadow-[0_6px_16px_-8px_rgb(15_17_19/0.6)]"
+                      : "text-steel hover:bg-graphite/[0.06] hover:text-graphite",
+                  )}
+                >
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          <div className="flex items-center gap-2">
+            <Link
+              href="/contact#enquiry"
+              className="btn-sheen group hidden h-10 items-center gap-2 rounded-full bg-gradient-to-r from-brand to-accent px-5 text-[0.8rem] font-semibold text-white shadow-[var(--shadow-glow)] transition-[filter] hover:brightness-110 sm:inline-flex"
+            >
+              Request Enquiry
+              <ArrowRight
+                aria-hidden
+                className="size-3.5 transition-transform group-hover:translate-x-0.5"
+              />
+            </Link>
+            <a
+              href="https://www.amazon.in/s?k=plusmark+retail&crid=2HJSPM7CNLEYV&sprefix=plusmark%2Caps%2C380&ref=nb_sb_ss_mvt-t11-ranker_1_8"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden h-10 items-center rounded-full bg-graphite px-5 text-[0.8rem] font-semibold text-white transition-colors hover:bg-ink sm:inline-flex"
+            >
+              Buy on Amazon
+            </a>
+            <button
+              type="button"
+              className="inline-flex size-10 items-center justify-center text-graphite xl:hidden"
+              aria-label={open ? "Close menu" : "Open menu"}
+              aria-expanded={open}
+              aria-controls="mobile-menu"
+              onClick={() => setOpen((v) => !v)}
+            >
+              {open ? <X className="size-5" /> : <Menu className="size-5" />}
+            </button>
+          </div>
+        </nav>
       </div>
 
       <AnimatePresence>
@@ -134,7 +151,11 @@ export function Navbar() {
                   key={l.href}
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.04 * i, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{
+                    delay: 0.04 * i,
+                    duration: 0.5,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
                   className="border-b border-fog"
                 >
                   <Link
@@ -142,8 +163,16 @@ export function Navbar() {
                     aria-current={isActive(l.href) ? "page" : undefined}
                     className="flex items-center justify-between py-4 font-display text-2xl font-semibold"
                   >
-                    <span className={isActive(l.href) ? "text-accent" : "text-graphite"}>{l.label}</span>
-                    <span className="font-mono text-xs text-alu-dark">{String(i + 1).padStart(2, "0")}</span>
+                    <span
+                      className={
+                        isActive(l.href) ? "text-accent" : "text-graphite"
+                      }
+                    >
+                      {l.label}
+                    </span>
+                    <span className="font-mono text-xs text-alu-dark">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
                   </Link>
                 </motion.li>
               ))}
@@ -155,6 +184,14 @@ export function Navbar() {
               >
                 Request Enquiry <ArrowRight aria-hidden className="size-4" />
               </Link>
+              <a
+                href="https://www.amazon.in/s?k=plusmark+retail&crid=2HJSPM7CNLEYV&sprefix=plusmark%2Caps%2C380&ref=nb_sb_ss_mvt-t11-ranker_1_8"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 flex h-14 items-center justify-center rounded-full bg-graphite text-sm font-semibold text-white transition-colors hover:bg-ink"
+              >
+                Buy on Amazon
+              </a>
             </div>
           </motion.div>
         )}

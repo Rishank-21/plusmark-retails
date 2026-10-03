@@ -1,0 +1,45 @@
+[1mdiff --git a/plusmark/data/media.ts b/plusmark/data/media.ts[m
+[1mindex f4a8086..341ae8b 100644[m
+[1m--- a/plusmark/data/media.ts[m
+[1m+++ b/plusmark/data/media.ts[m
+[36m@@ -1,6 +1,6 @@[m
+ /**[m
+  * Product videos from the Plusmark Drive: re-encoded from the 1920×1080 masters to 1080p H.264[m
+[31m- * (CRF 21, ≤4.5 Mbps, faststart) in /public/videos, with a full-HD poster frame alongside. Only products that have their own footage get a product video; every wall[m
+[32m+[m[32m * (CRF 21, ≤4.5 Mbps, faststart) in Cloudinary, with a full-HD poster frame alongside. Only products that have their own footage get a product video; every wall[m
+  * board also shows the installation guide.[m
+  */[m
+ export interface Video {[m
+[36m@@ -10,8 +10,31 @@[m [mexport interface Video {[m
+   caption: string;[m
+ }[m
+ [m
+[32m+[m[32mconst cloudinaryVideoUrls: Record<string, string> = {[m
+[32m+[m[32m  "board-installation":[m
+[32m+[m[32m    "https://res.cloudinary.com/drt0rpkn2/video/upload/v1791015552/plusmark/videos/board-installation.mp4",[m
+[32m+[m[32m  "eco-premium-both-side":[m
+[32m+[m[32m    "https://res.cloudinary.com/drt0rpkn2/video/upload/v1791015572/plusmark/videos/eco-premium-both-side.mp4",[m
+[32m+[m[32m  "eco-premium-chalk-board":[m
+[32m+[m[32m    "https://res.cloudinary.com/drt0rpkn2/video/upload/v1791015594/plusmark/videos/eco-premium-chalk-board.mp4",[m
+[32m+[m[32m  "eco-premium-notice-board":[m
+[32m+[m[32m    "https://res.cloudinary.com/drt0rpkn2/video/upload/v1791015611/plusmark/videos/eco-premium-notice-board.mp4",[m
+[32m+[m[32m  "eco-premium-white-board":[m
+[32m+[m[32m    "https://res.cloudinary.com/drt0rpkn2/video/upload/v1791015631/plusmark/videos/eco-premium-white-board.mp4",[m
+[32m+[m[32m  "metallic-premium-both-side":[m
+[32m+[m[32m    "https://res.cloudinary.com/drt0rpkn2/video/upload/v1791016288/plusmark/videos/metallic-premium-both-side.mp4",[m
+[32m+[m[32m  "metallic-premium-chalk-board":[m
+[32m+[m[32m    "https://res.cloudinary.com/drt0rpkn2/video/upload/v1791016355/plusmark/videos/metallic-premium-chalk-board.mp4",[m
+[32m+[m[32m  "metallic-premium-notice-board":[m
+[32m+[m[32m    "https://res.cloudinary.com/drt0rpkn2/video/upload/v1791016412/plusmark/videos/metallic-premium-notice-board.mp4",[m
+[32m+[m[32m  "metallic-premium-white-board":[m
+[32m+[m[32m    "https://res.cloudinary.com/drt0rpkn2/video/upload/v1791016477/plusmark/videos/metallic-premium-white-board.mp4",[m
+[32m+[m[32m  "retail-board-installation":[m
+[32m+[m[32m    "https://res.cloudinary.com/drt0rpkn2/video/upload/v1791016507/plusmark/videos/retail-board-installation.mp4",[m
+[32m+[m[32m};[m
+[32m+[m
+ const v = (file: string, title: string, caption: string): Video => ({[m
+[31m-  src: `/videos/${file}.mp4`,[m
+[32m+[m[32m  src: cloudinaryVideoUrls[file],[m
+   poster: `/videos/${file}.jpg`,[m
+   title,[m
+   caption,[m

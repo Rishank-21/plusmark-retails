@@ -19,6 +19,7 @@
 
 # production
 /build
+*.mp4
 
 # local data / Firebase service-account keys (secrets)
 /.data/

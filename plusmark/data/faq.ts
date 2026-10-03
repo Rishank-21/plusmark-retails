@@ -95,14 +95,4 @@ export const faqGroups: FaqGroup[] = [
   },
 ];
 
-/** A short list for the home page preview. */
-export const featuredFaqs: FaqItem[] = [
-  faqGroups[0].items[1],
-  faqGroups[0].items[4],
-  faqGroups[1].items[1],
-  faqGroups[2].items[1],
-  faqGroups[2].items[3],
-  faqGroups[2].items[4],
-];
-
 export const allFaqs: FaqItem[] = faqGroups.flatMap((g) => g.items);
