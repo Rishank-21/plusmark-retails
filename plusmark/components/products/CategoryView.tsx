@@ -1,7 +1,9 @@
 import type { Category } from "@/data/types";
 import { getProductsByCategory } from "@/data/products";
+import { getCategorySubcategories, getAllProductsForCategory } from "@/data/subcategories";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { ProductCard } from "./ProductCard";
+import { SubcategoryProductList } from "./SubcategoryProductList";
 import { CategoryGrid } from "./CategoryGrid";
 import { EnquiryBand } from "@/components/sections/EnquiryBand";
 import { JsonLd } from "@/components/ui/JsonLd";
@@ -9,7 +11,10 @@ import { Reveal } from "@/components/animations/Reveal";
 import { itemListSchema } from "@/lib/structured-data";
 
 export function CategoryView({ category }: { category: Category }) {
-  const list = getProductsByCategory(category.slug);
+  const subcategoryConfig = getCategorySubcategories(category.slug);
+  const list = subcategoryConfig
+    ? getAllProductsForCategory(category.slug)
+    : getProductsByCategory(category.slug);
   const listingOnly = list.every((p) => p.catalogDetail === "listing");
   return (
     <>
@@ -27,18 +32,29 @@ export function CategoryView({ category }: { category: Category }) {
         <h2 id="range-title" className="sr-only">
           {category.name} range
         </h2>
-        {listingOnly && (
-          <p className="mb-8 max-w-2xl border-l-2 border-accent bg-accent-soft/50 px-5 py-4 text-sm text-graphite">
-            The Plusmark catalog lists these models by name. Request an enquiry for dimensions, materials and finishes.
-          </p>
+        {subcategoryConfig ? (
+          <SubcategoryProductList
+            category={category}
+            config={subcategoryConfig}
+            allProducts={list}
+            listingOnly={listingOnly}
+          />
+        ) : (
+          <>
+            {listingOnly && (
+              <p className="mb-8 max-w-2xl border-l-2 border-accent bg-accent-soft/50 px-5 py-4 text-sm text-graphite">
+                The Plusmark catalog lists these models by name. Request an enquiry for dimensions, materials and finishes.
+              </p>
+            )}
+            <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {list.map((p, i) => (
+                <Reveal as="li" key={p.slug} delay={Math.min(i, 6) * 0.05}>
+                  <ProductCard product={p} />
+                </Reveal>
+              ))}
+            </ul>
+          </>
         )}
-        <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {list.map((p, i) => (
-            <Reveal as="li" key={p.slug} delay={Math.min(i, 6) * 0.05}>
-              <ProductCard product={p} />
-            </Reveal>
-          ))}
-        </ul>
       </section>
 
       <section className="border-t border-fog bg-mist py-16 md:py-20" aria-labelledby="other-cats">

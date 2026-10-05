@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { categories } from "@/data/categories";
 import { getProduct, getProductsByCategory } from "@/data/products";
+import { getCategorySubcategories, getAllProductsForCategory } from "@/data/subcategories";
 import { pad2, cn } from "@/lib/utils";
 
 export function CategoryGrid({ exclude, compact }: { exclude?: string; compact?: boolean }) {
@@ -11,7 +12,10 @@ export function CategoryGrid({ exclude, compact }: { exclude?: string; compact?:
     <ul className={cn("grid gap-4 sm:grid-cols-2", compact ? "lg:grid-cols-4" : "lg:grid-cols-3 xl:grid-cols-4")}>
       {list.map((c, i) => {
         const cover = getProduct(c.coverProduct);
-        const count = getProductsByCategory(c.slug).length;
+        const subConfig = getCategorySubcategories(c.slug);
+        const count = subConfig
+          ? getAllProductsForCategory(c.slug).length
+          : getProductsByCategory(c.slug).length;
         return (
           <li key={c.slug} className="group relative overflow-hidden rounded-3xl bg-white ring-1 ring-fog shadow-[var(--shadow-soft)] transition-[box-shadow,transform] duration-500 ease-[var(--ease-premium)] hover:-translate-y-1 hover:shadow-[var(--shadow-lift)] motion-reduce:hover:translate-y-0">
             <div className="relative m-2 mb-0 aspect-[16/10] overflow-hidden rounded-[1.1rem] studio-bg">
@@ -34,7 +38,20 @@ export function CategoryGrid({ exclude, compact }: { exclude?: string; compact?:
                   </Link>
                 </h3>
                 {!compact && <p className="mt-1.5 line-clamp-2 text-xs leading-relaxed text-steel">{c.summary}</p>}
-                <p className="mt-2 font-mono text-[0.6rem] uppercase tracking-[0.14em] text-alu-dark">
+                {subConfig && (
+                  <div className="relative z-10 mt-3 flex flex-wrap gap-1.5">
+                    {subConfig.subcategories.map((sub) => (
+                      <Link
+                        key={sub.id}
+                        href={`/products/${c.slug}?type=${sub.id}`}
+                        className="rounded-full bg-mist px-2.5 py-0.5 text-[0.68rem] font-medium text-graphite ring-1 ring-line transition-all hover:bg-graphite hover:text-white"
+                      >
+                        {sub.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+                <p className="mt-2.5 font-mono text-[0.6rem] uppercase tracking-[0.14em] text-alu-dark">
                   {count} {count === 1 ? "product" : "products"}
                 </p>
               </div>

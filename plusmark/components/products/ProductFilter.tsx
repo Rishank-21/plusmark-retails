@@ -3,8 +3,9 @@
 import { useEffect, useId, useMemo, useState, useDeferredValue } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Search, X } from "lucide-react";
-import type { Category, Series } from "@/data/types";
+import type { Category, CategorySlug, Series } from "@/data/types";
 import type { FilterItem } from "@/lib/filter";
+import { subcategoryConfigs } from "@/data/subcategories";
 import { cn } from "@/lib/utils";
 
 interface ProductFilterProps {
@@ -24,6 +25,7 @@ const normalise = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, " ").tri
  */
 export function ProductFilter({ products, categories, series, cards }: ProductFilterProps) {
   const [category, setCategory] = useState<string>("all");
+  const [subtype, setSubtype] = useState<string>("all");
   const [type, setType] = useState<string>("all");
   const [query, setQuery] = useState("");
   const deferredQuery = useDeferredValue(query);
@@ -32,19 +34,31 @@ export function ProductFilter({ products, categories, series, cards }: ProductFi
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    setCategory(params.get("category") ?? "all");
-    setType(params.get("type") ?? "all");
+    const cat = params.get("category") ?? "all";
+    const t = params.get("type") ?? "all";
+    setCategory(cat);
+    if (cat !== "all" && subcategoryConfigs[cat as CategorySlug]) {
+      const match = subcategoryConfigs[cat as CategorySlug]?.subcategories.some((s) => s.id === t);
+      if (match) {
+        setSubtype(t);
+      } else {
+        setType(t);
+      }
+    } else {
+      setType(t);
+    }
     setQuery(params.get("q") ?? "");
   }, []);
 
   useEffect(() => {
     const params = new URLSearchParams();
     if (category !== "all") params.set("category", category);
-    if (type !== "all") params.set("type", type);
+    if (subtype !== "all") params.set("type", subtype);
+    else if (type !== "all") params.set("type", type);
     if (deferredQuery) params.set("q", deferredQuery);
     const qs = params.toString();
     window.history.replaceState(null, "", `${window.location.pathname}${qs ? `?${qs}` : ""}`);
-  }, [category, type, deferredQuery]);
+  }, [category, subtype, type, deferredQuery]);
 
   const index = useMemo(
     () =>
@@ -57,27 +71,47 @@ export function ProductFilter({ products, categories, series, cards }: ProductFi
     [products],
   );
 
+  const activeSubConfig = category !== "all" ? subcategoryConfigs[category as CategorySlug] : null;
+  const activeSub = activeSubConfig?.subcategories.find((s) => s.id === subtype);
+
   const results = useMemo(() => {
     const terms = normalise(deferredQuery).split(" ").filter(Boolean);
     return index
-      .filter(({ p }) => category === "all" || p.categorySlug === category)
+      .filter(({ p }) => {
+        if (category === "all") return true;
+        if (activeSub) return activeSub.productSlugs.includes(p.slug);
+        if (activeSubConfig) {
+          const allSlugs = new Set(activeSubConfig.subcategories.flatMap((s) => s.productSlugs));
+          return allSlugs.has(p.slug) || p.categorySlug === category;
+        }
+        return p.categorySlug === category;
+      })
       .filter(({ p }) => type === "all" || p.series === type)
       .filter(({ haystack }) => terms.every((t) => haystack.includes(t)))
       .map(({ p }) => p);
-  }, [index, category, type, deferredQuery]);
+  }, [index, category, subtype, activeSub, activeSubConfig, type, deferredQuery]);
 
   const counts = useMemo(() => {
     const map: Record<string, number> = {};
-    for (const p of products) map[p.categorySlug] = (map[p.categorySlug] ?? 0) + 1;
+    for (const c of categories) {
+      const sub = subcategoryConfigs[c.slug as CategorySlug];
+      if (sub) {
+        const allSlugs = new Set(sub.subcategories.flatMap((s) => s.productSlugs));
+        map[c.slug] = allSlugs.size;
+      } else {
+        map[c.slug] = products.filter((p) => p.categorySlug === c.slug).length;
+      }
+    }
     return map;
-  }, [products]);
+  }, [categories, products]);
 
   const reset = () => {
     setCategory("all");
+    setSubtype("all");
     setType("all");
     setQuery("");
   };
-  const active = category !== "all" || type !== "all" || !!query;
+  const active = category !== "all" || subtype !== "all" || type !== "all" || !!query;
 
   return (
     <div>
@@ -107,7 +141,7 @@ export function ProductFilter({ products, categories, series, cards }: ProductFi
               onChange={(e) => setType(e.target.value)}
               className="h-11 min-w-0 flex-1 bg-mist px-3 text-sm text-graphite ring-1 ring-transparent focus:outline-none focus:ring-graphite md:w-52 md:flex-none"
             >
-              <option value="all">All product types</option>
+              <option value="all">All series</option>
               {series.map((s) => (
                 <option key={s} value={s}>
                   {s}
@@ -134,7 +168,10 @@ export function ProductFilter({ products, categories, series, cards }: ProductFi
                 key={c.slug}
                 type="button"
                 aria-pressed={on}
-                onClick={() => setCategory(c.slug)}
+                onClick={() => {
+                  setCategory(c.slug);
+                  setSubtype("all");
+                }}
                 className={cn(
                   "relative shrink-0 px-3.5 py-2 text-xs font-semibold transition-colors",
                   on ? "text-white" : "text-steel hover:text-graphite",
@@ -155,6 +192,50 @@ export function ProductFilter({ products, categories, series, cards }: ProductFi
             );
           })}
         </div>
+
+        {activeSubConfig && (
+          <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-fog/70 pt-2.5">
+            <span className="font-mono text-[0.66rem] uppercase tracking-[0.14em] text-steel">
+              {activeSubConfig.filterLabel}:
+            </span>
+            <div className="flex flex-wrap gap-1.5">
+              <button
+                type="button"
+                onClick={() => setSubtype("all")}
+                className={cn(
+                  "rounded-full px-3 py-1 text-xs font-semibold transition-all",
+                  subtype === "all"
+                    ? "bg-graphite text-white shadow-sm"
+                    : "bg-mist text-steel hover:bg-fog hover:text-graphite"
+                )}
+              >
+                All
+              </button>
+              {activeSubConfig.subcategories.map((sub) => {
+                const on = subtype === sub.id;
+                const subCount = sub.productSlugs.length;
+                return (
+                  <button
+                    key={sub.id}
+                    type="button"
+                    onClick={() => setSubtype(sub.id)}
+                    className={cn(
+                      "flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold transition-all",
+                      on
+                        ? "bg-accent text-white shadow-sm"
+                        : "bg-mist text-steel hover:bg-fog hover:text-graphite"
+                    )}
+                  >
+                    <span>{sub.label}</span>
+                    <span className={cn("font-mono text-[0.62rem]", on ? "text-white/80" : "text-steel")}>
+                      ({subCount})
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
 
       <p className="mt-8 font-mono text-[0.68rem] uppercase tracking-[0.14em] text-steel" aria-live="polite">

@@ -5,7 +5,7 @@ import { LogoMarquee } from "./LogoMarquee";
 /** Home page: organizations Plusmark has supplied, as a slowly drifting strip of logo cards. */
 export function TrustedBySection() {
   return (
-    <section aria-labelledby="trusted-title" className="py-20 md:py-28">
+    <section aria-labelledby="trusted-title" className="border-y border-fog bg-mist/40 py-20 md:py-28">
       <Reveal className="container-x">
         <div className="mx-auto max-w-4xl text-center">
           {/* Theme C sets heading letter-spacing outside the utility layer, hence the "!" */}

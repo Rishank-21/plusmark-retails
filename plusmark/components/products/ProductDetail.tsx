@@ -5,13 +5,14 @@ import { categoryMap } from "@/data/categories";
 import { getRelatedProducts } from "@/data/products";
 import { representativeModels } from "@/data/visuals";
 import { company } from "@/data/company";
+import { getFramePricing } from "@/data/frame-pricing";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { Reveal } from "@/components/animations/Reveal";
 import { productSchema } from "@/lib/structured-data";
+import { ButtonLink } from "@/components/ui/Button";
 import { ProductViewer3D } from "./ProductViewer3D";
 import { ProductCard } from "./ProductCard";
-import { SizeEnquiryButton, SizePicker, SizeProvider } from "./SizeSelection";
 import { EnquiryBand } from "@/components/sections/EnquiryBand";
 import { getProductAplus } from "@/data/aplus";
 import { AplusDescription } from "./AplusDescription";
@@ -72,7 +73,6 @@ export function ProductDetail({ product }: { product: Product }) {
               { name: product.name, path: `/products/${product.slug}` },
             ]}
           />
-          <SizeProvider options={product.sizeOptions}>
           {/* Copy left, viewer right; the viewer takes the wider column so the product reads large. */}
           <div className="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] lg:items-center lg:gap-12">
             <div className="min-w-0 animate-fade lg:order-1">
@@ -107,9 +107,10 @@ export function ProductDetail({ product }: { product: Product }) {
                   ))}
                 </ul>
               )}
-              <SizePicker className="mt-8" />
               <div className="mt-8 flex flex-wrap items-center gap-4">
-                <SizeEnquiryButton slug={product.slug}>Request Enquiry</SizeEnquiryButton>
+                <ButtonLink href={`/contact?product=${product.slug}#enquiry`} magnetic>
+                  Request Enquiry
+                </ButtonLink>
                 <a href="#specifications" className="group inline-flex items-center gap-2 text-sm font-semibold">
                   <span className="link-underline">View specifications</span>
                   <ArrowRight aria-hidden className="size-4 transition-transform group-hover:translate-x-1" />
@@ -117,7 +118,6 @@ export function ProductDetail({ product }: { product: Product }) {
               </div>
             </div>
           </div>
-          </SizeProvider>
         </div>
       </div>
 
@@ -176,17 +176,21 @@ export function ProductDetail({ product }: { product: Product }) {
           </Block>
         )}
 
-        {product.sizes.length > 0 && (
-          <Block id="sizes" title="Available Sizes">
-            <ul className="flex flex-wrap gap-2">
-              {product.sizes.map((s) => (
-                <li key={s} className="bg-graphite px-4 py-2.5 font-mono text-[0.8125rem] text-white">
-                  {s}
-                </li>
-              ))}
-            </ul>
-          </Block>
-        )}
+{(() => {
+            const pricing = getFramePricing(product.series);
+            const displaySizes = pricing ? pricing.availableSizes : product.sizes;
+            return displaySizes.length > 0 ? (
+              <Block id="sizes" title="Available Sizes">
+                <ul className="flex flex-wrap gap-2">
+                  {displaySizes.map((s) => (
+                    <li key={s} className="bg-graphite px-4 py-2.5 font-mono text-[0.8125rem] text-white">
+                      {s}
+                    </li>
+                  ))}
+                </ul>
+              </Block>
+            ) : null;
+          })()}
 
         {product.colors.length > 0 && (
           <Block id="colors" title="Available Colors">
@@ -225,7 +229,13 @@ export function ProductDetail({ product }: { product: Product }) {
         <Block id="warranty" title="Warranty">
           <p className="flex max-w-3xl items-start gap-3.5 text-base leading-relaxed text-steel md:text-[1.125rem]">
             <ShieldCheck aria-hidden className="mt-1 size-5 shrink-0 text-verdant" />
-            {company.warranty}
+            {(() => {
+              const pricing = getFramePricing(product.series);
+              if (pricing) {
+                return `${pricing.warrantyYears}-Year Manufacturer Warranty. All Plusmark products are backed by a ${pricing.warrantyYears}-year warranty covering manufacturing defects.`;
+              }
+              return company.warranty;
+            })()}
           </p>
         </Block>
       </div>

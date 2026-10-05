@@ -32,10 +32,10 @@ export default function HomePage() {
       <DesignHomeRedirect />
       <Hero />
       <StatsBand />
+      <TrustedBySection />
       <CollectionSection />
       {/* Same "Spin the film reel" section as design D, with every product and installation film */}
       <VideoRing videos={allVideos} />
-      <TrustedBySection />
       <AboutSection />
       {/* No overflow-hidden here: it would break the sticky 3D assembly inside QualityStory. */}
       <section aria-labelledby="quality-title" className="relative bg-white py-24 md:py-32">

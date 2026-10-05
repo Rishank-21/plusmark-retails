@@ -26,12 +26,12 @@ export const categories: Category[] = [
   {
     slug: "notice-boards",
     name: "Notice Boards",
-    summary: "Pin-up notice boards with 2 mm Blazer Cloth or Super Fine Velvet Cloth over soft, pin-friendly cores.",
+    summary: "Pin-up notice boards with Blazer Cloth, Velvet Cloth, Cork and Fabric surfaces — in Metallic Premium, Eco Premium, Deluxe Standard and Eco Regular series.",
     intro:
-      "Plusmark notice boards pair 2 mm Blazer Cloth or Super Fine Velvet Cloth surfaces with soft cores designed for repeated pinning, in Metallic Premium, Eco Premium, Deluxe Standard and Eco Regular series.",
-    seoTitle: "Notice Boards — Blazer Cloth & Velvet Cloth Pin-up Boards",
+      "Plusmark notice boards cover all pin-up surface types from the catalog — Blazer Cloth and Velvet Cloth boards in four frame series (Metallic Premium, Eco Premium, Deluxe Standard and Eco Regular), high-quality natural Cork Notice Boards, Fabric Notice Boards in the customer's preferred colour, and Combination Boards that pair a dry wipe white board surface with a fabric pin-up surface in a single frame.",
+    seoTitle: "Notice Boards — Blazer Cloth, Velvet Cloth, Cork, Fabric & Combination Boards",
     seoDescription:
-      "Plusmark notice boards with 2 mm Blazer Cloth and Super Fine Velvet Cloth surfaces, soft pin-friendly cores and multiple colour options for schools, colleges and offices.",
+      "Plusmark notice boards: Blazer Cloth, Velvet Cloth, Cork, Fabric and Combination boards in Metallic Premium, Eco Premium, Deluxe Standard and Eco Regular frames for schools, colleges, offices and institutions.",
     coverProduct: "metallic-premium-notice-board",
   },
   {
@@ -59,13 +59,13 @@ export const categories: Category[] = [
   {
     slug: "specialty-boards",
     name: "Specialty Display Boards",
-    summary: "Acrylic folder display, cork, combination and fabric notice boards for specific display needs.",
+    summary: "Acrylic folder display boards for organised display of charts, reports, SOPs and production data.",
     intro:
-      "Different types of notice boards for specific display needs — acrylic folder display boards for charts, reports and SOPs, natural cork boards, combination boards that pair dry wipe writing with fabric pin-up display, and fabric notice boards in the customer's preferred colour.",
-    seoTitle: "Specialty Display Boards — Cork, Fabric, Combination & Acrylic Folder Boards",
+      "Specialty Display Boards for specific display needs — Acrylic Folder Display Boards give clear visibility through transparent front folders, ideal for organised display of charts, reports, SOPs and production data. Folder size and quantity made as per customer requirement in a strong aluminium frame.",
+    seoTitle: "Specialty Display Boards — Acrylic Folder Display Boards",
     seoDescription:
-      "Plusmark cork notice boards, fabric notice boards, combination boards and acrylic folder display boards with Metallic Premium, Eco Premium and Deluxe frame variants.",
-    coverProduct: "combination-board",
+      "Plusmark Acrylic Folder Display Boards with transparent front folders in a strong aluminium frame — folder size and quantity as per customer requirement for industrial and institutional use.",
+    coverProduct: "acrylic-folder-display-board",
   },
   {
     slug: "acrylic-door-cover-notice-boards",

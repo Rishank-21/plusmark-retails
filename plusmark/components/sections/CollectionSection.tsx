@@ -1,5 +1,6 @@
 import { categories } from "@/data/categories";
 import { getProductsByCategory, products } from "@/data/products";
+import { getCategorySubcategories, getAllProductsForCategory } from "@/data/subcategories";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ProductCard } from "@/components/products/ProductCard";
 import { CategoryGrid } from "@/components/products/CategoryGrid";
@@ -12,12 +13,20 @@ export function CollectionSection() {
     { slug: "featured", name: "Featured", products: featured, href: "/products" },
     ...categories
       .filter((c) => c.slug !== "schedule-boards")
-      .map((c) => ({
-        slug: c.slug,
-        name: c.name,
-        products: getProductsByCategory(c.slug).slice(0, 8).map((p) => p.slug),
-        href: `/products/${c.slug}`,
-      })),
+      .map((c) => {
+        const subConfig = getCategorySubcategories(c.slug);
+        const prods = subConfig
+          ? getAllProductsForCategory(c.slug)
+          : getProductsByCategory(c.slug);
+        return {
+          slug: c.slug,
+          name: c.name,
+          products: prods.map((p) => p.slug),
+          href: `/products/${c.slug}`,
+          subcategories: subConfig ? subConfig.subcategories : undefined,
+          filterLabel: subConfig?.filterLabel,
+        };
+      }),
   ];
   const used = new Set(tabs.flatMap((t) => t.products));
   const cards = Object.fromEntries(

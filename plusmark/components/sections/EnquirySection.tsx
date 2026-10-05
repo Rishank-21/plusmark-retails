@@ -1,20 +1,23 @@
 import { products } from "@/data/products";
 import { categoryMap } from "@/data/categories";
 import { company, contactChannels } from "@/data/company";
+import { getFramePricing } from "@/data/frame-pricing";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/animations/Reveal";
 import { EnquiryForm } from "./EnquiryForm";
 
 export function EnquirySection({ headingLevel = "h2" }: { headingLevel?: "h1" | "h2" }) {
-  // Only concrete sizes are selectable ("2 × 3 ft", "12 mm"); summaries like "Available in 6 different sizes" are not.
+  // Only concrete sizes are selectable; summaries like "Available in 6 different sizes" are not.
   const selectable = (sizes: string[]) => sizes.filter((s) => !/^available\b|\bsizes\b/i.test(s));
   const options = products.map((p) => {
-    const sizes = selectable(p.sizes);
+    // Prefer real catalog sizes from frame-pricing; fall back to product.sizes
+    const framePricing = getFramePricing(p.series);
+    const rawSizes = framePricing ? framePricing.availableSizes : selectable(p.sizes);
     return {
       slug: p.slug,
       name: p.name,
       group: categoryMap[p.categorySlug].name,
-      sizes: sizes.length > 1 ? sizes : [],
+      sizes: rawSizes.length > 1 ? rawSizes : [],
     };
   });
   return (

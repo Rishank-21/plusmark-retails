@@ -16,15 +16,15 @@ const SECTOR_ICON: Record<ClientSector, LucideIcon> = {
 /** Seconds per organization: the strip drifts at the same unhurried pace however long the list gets. */
 const SECONDS_PER_ITEM = 6.4;
 
-/** Logo height the files are requested at (px); CSS sets the shown height per breakpoint (32–44 px). */
-const LOGO_PX = 48;
+/** Logo height the files are requested at (px); CSS sets the shown height per breakpoint. */
+const LOGO_PX = 72;
 
 function ClientCard({ client }: { client: TrustedClient }) {
   const Icon = SECTOR_ICON[client.sector];
   const logo = client.logo;
   return (
-    <div className="flex h-16 items-center gap-3 rounded-[min(var(--card-radius,1rem),1.25rem)] bg-white px-4 ring-1 ring-fog transition-[box-shadow,transform] duration-500 ease-[var(--ease-premium)] hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)] hover:ring-line md:h-[4.5rem] md:gap-4 md:px-5 lg:h-20 lg:px-6">
-      <span className="flex h-8 shrink-0 items-center md:h-10 lg:h-11">
+    <div className="flex h-20 min-w-[280px] items-center gap-4 rounded-2xl bg-white px-6 ring-1 ring-fog shadow-[var(--shadow-soft)] transition-[box-shadow,transform] duration-500 ease-[var(--ease-premium)] hover:-translate-y-1 hover:shadow-[var(--shadow-lift)] hover:ring-graphite/20 sm:h-24 sm:min-w-[320px] sm:px-7 md:h-28 md:min-w-[360px] md:gap-5 md:px-8 lg:h-32 lg:min-w-[400px] lg:px-9">
+      <span className="flex h-12 shrink-0 items-center sm:h-14 md:h-16 lg:h-18">
         {logo ? (
           // The name sits right beside the logo, so the image itself is decorative.
           <Image
@@ -33,15 +33,15 @@ function ClientCard({ client }: { client: TrustedClient }) {
             width={Math.round((LOGO_PX * logo.width) / logo.height)}
             height={LOGO_PX}
             unoptimized={logo.src.endsWith(".svg")}
-            className="h-full w-auto max-w-28 object-contain md:max-w-32 lg:max-w-36"
+            className="h-full w-auto max-w-36 object-contain sm:max-w-44 md:max-w-52 lg:max-w-60"
           />
         ) : (
-          <span aria-hidden className="flex aspect-square h-full items-center justify-center rounded-full bg-mist text-steel ring-1 ring-fog">
-            <Icon strokeWidth={1.6} className="size-[46%]" />
+          <span aria-hidden className="flex aspect-square h-full items-center justify-center rounded-2xl bg-mist text-steel ring-1 ring-fog">
+            <Icon strokeWidth={1.8} className="size-[50%]" />
           </span>
         )}
       </span>
-      <span className="whitespace-nowrap font-display text-sm font-semibold text-graphite md:text-[0.9375rem] lg:text-base">
+      <span className="whitespace-nowrap font-display text-base font-semibold text-graphite sm:text-lg md:text-xl lg:text-[1.3rem]">
         {client.name}
       </span>
     </div>
@@ -74,11 +74,11 @@ export function LogoMarquee({ clients }: { clients: TrustedClient[] }) {
       className={
         copy
           ? "flex shrink-0 motion-reduce:hidden"
-          : "flex shrink-0 motion-reduce:flex-wrap motion-reduce:justify-center motion-reduce:gap-3"
+          : "flex shrink-0 motion-reduce:flex-wrap motion-reduce:justify-center motion-reduce:gap-4"
       }
     >
       {clients.map((c) => (
-        <li key={c.id} className="shrink-0 pr-3 md:pr-4 lg:pr-5 motion-reduce:pr-0">
+        <li key={c.id} className="shrink-0 pr-4 sm:pr-5 md:pr-6 lg:pr-7 motion-reduce:pr-0">
           <ClientCard client={c} />
         </li>
       ))}

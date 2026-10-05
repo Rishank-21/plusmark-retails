@@ -32,9 +32,7 @@ export function SizePicker({ className }: { className?: string }) {
   const { options, selected, select } = ctx;
   return (
     <fieldset className={className}>
-      <legend className="eyebrow mb-3 text-[0.75rem]">
-        Size <span className="normal-case tracking-normal text-steel">{selected ? `· ${selected.label}` : "· select to preview"}</span>
-      </legend>
+      <legend className="eyebrow mb-3 text-[0.75rem]">Size</legend>
       <div className="flex flex-wrap gap-2">
         {options.map((s) => {
           const on = selected?.label === s.label;

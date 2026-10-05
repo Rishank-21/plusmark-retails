@@ -326,6 +326,137 @@ const chalkBoards: Product[] = [
 ];
 
 /* ------------------------------------------------------------------ */
+/* Magnetic Chalk Boards — Resin Coated & Ceramic Steel                */
+/* ------------------------------------------------------------------ */
+const magneticChalkBoards: Product[] = [
+  define({
+    slug: "metallic-premium-magnetic-chalk-board",
+    name: "Metallic Premium Magnetic Chalk Board",
+    categorySlug: "chalk-boards",
+    series: "Metallic Premium",
+    featured: true,
+    highlights: ["Resin Coated Steel Magnetic Chalk Board", "Accepts Magnet", "Signature Dual-Tone Corners"],
+    shortDescription:
+      "Resin coated magnetic chalk writing surface for smooth writing and easy erasing that accepts magnets, framed in heavy-duty aluminium with Signature Dual-Tone Corners.",
+    description:
+      "The Metallic Premium Magnetic Chalk Board is a Resin Coated Steel Magnetic Board designed for chalk writing. It accepts magnets and is compatible with magnetic accessories such as magnetic pins, charts, and holders. Heavy-duty aluminium framing with Signature Dual-Tone Corners surrounds a durable, non-reflective green chalk surface.",
+    features: [
+      "Accepts magnets and magnetic accessories",
+      "Resin coated green chalk surface with smooth writing and easy erasing",
+      "Compatible with magnets, charts and holders",
+      "Heavy-duty aluminium framing with Signature Dual-Tone Corners",
+      "Built for intensive daily institutional and classroom use",
+    ],
+    specifications: [
+      { label: "Type", value: "Resin Coated Steel Magnetic Chalk Board" },
+      { label: "Surface", value: "Resin coated green chalk surface; accepts magnets" },
+      { label: "Magnetic Use", value: "Compatible with magnetic pins, dusters, and charts" },
+      { label: "Design", value: "Heavy-duty aluminium framing with Signature Dual-Tone Corners" },
+      { label: "Finish", value: "Smooth green writing surface for regular chalk writing and erasing" },
+    ],
+    applications: ["Schools", "Colleges", "Institutions", "Classrooms"],
+  }),
+  define({
+    slug: "deluxe-standard-magnetic-chalk-board",
+    name: "Deluxe Standard Magnetic Chalk Board",
+    categorySlug: "chalk-boards",
+    series: "Deluxe Standard",
+    highlights: ["Resin Coated Steel Magnetic Chalk Board", "Accepts Magnet", "Electroplated Chrome Corners"],
+    shortDescription:
+      "Resin coated green magnetic chalk surface with aluminium frame and Electroplated Chrome Corners — balanced construction for everyday classroom use.",
+    description:
+      "The Deluxe Standard Magnetic Chalk Board accepts magnets and has a resin coated green chalk writing surface suitable for standard magnetic accessories. An aluminium frame with Electroplated Chrome Corners and balanced construction make it dependable for daily school and coaching use.",
+    features: [
+      "Accepts magnets and magnetic accessories",
+      "Resin coated green chalk writing surface",
+      "Aluminium frame with Electroplated Chrome Corners",
+      "Balanced construction for regular use",
+    ],
+    specifications: [
+      { label: "Type", value: "Resin Coated Steel Magnetic Chalk Board" },
+      { label: "Surface", value: "Resin coated green chalk writing surface; accepts magnets" },
+      { label: "Magnetic Use", value: "Suitable for standard magnetic accessories" },
+      { label: "Design", value: "Aluminium frame with Electroplated Chrome Corners" },
+    ],
+    applications: ["Classrooms", "Coaching centres", "Offices"],
+  }),
+  define({
+    slug: "eco-regular-magnetic-chalk-board",
+    name: "Eco Regular Magnetic Chalk Board",
+    categorySlug: "chalk-boards",
+    series: "Eco Regular",
+    highlights: ["Resin Coated Steel Magnetic Chalk Board", "Accepts Magnet"],
+    shortDescription:
+      "Economical magnetic chalk board with a resin coated green surface and lightweight aluminium frame with standard plastic corners.",
+    description:
+      "The Eco Regular Magnetic Chalk Board accepts magnets and supports basic magnetic accessories. Its resin coated green chalk writing surface comes in a lightweight aluminium frame with standard plastic corners — an economical option designed for light and budget-friendly institutional use.",
+    features: [
+      "Accepts magnets and basic magnetic accessories",
+      "Resin coated green chalk writing surface",
+      "Lightweight aluminium frame with standard plastic corners",
+      "Economical option for tuition classes and small classrooms",
+    ],
+    specifications: [
+      { label: "Type", value: "Resin Coated Steel Magnetic Chalk Board" },
+      { label: "Surface", value: "Resin coated green chalk writing surface; accepts magnets" },
+      { label: "Magnetic Use", value: "Supports basic magnetic accessories" },
+      { label: "Design", value: "Lightweight aluminium frame with standard plastic corners" },
+    ],
+    applications: ["Home classrooms", "Tuition classes", "Small institutions"],
+  }),
+  define({
+    slug: "metallic-premium-ceramic-chalk-board",
+    name: "Metallic Premium Ceramic Chalk Board",
+    categorySlug: "chalk-boards",
+    series: "Metallic Premium",
+    featured: true,
+    highlights: ["Ceramic Steel Magnetic Chalk Board", "Accepts Magnet", "Signature Dual-Tone Corners"],
+    shortDescription:
+      "Ceramic steel / porcelain enamel green chalk surface — ultra-durable, scratch-proof and non-porous for continuous chalk writing and frequent cleaning.",
+    description:
+      "The Metallic Premium Ceramic Chalk Board has a porcelain enamel / ceramic steel green surface that accepts magnets. The ultra-hard, scratch-resistant surface is built for decades of intensive institutional use with glare-free chalk writing and effortless cleaning. Heavy-duty aluminium framing with Signature Dual-Tone Corners.",
+    features: [
+      "Ceramic steel / porcelain enamel magnetic green chalk surface",
+      "Scratch-proof, hard and non-porous for continuous daily writing",
+      "Glare-free with excellent chalk visibility from all angles",
+      "Heavy-duty aluminium framing with Signature Dual-Tone Corners",
+      "Designed for maximum longevity under regular institutional use",
+    ],
+    specifications: [
+      { label: "Type", value: "Ceramic Steel Magnetic Chalk Board" },
+      { label: "Surface", value: "Ceramic steel / porcelain enamel green chalk surface; accepts magnets" },
+      { label: "Product Life", value: "Designed for very long product life under regular institutional use" },
+      { label: "Design", value: "Aluminium frame with Signature Dual-Tone Corners" },
+    ],
+    applications: ["Classrooms", "Institutions", "Colleges"],
+  }),
+  define({
+    slug: "deluxe-standard-ceramic-chalk-board",
+    name: "Deluxe Standard Ceramic Chalk Board",
+    categorySlug: "chalk-boards",
+    series: "Deluxe Standard",
+    highlights: ["Ceramic Steel Magnetic Chalk Board", "Accepts Magnet", "Electroplated Chrome Corners"],
+    shortDescription:
+      "Ceramic steel green chalk magnetic surface with aluminium frame and Electroplated Chrome Corners — long-lasting performance for institutions.",
+    description:
+      "The Deluxe Standard Ceramic Chalk Board combines a porcelain enamel / ceramic steel green chalk surface that accepts magnets with an aluminium frame and Electroplated Chrome Corners. Ideal for colleges and institutions requiring long surface life with standard framing.",
+    features: [
+      "Ceramic steel / porcelain enamel magnetic chalk surface",
+      "Long product life under regular institutional use",
+      "Aluminium frame with Electroplated Chrome Corners",
+      "Smooth writing and easy cleaning",
+    ],
+    specifications: [
+      { label: "Type", value: "Ceramic Steel Magnetic Chalk Board" },
+      { label: "Surface", value: "Ceramic steel green chalk surface; accepts magnets" },
+      { label: "Product Life", value: "Designed for very long product life under regular institutional use" },
+      { label: "Design", value: "Aluminium frame with Electroplated Chrome Corners" },
+    ],
+    applications: ["Classrooms", "Coaching centres", "Offices"],
+  }),
+];
+
+/* ------------------------------------------------------------------ */
 /* Notice Boards                                                       */
 /* ------------------------------------------------------------------ */
 const noticeBoards: Product[] = [
@@ -627,7 +758,7 @@ const specialtyBoards: Product[] = [
   define({
     slug: "cork-notice-board",
     name: "Cork Notice Board",
-    categorySlug: "specialty-boards",
+    categorySlug: "notice-boards",
     series: "Specialty",
     highlights: ["Natural cork surface"],
     shortDescription:
@@ -653,7 +784,7 @@ const specialtyBoards: Product[] = [
   define({
     slug: "combination-board",
     name: "Combination Board",
-    categorySlug: "specialty-boards",
+    categorySlug: "notice-boards",
     series: "Specialty",
     highlights: ["Dry wipe + fabric", "Two surfaces, one board"],
     shortDescription:
@@ -679,7 +810,7 @@ const specialtyBoards: Product[] = [
   define({
     slug: "fabric-notice-board",
     name: "Fabric Notice Board",
-    categorySlug: "specialty-boards",
+    categorySlug: "notice-boards",
     series: "Specialty",
     highlights: ["Customer's preferred fabric colour"],
     shortDescription:
@@ -1178,6 +1309,7 @@ const scheduleBoards: Product[] = [
 export const products: Product[] = [
   ...whiteBoards,
   ...chalkBoards,
+  ...magneticChalkBoards,
   ...noticeBoards,
   ...magneticBoards,
   ...ceramicBoards,

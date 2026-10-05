@@ -3,7 +3,7 @@
 import { useId, useMemo, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, HelpCircle, MessageCircle, PhoneCall, Plus, Search, X } from "lucide-react";
+import { ArrowRight, BookOpen, HelpCircle, MessageCircle, PhoneCall, Plus, Search, X } from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ButtonLink } from "@/components/ui/Button";
 import { JsonLd } from "@/components/ui/JsonLd";
@@ -81,7 +81,7 @@ export function FaqSection() {
               />
             </Reveal>
 
-            {/* Category Filter Tabs */}
+              {/* Category Filter Tabs */}
             <Reveal delay={0.06} className="mt-8">
               <p className="mb-3 font-mono text-[0.66rem] uppercase tracking-[0.14em] text-steel">Select Section</p>
               <div role="tablist" aria-label="FAQ sections" className="flex flex-wrap gap-2 lg:flex-col lg:gap-1.5">
@@ -95,13 +95,20 @@ export function FaqSection() {
                       aria-selected={isActive}
                       onClick={() => handleTabChange(group.id)}
                       className={cn(
-                        "group relative flex items-center justify-between gap-3 rounded-xl px-4 py-3 text-left text-sm font-medium transition-all",
+                        "group relative flex items-center justify-between gap-3 overflow-hidden rounded-xl px-4 py-3 text-left text-sm font-medium transition-colors",
                         isActive
-                          ? "bg-graphite text-white shadow-md shadow-graphite/10"
+                          ? "text-white"
                           : "bg-white text-steel ring-1 ring-line hover:bg-mist hover:text-graphite",
                       )}
                     >
-                      <span className="flex items-center gap-2.5">
+                      {isActive && (
+                        <motion.span
+                          layoutId="faq-tab-bg"
+                          className="absolute inset-0 bg-graphite"
+                          transition={{ type: "spring", stiffness: 400, damping: 38 }}
+                        />
+                      )}
+                      <span className="relative flex items-center gap-2.5">
                         <span className={cn("font-mono text-[0.68rem]", isActive ? "text-white/60" : "text-alu-dark")}>
                           {String(gi + 1).padStart(2, "0")}
                         </span>
@@ -109,7 +116,7 @@ export function FaqSection() {
                       </span>
                       <span
                         className={cn(
-                          "rounded-full px-2 py-0.5 font-mono text-[0.66rem]",
+                          "relative rounded-full px-2 py-0.5 font-mono text-[0.66rem]",
                           isActive ? "bg-white/20 text-white" : "bg-mist text-alu-dark",
                         )}
                       >
@@ -191,7 +198,11 @@ export function FaqSection() {
                 {searchQuery ? (
                   <>Found <strong className="font-semibold text-graphite">{filteredItems.length}</strong> questions matching <span className="italic text-graphite">"{searchQuery}"</span></>
                 ) : (
-                  <>Showing <strong className="font-semibold text-graphite">{filteredItems.length}</strong> questions in <span className="font-medium text-graphite">{activeGroup.title}</span></>
+                  <>
+                    <span className="font-medium text-graphite">{activeGroup.title}</span>
+                    <span className="mx-1.5 text-line">·</span>
+                    <strong className="font-semibold text-graphite">{filteredItems.length}</strong> questions
+                  </>
                 )}
               </span>
               {searchQuery && (
@@ -204,6 +215,26 @@ export function FaqSection() {
                 </button>
               )}
             </div>
+
+            {/* Active section header (only shown when not searching) */}
+            {!searchQuery && (
+              <motion.div
+                key={activeGroup.id}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.25 }}
+                className="mb-5 flex items-center gap-3 border-b border-line pb-4"
+              >
+                <span className="flex size-8 items-center justify-center rounded-full bg-graphite font-mono text-[0.68rem] font-semibold text-white">
+                  {String(faqGroups.findIndex(g => g.id === activeGroup.id) + 1).padStart(2, "0")}
+                </span>
+                <div>
+                  <h3 className="font-display text-lg font-semibold text-graphite">{activeGroup.title}</h3>
+                  <p className="text-xs text-steel">{activeGroup.items.length} questions in this section</p>
+                </div>
+                <BookOpen className="ml-auto size-4 text-alu-dark" aria-hidden />
+              </motion.div>
+            )}
 
             {/* Accordion list */}
             {filteredItems.length === 0 ? (
