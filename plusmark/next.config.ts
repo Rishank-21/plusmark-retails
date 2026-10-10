@@ -13,6 +13,13 @@ const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
     qualities: [75, 85],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        pathname: "/drt0rpkn2/image/upload/**",
+      },
+    ],
     localPatterns: [
       // Product photos carry a content-hash `?v=` cache-buster (see scripts/import-photos.mts).
       { pathname: "/images/products/**" },

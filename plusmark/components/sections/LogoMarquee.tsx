@@ -14,7 +14,7 @@ const SECTOR_ICON: Record<ClientSector, LucideIcon> = {
 };
 
 /** Seconds per organization: the strip drifts at the same unhurried pace however long the list gets. */
-const SECONDS_PER_ITEM = 6.4;
+const SECONDS_PER_ITEM = 4.5;
 
 /** Logo height the files are requested at (px); CSS sets the shown height per breakpoint. */
 const LOGO_PX = 72;

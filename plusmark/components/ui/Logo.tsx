@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { getCloudinaryUrl } from "@/lib/cloudinary";
 
 /**
  * Plusmark brand logo (circular "A" monogram + PLUSMARK wordmark).
@@ -9,7 +10,7 @@ import { cn } from "@/lib/utils";
 export function Logo({ className, tone = "dark" }: { className?: string; tone?: "dark" | "light" }) {
   return (
     <Image
-      src="/images/plusmark-logo.png"
+      src={getCloudinaryUrl("/images/plusmark-logo.png")}
       alt="Plusmark — Writing & Display System"
       width={892}
       height={162}

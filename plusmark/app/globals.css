@@ -778,3 +778,15 @@ html[data-theme="c"] ::selection {
     transform: none;
   }
 }
+
+/* Force remove rounded corners from A+ listing images */
+#aplus-banners,
+#aplus-banners > li,
+#aplus-banners > li > img,
+#aplus-banners img {
+  border-radius: 0 !important;
+  -webkit-border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+  overflow: visible !important;
+  clip-path: none !important;
+}

@@ -1,0 +1,2118 @@
+{
+  "/images/aplus/brand.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/aplus/brand",
+    "publicId": "plusmark/aplus/brand",
+    "existing": true
+  },
+  "/images/aplus/eco-magnetic-chalk-board/02.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/aplus/eco-magnetic-chalk-board/02",
+    "publicId": "plusmark/aplus/eco-magnetic-chalk-board/02",
+    "existing": true
+  },
+  "/images/aplus/eco-magnetic-chalk-board/01.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/aplus/eco-magnetic-chalk-board/01",
+    "publicId": "plusmark/aplus/eco-magnetic-chalk-board/01",
+    "existing": true
+  },
+  "/images/aplus/eco-magnetic-chalk-board/03.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/aplus/eco-magnetic-chalk-board/03",
+    "publicId": "plusmark/aplus/eco-magnetic-chalk-board/03",
+    "existing": true
+  },
+  "/images/aplus/eco-magnetic-chalk-board/05.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/aplus/eco-magnetic-chalk-board/05",
+    "publicId": "plusmark/aplus/eco-magnetic-chalk-board/05",
+    "existing": true
+  },
+  "/images/aplus/eco-magnetic-chalk-board/04.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/aplus/eco-magnetic-chalk-board/04",
+    "publicId": "plusmark/aplus/eco-magnetic-chalk-board/04",
+    "existing": true
+  },
+  "/images/aplus/eco-magnetic-chalk-board/08.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/aplus/eco-magnetic-chalk-board/08",
+    "publicId": "plusmark/aplus/eco-magnetic-chalk-board/08",
+    "existing": true
+  },
+  "/images/aplus/eco-magnetic-chalk-board/06.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/aplus/eco-magnetic-chalk-board/06",
+    "publicId": "plusmark/aplus/eco-magnetic-chalk-board/06",
+    "existing": true
+  },
+  "/images/aplus/eco-magnetic-chalk-board/07.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/aplus/eco-magnetic-chalk-board/07",
+    "publicId": "plusmark/aplus/eco-magnetic-chalk-board/07",
+    "existing": true
+  },
+  "/images/aplus/eco-premium-both-side-board/03.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/aplus/eco-premium-both-side-board/03",
+    "publicId": "plusmark/aplus/eco-premium-both-side-board/03",
+    "existing": true
+  },
+  "/images/aplus/eco-premium-both-side-board/01.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/aplus/eco-premium-both-side-board/01",
+    "publicId": "plusmark/aplus/eco-premium-both-side-board/01",
+    "existing": true
+  },
+  "/images/aplus/eco-premium-both-side-board/02.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/aplus/eco-premium-both-side-board/02",
+    "publicId": "plusmark/aplus/eco-premium-both-side-board/02",
+    "existing": true
+  },
+  "/images/aplus/eco-premium-both-side-board/05.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/aplus/eco-premium-both-side-board/05",
+    "publicId": "plusmark/aplus/eco-premium-both-side-board/05",
+    "existing": true
+  },
+  "/images/aplus/eco-premium-both-side-board/04.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/aplus/eco-premium-both-side-board/04",
+    "publicId": "plusmark/aplus/eco-premium-both-side-board/04",
+    "existing": true
+  },
+  "/images/aplus/eco-premium-both-side-board/06.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/aplus/eco-premium-both-side-board/06",
+    "publicId": "plusmark/aplus/eco-premium-both-side-board/06",
+    "existing": true
+  },
+  "/images/aplus/eco-premium-both-side-board/08.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/aplus/eco-premium-both-side-board/08",
+    "publicId": "plusmark/aplus/eco-premium-both-side-board/08",
+    "existing": true
+  },
+  "/images/aplus/eco-premium-chalk-board/01.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/aplus/eco-premium-chalk-board/01",
+    "publicId": "plusmark/aplus/eco-premium-chalk-board/01",
+    "existing": true
+  },
+  "/images/aplus/eco-premium-both-side-board/07.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/aplus/eco-premium-both-side-board/07",
+    "publicId": "plusmark/aplus/eco-premium-both-side-board/07",
+    "existing": true
+  },
+  "/images/aplus/eco-premium-chalk-board/02.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/aplus/eco-premium-chalk-board/02",
+    "publicId": "plusmark/aplus/eco-premium-chalk-board/02",
+    "existing": true
+  },
+  "/images/aplus/eco-premium-chalk-board/04.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/aplus/eco-premium-chalk-board/04",
+    "publicId": "plusmark/aplus/eco-premium-chalk-board/04",
+    "existing": true
+  },
+  "/images/aplus/eco-premium-chalk-board/03.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/aplus/eco-premium-chalk-board/03",
+    "publicId": "plusmark/aplus/eco-premium-chalk-board/03",
+    "existing": true
+  },
+  "/images/aplus/eco-premium-chalk-board/05.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/aplus/eco-premium-chalk-board/05",
+    "publicId": "plusmark/aplus/eco-premium-chalk-board/05",
+    "existing": true
+  },
+  "/images/aplus/eco-premium-chalk-board/06.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/aplus/eco-premium-chalk-board/06",
+    "publicId": "plusmark/aplus/eco-premium-chalk-board/06",
+    "existing": true
+  },
+  "/images/aplus/eco-premium-chalk-board/07.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/aplus/eco-premium-chalk-board/07",
+    "publicId": "plusmark/aplus/eco-premium-chalk-board/07",
+    "existing": true
+  },
+  "/images/aplus/eco-premium-chalk-board/08.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/aplus/eco-premium-chalk-board/08",
+    "publicId": "plusmark/aplus/eco-premium-chalk-board/08",
+    "existing": true
+  },
+  "/images/aplus/eco-premium-notice-board/02.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/aplus/eco-premium-notice-board/02",
+    "publicId": "plusmark/aplus/eco-premium-notice-board/02",
+    "existing": true
+  },
+  "/images/aplus/eco-premium-notice-board/01.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/aplus/eco-premium-notice-board/01",
+    "publicId": "plusmark/aplus/eco-premium-notice-board/01",
+    "existing": true
+  },
+  "/images/aplus/metallic-premium-white-board/02.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615780/plusmark/aplus/metallic-premium-white-board/02.jpg",
+    "publicId": "plusmark/aplus/metallic-premium-white-board/02",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:31:07.341Z"
+  },
+  "/images/aplus/metallic-premium-white-board/04.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615798/plusmark/aplus/metallic-premium-white-board/04.jpg",
+    "publicId": "plusmark/aplus/metallic-premium-white-board/04",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:31:13.124Z"
+  },
+  "/images/aplus/metallic-premium-white-board/03.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615802/plusmark/aplus/metallic-premium-white-board/03.jpg",
+    "publicId": "plusmark/aplus/metallic-premium-white-board/03",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:31:07.952Z"
+  },
+  "/images/aplus/metallic-premium-white-board/07.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615853/plusmark/aplus/metallic-premium-white-board/07.jpg",
+    "publicId": "plusmark/aplus/metallic-premium-white-board/07",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:31:41.328Z"
+  },
+  "/images/aplus/metallic-premium-white-board/06.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615862/plusmark/aplus/metallic-premium-white-board/06.jpg",
+    "publicId": "plusmark/aplus/metallic-premium-white-board/06",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:31:44.971Z"
+  },
+  "/images/aplus/metallic-premium-white-board/05.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615917/plusmark/aplus/metallic-premium-white-board/05.jpg",
+    "publicId": "plusmark/aplus/metallic-premium-white-board/05",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:31:27.785Z"
+  },
+  "/images/both-side/chalk.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615928/plusmark/both-side/chalk.webp",
+    "publicId": "plusmark/both-side/chalk",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:31:54.290Z"
+  },
+  "/images/aplus/metallic-premium-white-board/08.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615928/plusmark/aplus/metallic-premium-white-board/08.webp",
+    "publicId": "plusmark/aplus/metallic-premium-white-board/08",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:31:50.821Z"
+  },
+  "/images/aplus/metallic-premium-white-board/09.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615928/plusmark/aplus/metallic-premium-white-board/09.webp",
+    "publicId": "plusmark/aplus/metallic-premium-white-board/09",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:31:50.704Z"
+  },
+  "/images/clients/banas-dairy.png": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615929/plusmark/clients/banas-dairy.png",
+    "publicId": "plusmark/clients/banas-dairy",
+    "format": "png",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:31:56.172Z"
+  },
+  "/images/clients/amul-dairy.png": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615929/plusmark/clients/amul-dairy.png",
+    "publicId": "plusmark/clients/amul-dairy",
+    "format": "png",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:31:55.949Z"
+  },
+  "/images/both-side/white.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615929/plusmark/both-side/white.webp",
+    "publicId": "plusmark/both-side/white",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:31:56.095Z"
+  },
+  "/images/clients/gujarat-university.png": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615930/plusmark/clients/gujarat-university.png",
+    "publicId": "plusmark/clients/gujarat-university",
+    "format": "png",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:31:58.386Z"
+  },
+  "/images/clients/delhi-public-school.png": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615930/plusmark/clients/delhi-public-school.png",
+    "publicId": "plusmark/clients/delhi-public-school",
+    "format": "png",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:31:58.309Z"
+  },
+  "/images/clients/gem.png": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615930/plusmark/clients/gem.png",
+    "publicId": "plusmark/clients/gem",
+    "format": "png",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:31:58.642Z"
+  },
+  "/images/clients/kendriya-vidyalaya.png": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615931/plusmark/clients/kendriya-vidyalaya.png",
+    "publicId": "plusmark/clients/kendriya-vidyalaya",
+    "format": "png",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:01.080Z"
+  },
+  "/images/clients/jawahar-navodaya-vidyalaya.png": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615931/plusmark/clients/jawahar-navodaya-vidyalaya.png",
+    "publicId": "plusmark/clients/jawahar-navodaya-vidyalaya",
+    "format": "png",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:01.159Z"
+  },
+  "/images/clients/iit-kharagpur.png": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615931/plusmark/clients/iit-kharagpur.png",
+    "publicId": "plusmark/clients/iit-kharagpur",
+    "format": "png",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:01.122Z"
+  },
+  "/images/clients/mahi-dairy.png": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615932/plusmark/clients/mahi-dairy.png",
+    "publicId": "plusmark/clients/mahi-dairy",
+    "format": "png",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:03.084Z"
+  },
+  "/images/clients/tata-sky.png": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615932/plusmark/clients/tata-sky.png",
+    "publicId": "plusmark/clients/tata-sky",
+    "format": "png",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:03.061Z"
+  },
+  "/images/industries/colleges-universities.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615932/plusmark/industries/colleges-universities.webp",
+    "publicId": "plusmark/industries/colleges-universities",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:03.354Z"
+  },
+  "/images/industries/dealers-distributors.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615934/plusmark/industries/dealers-distributors.webp",
+    "publicId": "plusmark/industries/dealers-distributors",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:06.024Z"
+  },
+  "/images/industries/factories-industrial-units.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615934/plusmark/industries/factories-industrial-units.webp",
+    "publicId": "plusmark/industries/factories-industrial-units",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:05.989Z"
+  },
+  "/images/industries/government-private-institutions.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615934/plusmark/industries/government-private-institutions.webp",
+    "publicId": "plusmark/industries/government-private-institutions",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:06.004Z"
+  },
+  "/images/plusmark-logo.png": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615935/plusmark/plusmark-logo.png",
+    "publicId": "plusmark/plusmark-logo",
+    "format": "png",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:07.734Z"
+  },
+  "/images/industries/schools.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615936/plusmark/industries/schools.webp",
+    "publicId": "plusmark/industries/schools",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:08.769Z"
+  },
+  "/images/industries/training-coaching-centers.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615936/plusmark/industries/training-coaching-centers.webp",
+    "publicId": "plusmark/industries/training-coaching-centers",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:08.720Z"
+  },
+  "/images/products/acrylic-folder-display-board.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615937/plusmark/products/acrylic-folder-display-board.webp",
+    "publicId": "plusmark/products/acrylic-folder-display-board",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:11.970Z"
+  },
+  "/images/products/cork-notice-board.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615939/plusmark/products/cork-notice-board.webp",
+    "publicId": "plusmark/products/cork-notice-board",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:15.820Z"
+  },
+  "/images/products/combination-board.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615939/plusmark/products/combination-board.webp",
+    "publicId": "plusmark/products/combination-board",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:17.861Z"
+  },
+  "/images/products/crystal-clear-base-clipboard.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615940/plusmark/products/crystal-clear-base-clipboard.webp",
+    "publicId": "plusmark/products/crystal-clear-base-clipboard",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:19.892Z"
+  },
+  "/images/products/deluxe-45mm-adc-notice-board-double-door.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615940/plusmark/products/deluxe-45mm-adc-notice-board-double-door.webp",
+    "publicId": "plusmark/products/deluxe-45mm-adc-notice-board-double-door",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:21.642Z"
+  },
+  "/images/products/crystal-colour-base-clipboard.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615940/plusmark/products/crystal-colour-base-clipboard.webp",
+    "publicId": "plusmark/products/crystal-colour-base-clipboard",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:19.680Z"
+  },
+  "/images/products/deluxe-45mm-adc-notice-board-single-door.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615942/plusmark/products/deluxe-45mm-adc-notice-board-single-door.webp",
+    "publicId": "plusmark/products/deluxe-45mm-adc-notice-board-single-door",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:23.446Z"
+  },
+  "/images/products/deluxe-standard-ceramic-board.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615942/plusmark/products/deluxe-standard-ceramic-board.webp",
+    "publicId": "plusmark/products/deluxe-standard-ceramic-board",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:24.498Z"
+  },
+  "/images/products/deluxe-standard-chalk-board.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615943/plusmark/products/deluxe-standard-chalk-board.webp",
+    "publicId": "plusmark/products/deluxe-standard-chalk-board",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:25.527Z"
+  },
+  "/images/products/deluxe-standard-magnetic-chalk-board.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615946/plusmark/products/deluxe-standard-magnetic-chalk-board.webp",
+    "publicId": "plusmark/products/deluxe-standard-magnetic-chalk-board",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:30.721Z"
+  },
+  "/images/products/deluxe-standard-magnetic-board.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615947/plusmark/products/deluxe-standard-magnetic-board.webp",
+    "publicId": "plusmark/products/deluxe-standard-magnetic-board",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:30.345Z"
+  },
+  "/images/products/deluxe-standard-notice-board.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615949/plusmark/products/deluxe-standard-notice-board.webp",
+    "publicId": "plusmark/products/deluxe-standard-notice-board",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:30.408Z"
+  },
+  "/images/products/deluxe-standard-white-board.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615950/plusmark/products/deluxe-standard-white-board.webp",
+    "publicId": "plusmark/products/deluxe-standard-white-board",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:32.351Z"
+  },
+  "/images/products/eco-adc-notice-board-single-door.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615950/plusmark/products/eco-adc-notice-board-single-door.webp",
+    "publicId": "plusmark/products/eco-adc-notice-board-single-door",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:33.481Z"
+  },
+  "/images/products/dry-wipe-schedule-board.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615950/plusmark/products/dry-wipe-schedule-board.webp",
+    "publicId": "plusmark/products/dry-wipe-schedule-board",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:33.300Z"
+  },
+  "/images/products/eco-premium-both-side-board/3.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615951/plusmark/products/eco-premium-both-side-board/3.webp",
+    "publicId": "plusmark/products/eco-premium-both-side-board/3",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:36.220Z"
+  },
+  "/images/products/eco-premium-both-side-board/1.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615951/plusmark/products/eco-premium-both-side-board/1.webp",
+    "publicId": "plusmark/products/eco-premium-both-side-board/1",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:36.215Z"
+  },
+  "/images/products/eco-premium-both-side-board/2.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615952/plusmark/products/eco-premium-both-side-board/2.webp",
+    "publicId": "plusmark/products/eco-premium-both-side-board/2",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:36.187Z"
+  },
+  "/images/aplus/eco-premium-notice-board/03.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615064/plusmark/aplus/eco-premium-notice-board/03.jpg",
+    "publicId": "plusmark/aplus/eco-premium-notice-board/03",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:19:48.007Z"
+  },
+  "/images/aplus/eco-premium-notice-board/05.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615060/plusmark/aplus/eco-premium-notice-board/05.jpg",
+    "publicId": "plusmark/aplus/eco-premium-notice-board/05",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:19:52.549Z"
+  },
+  "/images/aplus/eco-premium-notice-board/04.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615062/plusmark/aplus/eco-premium-notice-board/04.jpg",
+    "publicId": "plusmark/aplus/eco-premium-notice-board/04",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:19:58.068Z"
+  },
+  "/images/aplus/eco-premium-notice-board/06.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615116/plusmark/aplus/eco-premium-notice-board/06.jpg",
+    "publicId": "plusmark/aplus/eco-premium-notice-board/06",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:20:09.883Z"
+  },
+  "/images/aplus/eco-premium-notice-board/08.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615093/plusmark/aplus/eco-premium-notice-board/08.webp",
+    "publicId": "plusmark/aplus/eco-premium-notice-board/08",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:20:13.217Z"
+  },
+  "/images/aplus/eco-premium-notice-board/07.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615116/plusmark/aplus/eco-premium-notice-board/07.jpg",
+    "publicId": "plusmark/aplus/eco-premium-notice-board/07",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:20:21.989Z"
+  },
+  "/images/aplus/eco-premium-notice-board/09.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615075/plusmark/aplus/eco-premium-notice-board/09.webp",
+    "publicId": "plusmark/aplus/eco-premium-notice-board/09",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:20:25.838Z"
+  },
+  "/images/aplus/eco-premium-white-board/01.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615095/plusmark/aplus/eco-premium-white-board/01.jpg",
+    "publicId": "plusmark/aplus/eco-premium-white-board/01",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:20:31.999Z"
+  },
+  "/images/aplus/eco-premium-white-board/02.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615132/plusmark/aplus/eco-premium-white-board/02.jpg",
+    "publicId": "plusmark/aplus/eco-premium-white-board/02",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:20:32.479Z"
+  },
+  "/images/aplus/eco-premium-white-board/03.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615139/plusmark/aplus/eco-premium-white-board/03.jpg",
+    "publicId": "plusmark/aplus/eco-premium-white-board/03",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:20:42.345Z"
+  },
+  "/images/aplus/eco-premium-white-board/04.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615173/plusmark/aplus/eco-premium-white-board/04.jpg",
+    "publicId": "plusmark/aplus/eco-premium-white-board/04",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:20:45.557Z"
+  },
+  "/images/aplus/eco-premium-white-board/05.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615145/plusmark/aplus/eco-premium-white-board/05.jpg",
+    "publicId": "plusmark/aplus/eco-premium-white-board/05",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:20:49.767Z"
+  },
+  "/images/aplus/eco-premium-white-board/06.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615159/plusmark/aplus/eco-premium-white-board/06.jpg",
+    "publicId": "plusmark/aplus/eco-premium-white-board/06",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:21:00.825Z"
+  },
+  "/images/aplus/eco-premium-white-board/08.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615191/plusmark/aplus/eco-premium-white-board/08.webp",
+    "publicId": "plusmark/aplus/eco-premium-white-board/08",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:21:02.683Z"
+  },
+  "/images/aplus/eco-premium-white-board/07.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615215/plusmark/aplus/eco-premium-white-board/07.jpg",
+    "publicId": "plusmark/aplus/eco-premium-white-board/07",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:21:10.179Z"
+  },
+  "/images/aplus/eco-regular-magnetic-board/01.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615216/plusmark/aplus/eco-regular-magnetic-board/01.jpg",
+    "publicId": "plusmark/aplus/eco-regular-magnetic-board/01",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:21:25.946Z"
+  },
+  "/images/aplus/eco-regular-magnetic-board/03.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615203/plusmark/aplus/eco-regular-magnetic-board/03.jpg",
+    "publicId": "plusmark/aplus/eco-regular-magnetic-board/03",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:21:27.314Z"
+  },
+  "/images/aplus/eco-regular-magnetic-board/02.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615203/plusmark/aplus/eco-regular-magnetic-board/02.jpg",
+    "publicId": "plusmark/aplus/eco-regular-magnetic-board/02",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:21:34.729Z"
+  },
+  "/images/aplus/eco-regular-magnetic-board/04.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615245/plusmark/aplus/eco-regular-magnetic-board/04.jpg",
+    "publicId": "plusmark/aplus/eco-regular-magnetic-board/04",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:21:43.461Z"
+  },
+  "/images/aplus/eco-regular-magnetic-board/05.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615254/plusmark/aplus/eco-regular-magnetic-board/05.jpg",
+    "publicId": "plusmark/aplus/eco-regular-magnetic-board/05",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:21:57.691Z"
+  },
+  "/images/aplus/eco-regular-magnetic-board/06.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615255/plusmark/aplus/eco-regular-magnetic-board/06.jpg",
+    "publicId": "plusmark/aplus/eco-regular-magnetic-board/06",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:21:59.229Z"
+  },
+  "/images/aplus/eco-regular-magnetic-board/08.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615236/plusmark/aplus/eco-regular-magnetic-board/08.webp",
+    "publicId": "plusmark/aplus/eco-regular-magnetic-board/08",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:22:05.657Z"
+  },
+  "/images/aplus/metallic-ceramic-chalk-board/01.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615316/plusmark/aplus/metallic-ceramic-chalk-board/01.jpg",
+    "publicId": "plusmark/aplus/metallic-ceramic-chalk-board/01",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:22:20.232Z"
+  },
+  "/images/aplus/eco-regular-magnetic-board/07.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615261/plusmark/aplus/eco-regular-magnetic-board/07.jpg",
+    "publicId": "plusmark/aplus/eco-regular-magnetic-board/07",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:22:20.922Z"
+  },
+  "/images/aplus/metallic-ceramic-chalk-board/03.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615296/plusmark/aplus/metallic-ceramic-chalk-board/03.jpg",
+    "publicId": "plusmark/aplus/metallic-ceramic-chalk-board/03",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:22:33.880Z"
+  },
+  "/images/aplus/metallic-ceramic-chalk-board/02.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615294/plusmark/aplus/metallic-ceramic-chalk-board/02.jpg",
+    "publicId": "plusmark/aplus/metallic-ceramic-chalk-board/02",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:22:37.119Z"
+  },
+  "/images/aplus/metallic-ceramic-chalk-board/04.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615322/plusmark/aplus/metallic-ceramic-chalk-board/04.jpg",
+    "publicId": "plusmark/aplus/metallic-ceramic-chalk-board/04",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:22:45.697Z"
+  },
+  "/images/aplus/metallic-ceramic-chalk-board/05.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615343/plusmark/aplus/metallic-ceramic-chalk-board/05.jpg",
+    "publicId": "plusmark/aplus/metallic-ceramic-chalk-board/05",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:22:57.072Z"
+  },
+  "/images/aplus/metallic-ceramic-chalk-board/07.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615398/plusmark/aplus/metallic-ceramic-chalk-board/07.jpg",
+    "publicId": "plusmark/aplus/metallic-ceramic-chalk-board/07",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:23:19.795Z"
+  },
+  "/images/aplus/metallic-ceramic-chalk-board/06.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615377/plusmark/aplus/metallic-ceramic-chalk-board/06.jpg",
+    "publicId": "plusmark/aplus/metallic-ceramic-chalk-board/06",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:23:21.795Z"
+  },
+  "/images/aplus/metallic-ceramic-chalk-board/08.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615371/plusmark/aplus/metallic-ceramic-chalk-board/08.webp",
+    "publicId": "plusmark/aplus/metallic-ceramic-chalk-board/08",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:23:28.464Z"
+  },
+  "/images/aplus/metallic-ceramic-chalk-board/09.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615361/plusmark/aplus/metallic-ceramic-chalk-board/09.webp",
+    "publicId": "plusmark/aplus/metallic-ceramic-chalk-board/09",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:23:29.027Z"
+  },
+  "/images/aplus/metallic-ceramic-white-board/01.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615378/plusmark/aplus/metallic-ceramic-white-board/01.jpg",
+    "publicId": "plusmark/aplus/metallic-ceramic-white-board/01",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:23:37.638Z"
+  },
+  "/images/aplus/metallic-ceramic-white-board/02.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615412/plusmark/aplus/metallic-ceramic-white-board/02.jpg",
+    "publicId": "plusmark/aplus/metallic-ceramic-white-board/02",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:23:47.154Z"
+  },
+  "/images/aplus/metallic-ceramic-white-board/03.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615452/plusmark/aplus/metallic-ceramic-white-board/03.jpg",
+    "publicId": "plusmark/aplus/metallic-ceramic-white-board/03",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:23:59.838Z"
+  },
+  "/images/aplus/metallic-ceramic-white-board/04.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615435/plusmark/aplus/metallic-ceramic-white-board/04.jpg",
+    "publicId": "plusmark/aplus/metallic-ceramic-white-board/04",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:24:00.172Z"
+  },
+  "/images/aplus/metallic-ceramic-white-board/06.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615458/plusmark/aplus/metallic-ceramic-white-board/06.jpg",
+    "publicId": "plusmark/aplus/metallic-ceramic-white-board/06",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:24:27.431Z"
+  },
+  "/images/aplus/metallic-ceramic-white-board/05.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615458/plusmark/aplus/metallic-ceramic-white-board/05.jpg",
+    "publicId": "plusmark/aplus/metallic-ceramic-white-board/05",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:24:32.649Z"
+  },
+  "/images/aplus/metallic-ceramic-white-board/07.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615501/plusmark/aplus/metallic-ceramic-white-board/07.jpg",
+    "publicId": "plusmark/aplus/metallic-ceramic-white-board/07",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:24:34.351Z"
+  },
+  "/images/aplus/metallic-ceramic-white-board/08.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615468/plusmark/aplus/metallic-ceramic-white-board/08.webp",
+    "publicId": "plusmark/aplus/metallic-ceramic-white-board/08",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:24:42.257Z"
+  },
+  "/images/aplus/metallic-ceramic-white-board/09.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615478/plusmark/aplus/metallic-ceramic-white-board/09.webp",
+    "publicId": "plusmark/aplus/metallic-ceramic-white-board/09",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:24:43.053Z"
+  },
+  "/images/aplus/metallic-magnetic-chalk-board/01.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615502/plusmark/aplus/metallic-magnetic-chalk-board/01.jpg",
+    "publicId": "plusmark/aplus/metallic-magnetic-chalk-board/01",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:24:55.181Z"
+  },
+  "/images/aplus/metallic-magnetic-chalk-board/02.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615472/plusmark/aplus/metallic-magnetic-chalk-board/02.jpg",
+    "publicId": "plusmark/aplus/metallic-magnetic-chalk-board/02",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:25:07.040Z"
+  },
+  "/images/aplus/metallic-magnetic-chalk-board/04.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615546/plusmark/aplus/metallic-magnetic-chalk-board/04.jpg",
+    "publicId": "plusmark/aplus/metallic-magnetic-chalk-board/04",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:25:20.433Z"
+  },
+  "/images/aplus/metallic-magnetic-chalk-board/03.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615529/plusmark/aplus/metallic-magnetic-chalk-board/03.jpg",
+    "publicId": "plusmark/aplus/metallic-magnetic-chalk-board/03",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:25:23.452Z"
+  },
+  "/images/aplus/metallic-magnetic-chalk-board/05.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615570/plusmark/aplus/metallic-magnetic-chalk-board/05.jpg",
+    "publicId": "plusmark/aplus/metallic-magnetic-chalk-board/05",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:25:48.520Z"
+  },
+  "/images/aplus/metallic-magnetic-chalk-board/06.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615562/plusmark/aplus/metallic-magnetic-chalk-board/06.jpg",
+    "publicId": "plusmark/aplus/metallic-magnetic-chalk-board/06",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:25:48.590Z"
+  },
+  "/images/aplus/metallic-magnetic-chalk-board/07.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615533/plusmark/aplus/metallic-magnetic-chalk-board/07.jpg",
+    "publicId": "plusmark/aplus/metallic-magnetic-chalk-board/07",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:25:53.398Z"
+  },
+  "/images/aplus/metallic-magnetic-chalk-board/08.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615581/plusmark/aplus/metallic-magnetic-chalk-board/08.webp",
+    "publicId": "plusmark/aplus/metallic-magnetic-chalk-board/08",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:25:56.782Z"
+  },
+  "/images/aplus/metallic-magnetic-chalk-board/09.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615584/plusmark/aplus/metallic-magnetic-chalk-board/09.webp",
+    "publicId": "plusmark/aplus/metallic-magnetic-chalk-board/09",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:26:01.081Z"
+  },
+  "/images/aplus/metallic-magnetic-white-board/01.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615608/plusmark/aplus/metallic-magnetic-white-board/01.jpg",
+    "publicId": "plusmark/aplus/metallic-magnetic-white-board/01",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:26:04.894Z"
+  },
+  "/images/aplus/metallic-magnetic-white-board/02.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615599/plusmark/aplus/metallic-magnetic-white-board/02.jpg",
+    "publicId": "plusmark/aplus/metallic-magnetic-white-board/02",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:26:21.535Z"
+  },
+  "/images/aplus/metallic-magnetic-white-board/03.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615589/plusmark/aplus/metallic-magnetic-white-board/03.jpg",
+    "publicId": "plusmark/aplus/metallic-magnetic-white-board/03",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:26:22.141Z"
+  },
+  "/images/aplus/metallic-magnetic-white-board/04.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615663/plusmark/aplus/metallic-magnetic-white-board/04.jpg",
+    "publicId": "plusmark/aplus/metallic-magnetic-white-board/04",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:26:31.653Z"
+  },
+  "/images/aplus/metallic-magnetic-white-board/05.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615662/plusmark/aplus/metallic-magnetic-white-board/05.jpg",
+    "publicId": "plusmark/aplus/metallic-magnetic-white-board/05",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:26:39.754Z"
+  },
+  "/images/aplus/metallic-magnetic-white-board/06.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615652/plusmark/aplus/metallic-magnetic-white-board/06.jpg",
+    "publicId": "plusmark/aplus/metallic-magnetic-white-board/06",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:26:52.296Z"
+  },
+  "/images/aplus/metallic-magnetic-white-board/07.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615657/plusmark/aplus/metallic-magnetic-white-board/07.jpg",
+    "publicId": "plusmark/aplus/metallic-magnetic-white-board/07",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:26:55.418Z"
+  },
+  "/images/aplus/metallic-magnetic-white-board/08.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615624/plusmark/aplus/metallic-magnetic-white-board/08.webp",
+    "publicId": "plusmark/aplus/metallic-magnetic-white-board/08",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:27:01.248Z"
+  },
+  "/images/aplus/metallic-magnetic-white-board/09.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791617220/plusmark/aplus/metallic-magnetic-white-board/09.webp",
+    "publicId": "plusmark/aplus/metallic-magnetic-white-board/09",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:27:01.588Z"
+  },
+  "/images/aplus/metallic-premium-chalk-board/01.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791617228/plusmark/aplus/metallic-premium-chalk-board/01.jpg",
+    "publicId": "plusmark/aplus/metallic-premium-chalk-board/01",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:27:09.939Z"
+  },
+  "/images/aplus/metallic-premium-chalk-board/02.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791617238/plusmark/aplus/metallic-premium-chalk-board/02.jpg",
+    "publicId": "plusmark/aplus/metallic-premium-chalk-board/02",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:27:19.544Z"
+  },
+  "/images/aplus/metallic-premium-chalk-board/03.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791617249/plusmark/aplus/metallic-premium-chalk-board/03.jpg",
+    "publicId": "plusmark/aplus/metallic-premium-chalk-board/03",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:27:30.598Z"
+  },
+  "/images/aplus/metallic-premium-chalk-board/04.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791617257/plusmark/aplus/metallic-premium-chalk-board/04.jpg",
+    "publicId": "plusmark/aplus/metallic-premium-chalk-board/04",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:27:38.250Z"
+  },
+  "/images/aplus/metallic-premium-chalk-board/05.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791617270/plusmark/aplus/metallic-premium-chalk-board/05.jpg",
+    "publicId": "plusmark/aplus/metallic-premium-chalk-board/05",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:27:51.589Z"
+  },
+  "/images/aplus/metallic-premium-chalk-board/07.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791617284/plusmark/aplus/metallic-premium-chalk-board/07.jpg",
+    "publicId": "plusmark/aplus/metallic-premium-chalk-board/07",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:28:06.115Z"
+  },
+  "/images/aplus/metallic-premium-chalk-board/06.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791617290/plusmark/aplus/metallic-premium-chalk-board/06.jpg",
+    "publicId": "plusmark/aplus/metallic-premium-chalk-board/06",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:28:12.047Z"
+  },
+  "/images/aplus/metallic-premium-chalk-board/08.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791617294/plusmark/aplus/metallic-premium-chalk-board/08.webp",
+    "publicId": "plusmark/aplus/metallic-premium-chalk-board/08",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:28:15.845Z"
+  },
+  "/images/aplus/metallic-premium-chalk-board/09.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791617301/plusmark/aplus/metallic-premium-chalk-board/09.webp",
+    "publicId": "plusmark/aplus/metallic-premium-chalk-board/09",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:28:22.810Z"
+  },
+  "/images/aplus/metallic-premium-notice-board/01.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791617313/plusmark/aplus/metallic-premium-notice-board/01.jpg",
+    "publicId": "plusmark/aplus/metallic-premium-notice-board/01",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:28:34.285Z"
+  },
+  "/images/aplus/metallic-premium-notice-board/02.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791617338/plusmark/aplus/metallic-premium-notice-board/02.jpg",
+    "publicId": "plusmark/aplus/metallic-premium-notice-board/02",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:29:00.033Z"
+  },
+  "/images/aplus/metallic-premium-notice-board/03.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791617345/plusmark/aplus/metallic-premium-notice-board/03.jpg",
+    "publicId": "plusmark/aplus/metallic-premium-notice-board/03",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:29:06.756Z"
+  },
+  "/images/aplus/metallic-premium-notice-board/04.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791617361/plusmark/aplus/metallic-premium-notice-board/04.jpg",
+    "publicId": "plusmark/aplus/metallic-premium-notice-board/04",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:29:22.271Z"
+  },
+  "/images/aplus/metallic-premium-notice-board/05.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791617407/plusmark/aplus/metallic-premium-notice-board/05.jpg",
+    "publicId": "plusmark/aplus/metallic-premium-notice-board/05",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:30:08.594Z"
+  },
+  "/images/aplus/metallic-premium-notice-board/06.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791617416/plusmark/aplus/metallic-premium-notice-board/06.jpg",
+    "publicId": "plusmark/aplus/metallic-premium-notice-board/06",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:30:17.427Z"
+  },
+  "/images/aplus/metallic-premium-notice-board/07.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791617426/plusmark/aplus/metallic-premium-notice-board/07.jpg",
+    "publicId": "plusmark/aplus/metallic-premium-notice-board/07",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:30:27.445Z"
+  },
+  "/images/aplus/metallic-premium-notice-board/08.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791617433/plusmark/aplus/metallic-premium-notice-board/08.webp",
+    "publicId": "plusmark/aplus/metallic-premium-notice-board/08",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:30:34.739Z"
+  },
+  "/images/aplus/metallic-premium-notice-board/09.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791617446/plusmark/aplus/metallic-premium-notice-board/09.webp",
+    "publicId": "plusmark/aplus/metallic-premium-notice-board/09",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:30:47.332Z"
+  },
+  "/images/aplus/metallic-premium-white-board/01.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791617448/plusmark/aplus/metallic-premium-white-board/01.jpg",
+    "publicId": "plusmark/aplus/metallic-premium-white-board/01",
+    "format": "jpg",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:30:49.778Z"
+  },
+  "/images/products/eco-premium-both-side-board/4.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615953/plusmark/products/eco-premium-both-side-board/4.webp",
+    "publicId": "plusmark/products/eco-premium-both-side-board/4",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:37.950Z"
+  },
+  "/images/products/eco-premium-both-side-board/5.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615953/plusmark/products/eco-premium-both-side-board/5.webp",
+    "publicId": "plusmark/products/eco-premium-both-side-board/5",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:38.557Z"
+  },
+  "/images/products/eco-premium-both-side-board/6.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615954/plusmark/products/eco-premium-both-side-board/6.webp",
+    "publicId": "plusmark/products/eco-premium-both-side-board/6",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:41.478Z"
+  },
+  "/images/products/eco-premium-chalk-board/1.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615955/plusmark/products/eco-premium-chalk-board/1.webp",
+    "publicId": "plusmark/products/eco-premium-chalk-board/1",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:43.729Z"
+  },
+  "/images/products/eco-premium-both-side-board.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615955/plusmark/products/eco-premium-both-side-board.webp",
+    "publicId": "plusmark/products/eco-premium-both-side-board",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:43.796Z"
+  },
+  "/images/products/eco-premium-chalk-board/2.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615955/plusmark/products/eco-premium-chalk-board/2.webp",
+    "publicId": "plusmark/products/eco-premium-chalk-board/2",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:43.994Z"
+  },
+  "/images/products/eco-premium-chalk-board/3.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615957/plusmark/products/eco-premium-chalk-board/3.webp",
+    "publicId": "plusmark/products/eco-premium-chalk-board/3",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:45.755Z"
+  },
+  "/images/products/eco-premium-chalk-board/4.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615957/plusmark/products/eco-premium-chalk-board/4.webp",
+    "publicId": "plusmark/products/eco-premium-chalk-board/4",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:46.055Z"
+  },
+  "/images/products/eco-premium-chalk-board/5.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615957/plusmark/products/eco-premium-chalk-board/5.webp",
+    "publicId": "plusmark/products/eco-premium-chalk-board/5",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:46.260Z"
+  },
+  "/images/products/eco-premium-chalk-board.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615959/plusmark/products/eco-premium-chalk-board.webp",
+    "publicId": "plusmark/products/eco-premium-chalk-board",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:49.175Z"
+  },
+  "/images/products/eco-premium-notice-board/1.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615961/plusmark/products/eco-premium-notice-board/1.webp",
+    "publicId": "plusmark/products/eco-premium-notice-board/1",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:51.262Z"
+  },
+  "/images/products/eco-premium-chalk-board/6.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615959/plusmark/products/eco-premium-chalk-board/6.webp",
+    "publicId": "plusmark/products/eco-premium-chalk-board/6",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:51.773Z"
+  },
+  "/images/products/eco-premium-notice-board/3.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615966/plusmark/products/eco-premium-notice-board/3.webp",
+    "publicId": "plusmark/products/eco-premium-notice-board/3",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:57.685Z"
+  },
+  "/images/products/eco-premium-notice-board/2.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615966/plusmark/products/eco-premium-notice-board/2.webp",
+    "publicId": "plusmark/products/eco-premium-notice-board/2",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:58.090Z"
+  },
+  "/images/products/eco-premium-notice-board/4.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615965/plusmark/products/eco-premium-notice-board/4.webp",
+    "publicId": "plusmark/products/eco-premium-notice-board/4",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:32:59.603Z"
+  },
+  "/images/products/eco-premium-notice-board/5.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615972/plusmark/products/eco-premium-notice-board/5.webp",
+    "publicId": "plusmark/products/eco-premium-notice-board/5",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:04.758Z"
+  },
+  "/images/products/eco-premium-notice-board/7.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615969/plusmark/products/eco-premium-notice-board/7.webp",
+    "publicId": "plusmark/products/eco-premium-notice-board/7",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:06.322Z"
+  },
+  "/images/products/eco-premium-notice-board/6.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615969/plusmark/products/eco-premium-notice-board/6.webp",
+    "publicId": "plusmark/products/eco-premium-notice-board/6",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:06.901Z"
+  },
+  "/images/products/eco-premium-white-board/1.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615973/plusmark/products/eco-premium-white-board/1.webp",
+    "publicId": "plusmark/products/eco-premium-white-board/1",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:09.156Z"
+  },
+  "/images/products/eco-premium-notice-board.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615973/plusmark/products/eco-premium-notice-board.webp",
+    "publicId": "plusmark/products/eco-premium-notice-board",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:09.231Z"
+  },
+  "/images/products/eco-premium-notice-board/8.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615973/plusmark/products/eco-premium-notice-board/8.webp",
+    "publicId": "plusmark/products/eco-premium-notice-board/8",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:09.231Z"
+  },
+  "/images/products/eco-premium-white-board/3.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615974/plusmark/products/eco-premium-white-board/3.webp",
+    "publicId": "plusmark/products/eco-premium-white-board/3",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:10.836Z"
+  },
+  "/images/products/eco-premium-white-board/4.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615974/plusmark/products/eco-premium-white-board/4.webp",
+    "publicId": "plusmark/products/eco-premium-white-board/4",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:11.272Z"
+  },
+  "/images/products/eco-premium-white-board/2.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615974/plusmark/products/eco-premium-white-board/2.webp",
+    "publicId": "plusmark/products/eco-premium-white-board/2",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:11.283Z"
+  },
+  "/images/products/eco-premium-white-board/5.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615976/plusmark/products/eco-premium-white-board/5.webp",
+    "publicId": "plusmark/products/eco-premium-white-board/5",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:12.943Z"
+  },
+  "/images/products/eco-premium-white-board.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615976/plusmark/products/eco-premium-white-board.webp",
+    "publicId": "plusmark/products/eco-premium-white-board",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:13.708Z"
+  },
+  "/images/products/eco-premium-white-board/6.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615977/plusmark/products/eco-premium-white-board/6.webp",
+    "publicId": "plusmark/products/eco-premium-white-board/6",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:16.778Z"
+  },
+  "/images/products/eco-regular-chalk-board.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615978/plusmark/products/eco-regular-chalk-board.webp",
+    "publicId": "plusmark/products/eco-regular-chalk-board",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:18.306Z"
+  },
+  "/images/products/eco-regular-magnetic-board/1.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615978/plusmark/products/eco-regular-magnetic-board/1.webp",
+    "publicId": "plusmark/products/eco-regular-magnetic-board/1",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:18.992Z"
+  },
+  "/images/products/eco-regular-magnetic-board/10.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615979/plusmark/products/eco-regular-magnetic-board/10.webp",
+    "publicId": "plusmark/products/eco-regular-magnetic-board/10",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:19.582Z"
+  },
+  "/images/products/eco-regular-magnetic-board/4.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615980/plusmark/products/eco-regular-magnetic-board/4.webp",
+    "publicId": "plusmark/products/eco-regular-magnetic-board/4",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:21.725Z"
+  },
+  "/images/products/eco-regular-magnetic-board/2.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615980/plusmark/products/eco-regular-magnetic-board/2.webp",
+    "publicId": "plusmark/products/eco-regular-magnetic-board/2",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:21.725Z"
+  },
+  "/images/products/eco-regular-magnetic-board/3.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615980/plusmark/products/eco-regular-magnetic-board/3.webp",
+    "publicId": "plusmark/products/eco-regular-magnetic-board/3",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:21.835Z"
+  },
+  "/images/products/eco-regular-magnetic-board/6.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615985/plusmark/products/eco-regular-magnetic-board/6.webp",
+    "publicId": "plusmark/products/eco-regular-magnetic-board/6",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:25.857Z"
+  },
+  "/images/products/eco-regular-magnetic-board/5.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615982/plusmark/products/eco-regular-magnetic-board/5.webp",
+    "publicId": "plusmark/products/eco-regular-magnetic-board/5",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:26.564Z"
+  },
+  "/images/products/eco-regular-magnetic-board/7.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615982/plusmark/products/eco-regular-magnetic-board/7.webp",
+    "publicId": "plusmark/products/eco-regular-magnetic-board/7",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:26.956Z"
+  },
+  "/images/products/eco-regular-magnetic-board/8.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615986/plusmark/products/eco-regular-magnetic-board/8.webp",
+    "publicId": "plusmark/products/eco-regular-magnetic-board/8",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:29.358Z"
+  },
+  "/images/products/eco-regular-magnetic-board/9.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615986/plusmark/products/eco-regular-magnetic-board/9.webp",
+    "publicId": "plusmark/products/eco-regular-magnetic-board/9",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:29.468Z"
+  },
+  "/images/products/eco-regular-magnetic-board.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615986/plusmark/products/eco-regular-magnetic-board.webp",
+    "publicId": "plusmark/products/eco-regular-magnetic-board",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:29.503Z"
+  },
+  "/images/products/eco-regular-magnetic-chalk-board.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615987/plusmark/products/eco-regular-magnetic-chalk-board.webp",
+    "publicId": "plusmark/products/eco-regular-magnetic-chalk-board",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:31.404Z"
+  },
+  "/images/products/eco-regular-white-board.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615988/plusmark/products/eco-regular-white-board.webp",
+    "publicId": "plusmark/products/eco-regular-white-board",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:31.855Z"
+  },
+  "/images/products/eco-regular-notice-board.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615989/plusmark/products/eco-regular-notice-board.webp",
+    "publicId": "plusmark/products/eco-regular-notice-board",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:32.052Z"
+  },
+  "/images/products/first-aid-box.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615990/plusmark/products/first-aid-box.webp",
+    "publicId": "plusmark/products/first-aid-box",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:34.473Z"
+  },
+  "/images/products/fabric-notice-board.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615991/plusmark/products/fabric-notice-board.webp",
+    "publicId": "plusmark/products/fabric-notice-board",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:35.983Z"
+  },
+  "/images/products/file-rack.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615991/plusmark/products/file-rack.webp",
+    "publicId": "plusmark/products/file-rack",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:36.510Z"
+  },
+  "/images/products/four-leg-stand.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615993/plusmark/products/four-leg-stand.webp",
+    "publicId": "plusmark/products/four-leg-stand",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:38.160Z"
+  },
+  "/images/products/graphic-mdf-base-clipboard/1.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615993/plusmark/products/graphic-mdf-base-clipboard/1.webp",
+    "publicId": "plusmark/products/graphic-mdf-base-clipboard/1",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:38.650Z"
+  },
+  "/images/products/four-line-square-line-practice-board.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615993/plusmark/products/four-line-square-line-practice-board.webp",
+    "publicId": "plusmark/products/four-line-square-line-practice-board",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:38.918Z"
+  },
+  "/images/products/graphic-mdf-base-clipboard/3.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615998/plusmark/products/graphic-mdf-base-clipboard/3.webp",
+    "publicId": "plusmark/products/graphic-mdf-base-clipboard/3",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:42.856Z"
+  },
+  "/images/products/graphic-mdf-base-clipboard/4.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615755/plusmark/products/graphic-mdf-base-clipboard/4.webp",
+    "publicId": "plusmark/products/graphic-mdf-base-clipboard/4",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:44.040Z"
+  },
+  "/images/products/graphic-mdf-base-clipboard/2.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615997/plusmark/products/graphic-mdf-base-clipboard/2.webp",
+    "publicId": "plusmark/products/graphic-mdf-base-clipboard/2",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:45.911Z"
+  },
+  "/images/products/grooved-boards/1.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615751/plusmark/products/grooved-boards/1.webp",
+    "publicId": "plusmark/products/grooved-boards/1",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:48.671Z"
+  },
+  "/images/products/grooved-boards.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615755/plusmark/products/grooved-boards.webp",
+    "publicId": "plusmark/products/grooved-boards",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:48.741Z"
+  },
+  "/images/products/graphic-mdf-base-clipboard.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615755/plusmark/products/graphic-mdf-base-clipboard.webp",
+    "publicId": "plusmark/products/graphic-mdf-base-clipboard",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:48.904Z"
+  },
+  "/images/products/key-hanger-board.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615764/plusmark/products/key-hanger-board.webp",
+    "publicId": "plusmark/products/key-hanger-board",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:51.063Z"
+  },
+  "/images/products/heavy-duty-clear-acrylic-clipboard.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615750/plusmark/products/heavy-duty-clear-acrylic-clipboard.webp",
+    "publicId": "plusmark/products/heavy-duty-clear-acrylic-clipboard",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:51.064Z"
+  },
+  "/images/products/laminate-mdf-base-clipboard/1.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615762/plusmark/products/laminate-mdf-base-clipboard/1.webp",
+    "publicId": "plusmark/products/laminate-mdf-base-clipboard/1",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:51.064Z"
+  },
+  "/images/products/letters-and-figures-set.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615763/plusmark/products/letters-and-figures-set.webp",
+    "publicId": "plusmark/products/letters-and-figures-set",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:53.786Z"
+  },
+  "/images/products/laminate-mdf-base-clipboard.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615766/plusmark/products/laminate-mdf-base-clipboard.webp",
+    "publicId": "plusmark/products/laminate-mdf-base-clipboard",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:53.856Z"
+  },
+  "/images/products/letter-box.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615766/plusmark/products/letter-box.webp",
+    "publicId": "plusmark/products/letter-box",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:53.983Z"
+  },
+  "/images/products/metallic-premium-ceramic-board/1.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615771/plusmark/products/metallic-premium-ceramic-board/1.webp",
+    "publicId": "plusmark/products/metallic-premium-ceramic-board/1",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:56.682Z"
+  },
+  "/images/products/metallic-premium-ceramic-board/10.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615775/plusmark/products/metallic-premium-ceramic-board/10.webp",
+    "publicId": "plusmark/products/metallic-premium-ceramic-board/10",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:57.382Z"
+  },
+  "/images/products/magazine-stand.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615772/plusmark/products/magazine-stand.webp",
+    "publicId": "plusmark/products/magazine-stand",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:33:59.167Z"
+  },
+  "/images/products/metallic-premium-ceramic-board/3.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615773/plusmark/products/metallic-premium-ceramic-board/3.webp",
+    "publicId": "plusmark/products/metallic-premium-ceramic-board/3",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:01.672Z"
+  },
+  "/images/products/metallic-premium-ceramic-board/2.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615775/plusmark/products/metallic-premium-ceramic-board/2.webp",
+    "publicId": "plusmark/products/metallic-premium-ceramic-board/2",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:01.797Z"
+  },
+  "/images/products/metallic-premium-ceramic-board/4.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615755/plusmark/products/metallic-premium-ceramic-board/4.webp",
+    "publicId": "plusmark/products/metallic-premium-ceramic-board/4",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:01.800Z"
+  },
+  "/images/products/metallic-premium-ceramic-board/7.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615753/plusmark/products/metallic-premium-ceramic-board/7.webp",
+    "publicId": "plusmark/products/metallic-premium-ceramic-board/7",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:07.368Z"
+  },
+  "/images/products/metallic-premium-ceramic-board/6.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615761/plusmark/products/metallic-premium-ceramic-board/6.webp",
+    "publicId": "plusmark/products/metallic-premium-ceramic-board/6",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:08.070Z"
+  },
+  "/images/products/metallic-premium-ceramic-board/5.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615757/plusmark/products/metallic-premium-ceramic-board/5.webp",
+    "publicId": "plusmark/products/metallic-premium-ceramic-board/5",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:08.422Z"
+  },
+  "/images/products/metallic-premium-ceramic-board/8.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615757/plusmark/products/metallic-premium-ceramic-board/8.webp",
+    "publicId": "plusmark/products/metallic-premium-ceramic-board/8",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:10.958Z"
+  },
+  "/images/products/metallic-premium-ceramic-board.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615764/plusmark/products/metallic-premium-ceramic-board.webp",
+    "publicId": "plusmark/products/metallic-premium-ceramic-board",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:11.028Z"
+  },
+  "/images/products/metallic-premium-ceramic-board/9.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615766/plusmark/products/metallic-premium-ceramic-board/9.webp",
+    "publicId": "plusmark/products/metallic-premium-ceramic-board/9",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:11.115Z"
+  },
+  "/images/products/metallic-premium-chalk-board/1.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615764/plusmark/products/metallic-premium-chalk-board/1.webp",
+    "publicId": "plusmark/products/metallic-premium-chalk-board/1",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:13.212Z"
+  },
+  "/images/products/metallic-premium-chalk-board/3.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615771/plusmark/products/metallic-premium-chalk-board/3.webp",
+    "publicId": "plusmark/products/metallic-premium-chalk-board/3",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:13.481Z"
+  },
+  "/images/products/metallic-premium-chalk-board/2.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615773/plusmark/products/metallic-premium-chalk-board/2.webp",
+    "publicId": "plusmark/products/metallic-premium-chalk-board/2",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:13.864Z"
+  },
+  "/images/products/metallic-premium-chalk-board/4.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615776/plusmark/products/metallic-premium-chalk-board/4.webp",
+    "publicId": "plusmark/products/metallic-premium-chalk-board/4",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:16.893Z"
+  },
+  "/images/products/metallic-premium-chalk-board/6.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615784/plusmark/products/metallic-premium-chalk-board/6.webp",
+    "publicId": "plusmark/products/metallic-premium-chalk-board/6",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:17.779Z"
+  },
+  "/images/products/metallic-premium-chalk-board/5.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615780/plusmark/products/metallic-premium-chalk-board/5.webp",
+    "publicId": "plusmark/products/metallic-premium-chalk-board/5",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:18.974Z"
+  },
+  "/images/products/metallic-premium-chalk-board.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615781/plusmark/products/metallic-premium-chalk-board.webp",
+    "publicId": "plusmark/products/metallic-premium-chalk-board",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:20.637Z"
+  },
+  "/images/products/metallic-premium-magnetic-board/1.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615781/plusmark/products/metallic-premium-magnetic-board/1.webp",
+    "publicId": "plusmark/products/metallic-premium-magnetic-board/1",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:21.297Z"
+  },
+  "/images/products/metallic-premium-magnetic-board/10.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615789/plusmark/products/metallic-premium-magnetic-board/10.webp",
+    "publicId": "plusmark/products/metallic-premium-magnetic-board/10",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:22.328Z"
+  },
+  "/images/products/metallic-premium-magnetic-board/4.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615788/plusmark/products/metallic-premium-magnetic-board/4.webp",
+    "publicId": "plusmark/products/metallic-premium-magnetic-board/4",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:24.882Z"
+  },
+  "/images/products/metallic-premium-magnetic-board/3.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615787/plusmark/products/metallic-premium-magnetic-board/3.webp",
+    "publicId": "plusmark/products/metallic-premium-magnetic-board/3",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:25.137Z"
+  },
+  "/images/products/metallic-premium-magnetic-board/2.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615789/plusmark/products/metallic-premium-magnetic-board/2.webp",
+    "publicId": "plusmark/products/metallic-premium-magnetic-board/2",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:25.307Z"
+  },
+  "/images/products/metallic-premium-magnetic-board/7.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615794/plusmark/products/metallic-premium-magnetic-board/7.webp",
+    "publicId": "plusmark/products/metallic-premium-magnetic-board/7",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:28.150Z"
+  },
+  "/images/products/metallic-premium-magnetic-board/6.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615794/plusmark/products/metallic-premium-magnetic-board/6.webp",
+    "publicId": "plusmark/products/metallic-premium-magnetic-board/6",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:28.372Z"
+  },
+  "/images/products/metallic-premium-magnetic-board/5.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615790/plusmark/products/metallic-premium-magnetic-board/5.webp",
+    "publicId": "plusmark/products/metallic-premium-magnetic-board/5",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:28.762Z"
+  },
+  "/images/products/metallic-premium-magnetic-board/8.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615793/plusmark/products/metallic-premium-magnetic-board/8.webp",
+    "publicId": "plusmark/products/metallic-premium-magnetic-board/8",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:32.938Z"
+  },
+  "/images/products/metallic-premium-magnetic-board.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615796/plusmark/products/metallic-premium-magnetic-board.webp",
+    "publicId": "plusmark/products/metallic-premium-magnetic-board",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:33.651Z"
+  },
+  "/images/products/metallic-premium-magnetic-board/9.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615794/plusmark/products/metallic-premium-magnetic-board/9.webp",
+    "publicId": "plusmark/products/metallic-premium-magnetic-board/9",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:35.073Z"
+  },
+  "/images/products/metallic-premium-magnetic-chalk-board/1.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615798/plusmark/products/metallic-premium-magnetic-chalk-board/1.webp",
+    "publicId": "plusmark/products/metallic-premium-magnetic-chalk-board/1",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:36.772Z"
+  },
+  "/images/products/metallic-premium-magnetic-chalk-board/3.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615799/plusmark/products/metallic-premium-magnetic-chalk-board/3.webp",
+    "publicId": "plusmark/products/metallic-premium-magnetic-chalk-board/3",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:37.333Z"
+  },
+  "/images/products/metallic-premium-magnetic-chalk-board/2.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615798/plusmark/products/metallic-premium-magnetic-chalk-board/2.webp",
+    "publicId": "plusmark/products/metallic-premium-magnetic-chalk-board/2",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:37.425Z"
+  },
+  "/images/products/metallic-premium-magnetic-chalk-board/6.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615802/plusmark/products/metallic-premium-magnetic-chalk-board/6.webp",
+    "publicId": "plusmark/products/metallic-premium-magnetic-chalk-board/6",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:40.770Z"
+  },
+  "/images/products/metallic-premium-magnetic-chalk-board/4.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615799/plusmark/products/metallic-premium-magnetic-chalk-board/4.webp",
+    "publicId": "plusmark/products/metallic-premium-magnetic-chalk-board/4",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:41.580Z"
+  },
+  "/images/products/metallic-premium-magnetic-chalk-board/5.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615800/plusmark/products/metallic-premium-magnetic-chalk-board/5.webp",
+    "publicId": "plusmark/products/metallic-premium-magnetic-chalk-board/5",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:44.764Z"
+  },
+  "/images/products/metallic-premium-magnetic-chalk-board/size-2x3.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615801/plusmark/products/metallic-premium-magnetic-chalk-board/size-2x3.webp",
+    "publicId": "plusmark/products/metallic-premium-magnetic-chalk-board/size-2x3",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:46.745Z"
+  },
+  "/images/products/metallic-premium-magnetic-chalk-board/size-2x4.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615801/plusmark/products/metallic-premium-magnetic-chalk-board/size-2x4.webp",
+    "publicId": "plusmark/products/metallic-premium-magnetic-chalk-board/size-2x4",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:47.280Z"
+  },
+  "/images/products/metallic-premium-magnetic-chalk-board/size-3x4.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615801/plusmark/products/metallic-premium-magnetic-chalk-board/size-3x4.webp",
+    "publicId": "plusmark/products/metallic-premium-magnetic-chalk-board/size-3x4",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:47.742Z"
+  },
+  "/images/products/metallic-premium-magnetic-chalk-board.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615801/plusmark/products/metallic-premium-magnetic-chalk-board.webp",
+    "publicId": "plusmark/products/metallic-premium-magnetic-chalk-board",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:51.793Z"
+  },
+  "/images/products/metallic-premium-notice-board/10.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615827/plusmark/products/metallic-premium-notice-board/10.webp",
+    "publicId": "plusmark/products/metallic-premium-notice-board/10",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:53.359Z"
+  },
+  "/images/products/metallic-premium-notice-board/1.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615825/plusmark/products/metallic-premium-notice-board/1.webp",
+    "publicId": "plusmark/products/metallic-premium-notice-board/1",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:34:55.514Z"
+  },
+  "/images/products/metallic-premium-notice-board/3.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615825/plusmark/products/metallic-premium-notice-board/3.webp",
+    "publicId": "plusmark/products/metallic-premium-notice-board/3",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:00.222Z"
+  },
+  "/images/products/metallic-premium-notice-board/2.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615826/plusmark/products/metallic-premium-notice-board/2.webp",
+    "publicId": "plusmark/products/metallic-premium-notice-board/2",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:00.470Z"
+  },
+  "/images/products/metallic-premium-notice-board/11.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615829/plusmark/products/metallic-premium-notice-board/11.webp",
+    "publicId": "plusmark/products/metallic-premium-notice-board/11",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:02.658Z"
+  },
+  "/images/products/metallic-premium-notice-board/5.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615838/plusmark/products/metallic-premium-notice-board/5.webp",
+    "publicId": "plusmark/products/metallic-premium-notice-board/5",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:07.299Z"
+  },
+  "/images/products/metallic-premium-notice-board/6.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615848/plusmark/products/metallic-premium-notice-board/6.webp",
+    "publicId": "plusmark/products/metallic-premium-notice-board/6",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:07.428Z"
+  },
+  "/images/products/metallic-premium-notice-board/4.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615839/plusmark/products/metallic-premium-notice-board/4.webp",
+    "publicId": "plusmark/products/metallic-premium-notice-board/4",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:10.323Z"
+  },
+  "/images/products/metallic-premium-notice-board/8.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615847/plusmark/products/metallic-premium-notice-board/8.webp",
+    "publicId": "plusmark/products/metallic-premium-notice-board/8",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:14.273Z"
+  },
+  "/images/products/metallic-premium-notice-board/7.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615837/plusmark/products/metallic-premium-notice-board/7.webp",
+    "publicId": "plusmark/products/metallic-premium-notice-board/7",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:17.143Z"
+  },
+  "/images/products/metallic-premium-notice-board/9.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615868/plusmark/products/metallic-premium-notice-board/9.webp",
+    "publicId": "plusmark/products/metallic-premium-notice-board/9",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:17.573Z"
+  },
+  "/images/products/metallic-premium-white-board/1.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615859/plusmark/products/metallic-premium-white-board/1.webp",
+    "publicId": "plusmark/products/metallic-premium-white-board/1",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:19.805Z"
+  },
+  "/images/products/metallic-premium-white-board/2.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615859/plusmark/products/metallic-premium-white-board/2.webp",
+    "publicId": "plusmark/products/metallic-premium-white-board/2",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:19.878Z"
+  },
+  "/images/products/metallic-premium-notice-board.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615859/plusmark/products/metallic-premium-notice-board.webp",
+    "publicId": "plusmark/products/metallic-premium-notice-board",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:20.330Z"
+  },
+  "/images/products/metallic-premium-white-board/3.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615854/plusmark/products/metallic-premium-white-board/3.webp",
+    "publicId": "plusmark/products/metallic-premium-white-board/3",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:22.293Z"
+  },
+  "/images/products/metallic-premium-white-board/5.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615881/plusmark/products/metallic-premium-white-board/5.webp",
+    "publicId": "plusmark/products/metallic-premium-white-board/5",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:22.623Z"
+  },
+  "/images/products/metallic-premium-white-board/4.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615870/plusmark/products/metallic-premium-white-board/4.webp",
+    "publicId": "plusmark/products/metallic-premium-white-board/4",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:22.632Z"
+  },
+  "/images/products/newspaper-stand/1.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615874/plusmark/products/newspaper-stand/1.webp",
+    "publicId": "plusmark/products/newspaper-stand/1",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:24.829Z"
+  },
+  "/images/products/metallic-premium-white-board.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615874/plusmark/products/metallic-premium-white-board.webp",
+    "publicId": "plusmark/products/metallic-premium-white-board",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:24.850Z"
+  },
+  "/images/products/metallic-premium-white-board/6.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615878/plusmark/products/metallic-premium-white-board/6.webp",
+    "publicId": "plusmark/products/metallic-premium-white-board/6",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:25.084Z"
+  },
+  "/images/products/pds-500.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615882/plusmark/products/pds-500.webp",
+    "publicId": "plusmark/products/pds-500",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:27.179Z"
+  },
+  "/images/products/pds-sb-801.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615884/plusmark/products/pds-sb-801.webp",
+    "publicId": "plusmark/products/pds-sb-801",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:27.233Z"
+  },
+  "/images/products/newspaper-stand.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615884/plusmark/products/newspaper-stand.webp",
+    "publicId": "plusmark/products/newspaper-stand",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:27.293Z"
+  },
+  "/images/products/pds-sb-803.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615884/plusmark/products/pds-sb-803.webp",
+    "publicId": "plusmark/products/pds-sb-803",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:29.618Z"
+  },
+  "/images/products/pds-sb-802.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615887/plusmark/products/pds-sb-802.webp",
+    "publicId": "plusmark/products/pds-sb-802",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:29.679Z"
+  },
+  "/images/products/pds-sb-804.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615892/plusmark/products/pds-sb-804.webp",
+    "publicId": "plusmark/products/pds-sb-804",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:29.679Z"
+  },
+  "/images/products/pds-sb-807.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615888/plusmark/products/pds-sb-807.webp",
+    "publicId": "plusmark/products/pds-sb-807",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:31.763Z"
+  },
+  "/images/products/pds-sb-805.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615888/plusmark/products/pds-sb-805.webp",
+    "publicId": "plusmark/products/pds-sb-805",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:31.789Z"
+  },
+  "/images/products/pds-sb-806.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615888/plusmark/products/pds-sb-806.webp",
+    "publicId": "plusmark/products/pds-sb-806",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:31.906Z"
+  },
+  "/images/products/pds-sb-809.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615894/plusmark/products/pds-sb-809.webp",
+    "publicId": "plusmark/products/pds-sb-809",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:34.040Z"
+  },
+  "/images/products/pds-sb-808.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615888/plusmark/products/pds-sb-808.webp",
+    "publicId": "plusmark/products/pds-sb-808",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:34.043Z"
+  },
+  "/images/products/pds-sb-810.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615895/plusmark/products/pds-sb-810.webp",
+    "publicId": "plusmark/products/pds-sb-810",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:34.049Z"
+  },
+  "/images/products/pds-sb-813.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615896/plusmark/products/pds-sb-813.webp",
+    "publicId": "plusmark/products/pds-sb-813",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:36.264Z"
+  },
+  "/images/products/pds-sb-811.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615895/plusmark/products/pds-sb-811.webp",
+    "publicId": "plusmark/products/pds-sb-811",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:36.287Z"
+  },
+  "/images/products/pds-sb-812.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615896/plusmark/products/pds-sb-812.webp",
+    "publicId": "plusmark/products/pds-sb-812",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:36.293Z"
+  },
+  "/images/products/pds-sb-814.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615898/plusmark/products/pds-sb-814.webp",
+    "publicId": "plusmark/products/pds-sb-814",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:38.408Z"
+  },
+  "/images/products/pds-sb-815.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615898/plusmark/products/pds-sb-815.webp",
+    "publicId": "plusmark/products/pds-sb-815",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:38.718Z"
+  },
+  "/images/products/perforated-board.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615899/plusmark/products/perforated-board.webp",
+    "publicId": "plusmark/products/perforated-board",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:42.729Z"
+  },
+  "/images/products/pre-lam-mdf-base-clipboard/1.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615899/plusmark/products/pre-lam-mdf-base-clipboard/1.webp",
+    "publicId": "plusmark/products/pre-lam-mdf-base-clipboard/1",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:44.623Z"
+  },
+  "/images/products/pre-lam-mdf-base-clipboard/3.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615902/plusmark/products/pre-lam-mdf-base-clipboard/3.webp",
+    "publicId": "plusmark/products/pre-lam-mdf-base-clipboard/3",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:46.191Z"
+  },
+  "/images/products/pre-lam-mdf-base-clipboard/2.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615900/plusmark/products/pre-lam-mdf-base-clipboard/2.webp",
+    "publicId": "plusmark/products/pre-lam-mdf-base-clipboard/2",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:46.263Z"
+  },
+  "/images/products/pre-lam-mdf-base-clipboard/4.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615902/plusmark/products/pre-lam-mdf-base-clipboard/4.webp",
+    "publicId": "plusmark/products/pre-lam-mdf-base-clipboard/4",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:47.868Z"
+  },
+  "/images/products/revolving-stand.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615901/plusmark/products/revolving-stand.webp",
+    "publicId": "plusmark/products/revolving-stand",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:47.983Z"
+  },
+  "/images/products/pre-lam-mdf-base-clipboard.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615901/plusmark/products/pre-lam-mdf-base-clipboard.webp",
+    "publicId": "plusmark/products/pre-lam-mdf-base-clipboard",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:48.706Z"
+  },
+  "/images/products/student-study-table/1.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615902/plusmark/products/student-study-table/1.webp",
+    "publicId": "plusmark/products/student-study-table/1",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:51.051Z"
+  },
+  "/images/products/student-study-table/10.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615905/plusmark/products/student-study-table/10.webp",
+    "publicId": "plusmark/products/student-study-table/10",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:51.364Z"
+  },
+  "/images/products/student-study-table/11.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615908/plusmark/products/student-study-table/11.webp",
+    "publicId": "plusmark/products/student-study-table/11",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:51.394Z"
+  },
+  "/images/products/student-study-table/3.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615906/plusmark/products/student-study-table/3.webp",
+    "publicId": "plusmark/products/student-study-table/3",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:53.946Z"
+  },
+  "/images/products/student-study-table/12.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615905/plusmark/products/student-study-table/12.webp",
+    "publicId": "plusmark/products/student-study-table/12",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:54.171Z"
+  },
+  "/images/products/student-study-table/2.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615907/plusmark/products/student-study-table/2.webp",
+    "publicId": "plusmark/products/student-study-table/2",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:54.336Z"
+  },
+  "/images/products/student-study-table/5.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615914/plusmark/products/student-study-table/5.webp",
+    "publicId": "plusmark/products/student-study-table/5",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:56.387Z"
+  },
+  "/images/products/student-study-table/4.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615913/plusmark/products/student-study-table/4.webp",
+    "publicId": "plusmark/products/student-study-table/4",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:56.457Z"
+  },
+  "/images/products/student-study-table/6.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615912/plusmark/products/student-study-table/6.webp",
+    "publicId": "plusmark/products/student-study-table/6",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:56.496Z"
+  },
+  "/images/products/student-study-table/7.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615914/plusmark/products/student-study-table/7.webp",
+    "publicId": "plusmark/products/student-study-table/7",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:35:58.736Z"
+  },
+  "/images/products/student-study-table/8.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615914/plusmark/products/student-study-table/8.webp",
+    "publicId": "plusmark/products/student-study-table/8",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:36:01.551Z"
+  },
+  "/images/products/student-study-table/9.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615921/plusmark/products/student-study-table/9.webp",
+    "publicId": "plusmark/products/student-study-table/9",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:36:03.416Z"
+  },
+  "/images/products/student-study-table.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615919/plusmark/products/student-study-table.webp",
+    "publicId": "plusmark/products/student-study-table",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:36:05.053Z"
+  },
+  "/images/products/telescopic-stand.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615918/plusmark/products/telescopic-stand.webp",
+    "publicId": "plusmark/products/telescopic-stand",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:36:05.171Z"
+  },
+  "/images/products/three-leg-stand.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615919/plusmark/products/three-leg-stand.webp",
+    "publicId": "plusmark/products/three-leg-stand",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:36:06.399Z"
+  },
+  "/images/products/zig-zag-stand.webp": {
+    "cloudinaryUrl": "https://res.cloudinary.com/drt0rpkn2/image/upload/v1791615919/plusmark/products/zig-zag-stand.webp",
+    "publicId": "plusmark/products/zig-zag-stand",
+    "format": "webp",
+    "existing": true,
+    "uploadedAt": "2026-10-10T07:36:08.751Z"
+  }
+}

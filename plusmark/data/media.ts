@@ -81,3 +81,83 @@ export function getProductVideos(slug: string, categorySlug: string): Video[] {
 
 /** Every film once, for the "Spin the film reel" section on every home page variant. */
 export const allVideos: Video[] = Object.values(videos);
+
+/**
+ * Fetch videos from Firebase database with fallback to static data.
+ * Used by server components.
+ */
+export async function getAllVideos(): Promise<Video[]> {
+  try {
+    const { adminDb } = await import("@/lib/firebase-admin");
+    const db = adminDb();
+    const snapshot = await db.ref("videos").orderByChild("order").once("value");
+    const dbVideos: Video[] = [];
+    
+    snapshot.forEach((child) => {
+      const data = child.val();
+      dbVideos.push({
+        src: data.src,
+        poster: data.poster,
+        title: data.title,
+        caption: data.caption,
+      });
+    });
+    
+    return dbVideos.length > 0 ? dbVideos : allVideos;
+  } catch (error) {
+    console.error("Error fetching videos from database, using static data:", error);
+    return allVideos;
+  }
+}
+
+/**
+ * Fetch videos for a specific product from database with fallback to static data.
+ */
+export async function getProductVideosFromDb(slug: string, categorySlug: string): Promise<Video[]> {
+  try {
+    const { adminDb } = await import("@/lib/firebase-admin");
+    const db = adminDb();
+    const snapshot = await db.ref("videos").orderByChild("order").once("value");
+    const productVideos: Video[] = [];
+    
+    snapshot.forEach((child) => {
+      const data = child.val();
+      if (data.productSlugs && Array.isArray(data.productSlugs) && data.productSlugs.includes(slug)) {
+        productVideos.push({
+          src: data.src,
+          poster: data.poster,
+          title: data.title,
+          caption: data.caption,
+        });
+      }
+    });
+    
+    // Add installation video for wall boards
+    const WALL_BOARD_CATEGORIES = new Set(["white-boards", "chalk-boards", "notice-boards", "magnetic-boards", "ceramic-boards", "specialty-boards", "white-boards-magnetic", "white-boards-non-magnetic", "white-boards-ceramic", "chalk-boards-magnetic", "chalk-boards-non-magnetic", "chalk-boards-ceramic"]);
+    
+    if (WALL_BOARD_CATEGORIES.has(categorySlug)) {
+      const snapshotVal = snapshot.val();
+      if (snapshotVal) {
+        const installVideo = Object.values(snapshotVal).find((v: any) => 
+          typeof v === 'object' && v !== null && 
+          typeof v.title === 'string' && 
+          (v.title.includes("Installation") || v.title.includes("installation"))
+        ) as { src: string; poster: string; title: string; caption: string } | undefined;
+        
+        if (installVideo) {
+          productVideos.push(installVideo);
+        } else {
+          // Fallback to static installation video
+          productVideos.push(videos.installation);
+        }
+      } else {
+        productVideos.push(videos.installation);
+      }
+    }
+    
+    return productVideos.length > 0 ? productVideos : getProductVideos(slug, categorySlug);
+  } catch (error) {
+    console.error("Error fetching product videos from database, using static data:", error);
+    return getProductVideos(slug, categorySlug);
+  }
+}

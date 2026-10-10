@@ -13,7 +13,18 @@ import { ProductDetail } from "@/components/products/ProductDetail";
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return [...categories.map((c) => ({ slug: c.slug })), ...products.map((p) => ({ slug: p.slug }))];
+  // Main categories
+  const categoryParams = categories.map((c) => ({ slug: c.slug }));
+  
+  // Subcategories (flatten from all categories)
+  const subcategoryParams = categories
+    .flatMap((c) => c.subcategories || [])
+    .map((sc) => ({ slug: sc.slug }));
+  
+  // Products
+  const productParams = products.map((p) => ({ slug: p.slug }));
+  
+  return [...categoryParams, ...subcategoryParams, ...productParams];
 }
 
 export async function generateMetadata({ params }: PageProps<"/products/[slug]">): Promise<Metadata> {

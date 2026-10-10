@@ -5,7 +5,7 @@
  * (not on Amazon) follow the same pattern: overview, features, mounting, hardware, sizes, 4 uses.
  * Amazon opens every listing with the shared brand banner, stored once as APLUS_BRAND.
  */
-import { aplusVersions } from "./aplus-versions";
+import { getAplusImageUrl } from "../lib/cloudinary";
 
 export interface AplusImage {
   src: string;
@@ -33,13 +33,10 @@ export interface AplusLine extends AplusSet {
 
 type Banner = [label: string, alt: string];
 
-/** Public path plus its content-hash `?v=`, so a re-exported banner never shows a stale cached copy. */
-const versioned = (path: string) => (aplusVersions[path] ? `${path}?v=${aplusVersions[path]}` : path);
-
 /** Banners in display order → /images/aplus/<id>/01.webp, 02.webp, … */
 const set = (id: string, banners: Banner[]): AplusImage[] =>
   banners.map(([label, alt], i) => ({
-    src: versioned(`/images/aplus/${id}/${String(i + 1).padStart(2, "0")}.webp`),
+    src: getAplusImageUrl(id, String(i + 1).padStart(2, "0")),
     alt,
     label,
   }));
@@ -49,7 +46,7 @@ export const APLUS_HEIGHT = 1680;
 
 /** Brand banner Amazon places first in every Plusmark Retail A+ description. */
 export const APLUS_BRAND: AplusImage = {
-  src: versioned("/images/aplus/brand.webp"),
+  src: getAplusImageUrl("brand", ""),
   alt: "Plusmark Retail",
   label: "Plusmark Retail",
 };
@@ -76,7 +73,6 @@ export const aplusLines: AplusLine[] = [
       ["Office", "Office use: meetings, communication, brainstorming and daily planning"],
       ["Classroom", "Classroom use: teaching, presentations, demonstrations and daily activities"],
       ["Home", "Home use: screen-free learning, reminders and kids' creativity"],
-      ["Restaurant & café", "Restaurant and café use: daily specials, order tracking and menus"],
     ]),
   },
   {
@@ -113,7 +109,6 @@ export const aplusLines: AplusLine[] = [
       ["Office records", "Office records: keep work progress and reminders in view"],
       ["School notices", "School notes area: announcements, achievements and competition winners"],
       ["Kids' corner", "Children's creative corner: drawings and message boards"],
-      ["Family photos", "Family photo album for weekly activities and memos"],
     ]),
   },
   {
@@ -139,6 +134,7 @@ export const aplusLines: AplusLine[] = [
     name: "Eco Magnetic Chalk Board",
     short: "Magnetic Chalk",
     tagline: "Resin-coated steel chalk surface that holds magnets.",
+    productSlug: "eco-regular-magnetic-board",
     amazonUrl: amazon("B0HHBDQVKC"),
     images: set("eco-magnetic-chalk-board", [
       ["Features", "Features: magnetic surface, easy-to-clean surface, premium aluminium anodised frame, quick wall-mount installation and ABS dual-tone edge"],
@@ -181,6 +177,13 @@ const WRITING_USES: Banner[] = [
   ["Restaurant & café", "Restaurant and café use: daily specials, kitchen orders and menus"],
 ];
 
+const CHALK_USES: Banner[] = [
+  ["Teaching", "Traditional writing essential for teaching, practice and explanations"],
+  ["Classroom", "Classroom use: teaching, presentations, demonstrations and daily activities"],
+  ["Home learning", "Screen-free learning at home with a classic writing experience"],
+  ["Restaurant", "Restaurant supply: daily specials, kitchen orders and offers menu"],
+];
+
 const metallic = (id: string, name: string, overview: string, features: string, uses: Banner[] = WRITING_USES): AplusSet => ({
   id,
   name,
@@ -188,8 +191,7 @@ const metallic = (id: string, name: string, overview: string, features: string, 
     ["Overview", overview],
     ["Features", features],
     ["Mounting", `Flexible mounting: the ${name} can be hung horizontally or vertically`],
-    ["Hardware", "Heavy-duty corner mounting brackets for direct screw fixing, plus 4 extra J-hooks for hanging"],
-    ["Sizes", `${name} available in 6 popular sizes`],
+    ["Sizes", `${name} available in multiple popular sizes`],
     ...uses,
   ]),
 });
@@ -217,6 +219,7 @@ const metallicSets = {
       ["Kids' corner", "Children's creative corner: drawings and message boards"],
       ["School notices", "School notes area: announcements, achievements, educational charts and competition winners"],
       ["Family photos", "Family photo album posted on a prominent wall for weekly activities and memos"],
+      ["Reception", "Reception and lobby display: company values, visitor information and announcements"],
     ],
   ),
   magneticWhite: metallic(
@@ -230,12 +233,7 @@ const metallicSets = {
     "Metallic Magnetic Chalk Board",
     "Plusmark Metallic magnetic chalk board",
     "Features: magnetic surface, ABS signature dual-tone edge, premium aluminium anodised frame, easy-to-clean surface",
-    [
-      ["Teaching", "Perfect for classroom use: teaching, presentations and demonstrations"],
-      ["Classroom", "Classroom use: teaching, presentations, demonstrations and daily activities"],
-      ["Home", "Screen-free learning at home: daily planning, reminders and kids' creativity"],
-      ["Restaurant & café", "Restaurant and café use: daily specials, kitchen orders and menus"],
-    ],
+    CHALK_USES,
   ),
   ceramicWhite: metallic(
     "metallic-ceramic-white-board",
@@ -248,6 +246,7 @@ const metallicSets = {
     "Ceramic Magnetic Chalk Board",
     "Plusmark ceramic magnetic chalk board",
     "Features: ceramic magnetic surface, ABS signature dual-tone edge, premium aluminium anodised frame, easy-to-clean surface",
+    CHALK_USES,
   ),
 };
 
@@ -281,6 +280,12 @@ const productAplus: Record<string, ProductAplus[]> = {
     { variant: "White Board", set: metallicSets.ceramicWhite },
     { variant: "Chalk Board", set: metallicSets.ceramicChalk },
   ],
+  "metallic-premium-ceramic-chalk-board": [{ set: metallicSets.ceramicChalk }],
+  "deluxe-standard-ceramic-board": [
+    { variant: "White Board", set: metallicSets.ceramicWhite },
+    { variant: "Chalk Board", set: metallicSets.ceramicChalk },
+  ],
+  "deluxe-standard-ceramic-chalk-board": [{ set: metallicSets.ceramicChalk }],
 };
 
 /** A+ banner sets for a product page (empty when the product has none). */

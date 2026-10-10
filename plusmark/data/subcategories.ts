@@ -26,7 +26,6 @@ export const subcategoryConfigs: Partial<Record<CategorySlug, CategorySubcategor
         productSlugs: [
           "metallic-premium-white-board",
           "eco-premium-white-board",
-          "eco-premium-both-side-board",
           "deluxe-standard-white-board",
           "eco-regular-white-board",
         ],
@@ -34,11 +33,18 @@ export const subcategoryConfigs: Partial<Record<CategorySlug, CategorySubcategor
       {
         id: "magnetic",
         label: "Magnetic",
-        description: "Resin coated steel and ceramic steel surfaces that securely accept magnets.",
+        description: "Resin coated steel surfaces that securely accept magnets.",
         productSlugs: [
           "metallic-premium-magnetic-board",
           "deluxe-standard-magnetic-board",
           "eco-regular-magnetic-board",
+        ],
+      },
+      {
+        id: "ceramic",
+        label: "Ceramic",
+        description: "Ceramic steel / porcelain enamel surfaces for maximum durability and very long product life.",
+        productSlugs: [
           "metallic-premium-ceramic-board",
           "deluxe-standard-ceramic-board",
         ],
@@ -63,11 +69,18 @@ export const subcategoryConfigs: Partial<Record<CategorySlug, CategorySubcategor
       {
         id: "magnetic",
         label: "Magnetic",
-        description: "Resin coated and ceramic steel green chalk surfaces that accept magnets.",
+        description: "Resin coated steel green chalk surfaces that accept magnets.",
         productSlugs: [
           "metallic-premium-magnetic-chalk-board",
           "deluxe-standard-magnetic-chalk-board",
           "eco-regular-magnetic-chalk-board",
+        ],
+      },
+      {
+        id: "ceramic",
+        label: "Ceramic",
+        description: "Ceramic steel / porcelain enamel green chalk surfaces for maximum durability and very long product life.",
+        productSlugs: [
           "metallic-premium-ceramic-chalk-board",
           "deluxe-standard-ceramic-chalk-board",
         ],

@@ -17,7 +17,7 @@ export function AplusDescription({ sets, productName }: { sets: ProductAplus[]; 
   const banners = [APLUS_BRAND, ...current.set.images];
 
   return (
-    <section aria-labelledby="aplus-title" className="border-t border-fog bg-white pt-12 md:pt-16">
+    <section aria-labelledby="aplus-title" className="bg-white pt-12 md:pt-16">
       <div className="container-x mb-8 flex flex-wrap items-end justify-between gap-4">
         <h2 id="aplus-title" className="font-display text-xl font-semibold md:text-2xl">
           Product Description
@@ -50,10 +50,21 @@ export function AplusDescription({ sets, productName }: { sets: ProductAplus[]; 
         role={sets.length > 1 ? "tabpanel" : undefined}
         aria-labelledby={sets.length > 1 ? `aplus-tab-${current.set.id}` : undefined}
         aria-label={sets.length > 1 ? undefined : `${productName} product description images`}
-        className="mx-auto w-full max-w-[1464px]"
+        className="mx-auto w-full max-w-[1464px] [&>li]:!rounded-none [&>li>img]:!rounded-none"
+        style={{ margin: '0 auto', padding: 0, listStyle: 'none' }}
       >
-        {banners.map((img) => (
-          <li key={img.src}>
+        {banners.map((img, index) => (
+          <li 
+            key={`${current.set.id}-${index}-${img.src}`}
+            style={{ 
+              lineHeight: 0, 
+              margin: 0, 
+              padding: 0, 
+              display: 'block',
+              overflow: 'hidden',
+              borderRadius: 0
+            }}
+          >
             <Image
               src={img.src}
               alt={img.alt}
@@ -61,7 +72,21 @@ export function AplusDescription({ sets, productName }: { sets: ProductAplus[]; 
               height={APLUS_HEIGHT}
               sizes="(min-width: 1464px) 1464px, 100vw"
               quality={85}
-              className="block h-auto w-full"
+              unoptimized
+              className="block w-full h-auto [&]:!rounded-none"
+              style={{ 
+                display: 'block', 
+                margin: 0, 
+                padding: 0, 
+                borderRadius: '0 !important',
+                border: 'none',
+                verticalAlign: 'bottom',
+                maxWidth: '100%',
+                height: 'auto',
+                clipPath: 'none',
+                WebkitBorderRadius: 0,
+                MozBorderRadius: 0
+              }}
             />
           </li>
         ))}

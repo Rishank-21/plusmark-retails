@@ -11,6 +11,7 @@ import { categoryMap } from "./categories.ts";
 import { modelPath } from "./visuals.ts";
 import { gallery } from "./gallery.ts";
 import { sizeOptions } from "./sizes.ts";
+import { getProductImageUrl } from "../lib/cloudinary.ts";
 
 type ProductInput = {
   slug: string;
@@ -42,7 +43,7 @@ function clip(text: string, max = 158): string {
 function define(input: ProductInput): Product {
   // The gallery's first entry is the main photo with a content-hash `?v=` suffix, so
   // replaced photos get a fresh URL instead of a stale cached copy.
-  const image = gallery[input.slug]?.[0] ?? `/images/products/${input.slug}.webp`;
+  const image = gallery[input.slug]?.[0] ?? getProductImageUrl(input.slug);
   const category = categoryMap[input.categorySlug];
   return {
     description: input.shortDescription,
@@ -86,7 +87,7 @@ const whiteBoards: Product[] = [
   define({
     slug: "metallic-premium-white-board",
     name: "Metallic Premium White Board",
-    categorySlug: "white-boards",
+    categorySlug: "white-boards-non-magnetic",
     series: "Metallic Premium",
     featured: true,
     highlights: ["Non-Magnetic White Board", "Signature Dual-Tone Corners", "Aluminium Anodized Frame"],
@@ -113,7 +114,7 @@ const whiteBoards: Product[] = [
   define({
     slug: "eco-premium-white-board",
     name: "Eco Premium White Board",
-    categorySlug: "white-boards",
+    categorySlug: "white-boards-non-magnetic",
     series: "Eco Premium",
     highlights: ["Non-Magnetic White Board", "ABS Dual-Tone Corner Design", "Aluminium Anodized Frame"],
     shortDescription:
@@ -141,7 +142,7 @@ const whiteBoards: Product[] = [
   define({
     slug: "eco-premium-both-side-board",
     name: "Eco Premium Both Side Board",
-    categorySlug: "white-boards",
+    categorySlug: "double-sided-boards",
     series: "Eco Premium",
     highlights: ["2-in-1 Writing Surface", "ABS Dual-Tone Corner Design", "Aluminium Anodized Frame"],
     shortDescription:
@@ -169,7 +170,7 @@ const whiteBoards: Product[] = [
   define({
     slug: "deluxe-standard-white-board",
     name: "Deluxe Standard White Board",
-    categorySlug: "white-boards",
+    categorySlug: "white-boards-non-magnetic",
     series: "Deluxe Standard",
     highlights: ["Non-Magnetic White Board", "Electroplated Chrome Corners"],
     shortDescription:
@@ -193,7 +194,7 @@ const whiteBoards: Product[] = [
   define({
     slug: "eco-regular-white-board",
     name: "Eco Regular White Board",
-    categorySlug: "white-boards",
+    categorySlug: "white-boards-non-magnetic",
     series: "Eco Regular",
     highlights: ["Non-Magnetic White Board", "Lightweight frame"],
     shortDescription:
@@ -223,7 +224,7 @@ const chalkBoards: Product[] = [
   define({
     slug: "metallic-premium-chalk-board",
     name: "Metallic Premium Chalk Board",
-    categorySlug: "chalk-boards",
+    categorySlug: "chalk-boards-non-magnetic",
     series: "Metallic Premium",
     featured: true,
     highlights: ["Non-Magnetic Chalk Board", "Signature Dual-Tone Corners", "Wall-mountable"],
@@ -252,7 +253,7 @@ const chalkBoards: Product[] = [
   define({
     slug: "eco-premium-chalk-board",
     name: "Eco Premium Chalk Board",
-    categorySlug: "chalk-boards",
+    categorySlug: "chalk-boards-non-magnetic",
     series: "Eco Premium",
     highlights: ["Non-Magnetic Chalk Board", "ABS Dual-Tone Corner Design"],
     shortDescription:
@@ -277,7 +278,7 @@ const chalkBoards: Product[] = [
   define({
     slug: "deluxe-standard-chalk-board",
     name: "Deluxe Standard Chalk Board",
-    categorySlug: "chalk-boards",
+    categorySlug: "chalk-boards-non-magnetic",
     series: "Deluxe Standard",
     highlights: ["Non-Magnetic Chalk Board", "Electroplated Chrome Corners"],
     shortDescription:
@@ -302,7 +303,7 @@ const chalkBoards: Product[] = [
   define({
     slug: "eco-regular-chalk-board",
     name: "Eco Regular Chalk Board",
-    categorySlug: "chalk-boards",
+    categorySlug: "chalk-boards-non-magnetic",
     series: "Eco Regular",
     highlights: ["Non-Magnetic Chalk Board", "Lightweight frame"],
     shortDescription:
@@ -332,7 +333,7 @@ const magneticChalkBoards: Product[] = [
   define({
     slug: "metallic-premium-magnetic-chalk-board",
     name: "Metallic Premium Magnetic Chalk Board",
-    categorySlug: "chalk-boards",
+    categorySlug: "chalk-boards-magnetic",
     series: "Metallic Premium",
     featured: true,
     highlights: ["Resin Coated Steel Magnetic Chalk Board", "Accepts Magnet", "Signature Dual-Tone Corners"],
@@ -359,7 +360,7 @@ const magneticChalkBoards: Product[] = [
   define({
     slug: "deluxe-standard-magnetic-chalk-board",
     name: "Deluxe Standard Magnetic Chalk Board",
-    categorySlug: "chalk-boards",
+    categorySlug: "chalk-boards-magnetic",
     series: "Deluxe Standard",
     highlights: ["Resin Coated Steel Magnetic Chalk Board", "Accepts Magnet", "Electroplated Chrome Corners"],
     shortDescription:
@@ -383,7 +384,7 @@ const magneticChalkBoards: Product[] = [
   define({
     slug: "eco-regular-magnetic-chalk-board",
     name: "Eco Regular Magnetic Chalk Board",
-    categorySlug: "chalk-boards",
+    categorySlug: "chalk-boards-magnetic",
     series: "Eco Regular",
     highlights: ["Resin Coated Steel Magnetic Chalk Board", "Accepts Magnet"],
     shortDescription:
@@ -407,7 +408,7 @@ const magneticChalkBoards: Product[] = [
   define({
     slug: "metallic-premium-ceramic-chalk-board",
     name: "Metallic Premium Ceramic Chalk Board",
-    categorySlug: "chalk-boards",
+    categorySlug: "chalk-boards-ceramic",
     series: "Metallic Premium",
     featured: true,
     highlights: ["Ceramic Steel Magnetic Chalk Board", "Accepts Magnet", "Signature Dual-Tone Corners"],
@@ -433,7 +434,7 @@ const magneticChalkBoards: Product[] = [
   define({
     slug: "deluxe-standard-ceramic-chalk-board",
     name: "Deluxe Standard Ceramic Chalk Board",
-    categorySlug: "chalk-boards",
+    categorySlug: "chalk-boards-ceramic",
     series: "Deluxe Standard",
     highlights: ["Ceramic Steel Magnetic Chalk Board", "Accepts Magnet", "Electroplated Chrome Corners"],
     shortDescription:
@@ -570,7 +571,7 @@ const magneticBoards: Product[] = [
   define({
     slug: "metallic-premium-magnetic-board",
     name: "Metallic Premium Magnetic Board",
-    categorySlug: "magnetic-boards",
+    categorySlug: "white-boards-magnetic",
     series: "Metallic Premium",
     featured: true,
     highlights: ["Resin Coated Steel Magnetic Board", "Accepts Magnet", "Signature Dual-Tone Corners"],
@@ -600,7 +601,7 @@ const magneticBoards: Product[] = [
   define({
     slug: "deluxe-standard-magnetic-board",
     name: "Deluxe Standard Magnetic Board",
-    categorySlug: "magnetic-boards",
+    categorySlug: "white-boards-magnetic",
     series: "Deluxe Standard",
     highlights: ["Resin Coated Steel Magnetic Board", "Accepts Magnet"],
     shortDescription:
@@ -628,7 +629,7 @@ const magneticBoards: Product[] = [
   define({
     slug: "eco-regular-magnetic-board",
     name: "Eco Regular Magnetic Board",
-    categorySlug: "magnetic-boards",
+    categorySlug: "white-boards-magnetic",
     series: "Eco Regular",
     highlights: ["Resin Coated Steel Magnetic Board", "Accepts Magnet"],
     shortDescription:
@@ -661,7 +662,7 @@ const ceramicBoards: Product[] = [
   define({
     slug: "metallic-premium-ceramic-board",
     name: "Metallic Premium Ceramic Board",
-    categorySlug: "ceramic-boards",
+    categorySlug: "white-boards-ceramic",
     series: "Metallic Premium",
     featured: true,
     highlights: ["Ceramic Steel Magnetic Board", "Signature Dual-Tone Corners"],
@@ -695,7 +696,7 @@ const ceramicBoards: Product[] = [
   define({
     slug: "deluxe-standard-ceramic-board",
     name: "Deluxe Standard Ceramic Board",
-    categorySlug: "ceramic-boards",
+    categorySlug: "white-boards-ceramic",
     series: "Deluxe Standard",
     highlights: ["Ceramic Steel Magnetic Board", "Electroplated Chrome Corners"],
     shortDescription:

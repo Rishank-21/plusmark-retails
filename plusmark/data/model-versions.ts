@@ -18,11 +18,11 @@ export const modelVersions: Record<string, string> = {
   "eco-regular-notice-board": "7ef14988c4",
   "eco-regular-white-board": "448e8a4b34",
   "fabric-notice-board": "1457ba57f3",
-  "laminate-mdf-base-clipboard": "530049bea3",
+  "laminate-mdf-base-clipboard": "f14f19def3",
   "metallic-premium-ceramic-board": "9595e9934d",
   "metallic-premium-chalk-board": "dcd360ae9a",
   "metallic-premium-magnetic-board": "5c28d0b956",
   "metallic-premium-notice-board": "34bb5889cb",
   "metallic-premium-white-board": "6f969e2d14",
-  "pds-sb-807": "4931c94b42",
+  "pds-sb-807": "6a66495768",
 };

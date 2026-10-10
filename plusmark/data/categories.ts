@@ -4,24 +4,75 @@ export const categories: Category[] = [
   {
     slug: "white-boards",
     name: "White Boards",
-    summary: "Non-magnetic marker boards with High Gloss Marker Grade HPL Sheet and High Gloss Melamine writing surfaces.",
+    summary: "Marker boards in Magnetic, Non-Magnetic, and Ceramic variants with High Gloss Marker Grade HPL Sheet and premium writing surfaces.",
     intro:
-      "Plusmark non-magnetic white boards are offered in four construction series — Metallic Premium, Eco Premium, Deluxe Standard and Eco Regular — from High Gloss Marker Grade HPL Sheet with Signature Dual-Tone Corners to budget-friendly High Gloss Melamine boards for light use.",
-    seoTitle: "White Boards — Non-Magnetic Marker Boards",
+      "Plusmark white boards are available in three types: Non-Magnetic boards with High Gloss Marker Grade HPL Sheet and Melamine surfaces in four construction series (Metallic Premium, Eco Premium, Deluxe Standard, Eco Regular), Magnetic boards with resin coated steel surfaces that accept magnets, and Ceramic boards with porcelain enamel steel surfaces for maximum durability and longevity.",
+    seoTitle: "White Boards — Magnetic, Non-Magnetic & Ceramic Marker Boards",
     seoDescription:
-      "Plusmark non-magnetic white boards with High Gloss Marker Grade HPL Sheet and High Gloss Melamine surfaces for offices, schools, institutes and coaching centres.",
+      "Plusmark white boards: magnetic, non-magnetic and ceramic marker boards with High Gloss HPL Sheet, resin coated steel and porcelain enamel surfaces for offices, schools and institutions.",
     coverProduct: "metallic-premium-white-board",
+    subcategories: [
+      {
+        slug: "white-boards-non-magnetic",
+        name: "Non-Magnetic White Boards",
+        summary: "High Gloss Marker Grade HPL Sheet and Melamine writing surfaces in Metallic Premium, Eco Premium, Deluxe Standard and Eco Regular series.",
+        coverProduct: "metallic-premium-white-board",
+      },
+      {
+        slug: "white-boards-magnetic",
+        name: "Magnetic White Boards",
+        summary: "Resin coated steel magnetic white boards that accept magnets, charts and holders.",
+        coverProduct: "metallic-premium-magnetic-board",
+      },
+      {
+        slug: "white-boards-ceramic",
+        name: "Ceramic White Boards",
+        summary: "Ceramic steel / porcelain enamel steel magnetic surfaces for very long product life.",
+        coverProduct: "metallic-premium-ceramic-board",
+      },
+    ],
   },
   {
     slug: "chalk-boards",
     name: "Chalk Boards",
-    summary: "Non-magnetic chalk boards with Chalk Grade HPL Sheet — non-reflective, glare-free, with clear visibility from all angles.",
+    summary: "Chalk boards in Magnetic, Non-Magnetic, and Ceramic variants with Chalk Grade HPL Sheet — non-reflective, glare-free surfaces.",
     intro:
-      "Plusmark non-magnetic chalk boards use Chalk Grade HPL Sheet surfaces that are non-reflective and glare-free, with clear visibility from all angles. The Metallic Premium and Eco Premium series use Hardcore Chalk Grade HPL Sheet with enhanced scratch resistance.",
-    seoTitle: "Chalk Boards — Non-Magnetic HPL Chalk Boards",
+      "Plusmark chalk boards are available in three types: Non-Magnetic boards with Chalk Grade HPL Sheet surfaces that are non-reflective and glare-free in four construction series (Metallic Premium, Eco Premium, Deluxe Standard, Eco Regular), Magnetic boards with resin coated steel green surfaces that accept magnets, and Ceramic boards with porcelain enamel steel green surfaces for maximum durability.",
+    seoTitle: "Chalk Boards — Magnetic, Non-Magnetic & Ceramic HPL Chalk Boards",
     seoDescription:
-      "Plusmark chalk boards with Hardcore Chalk Grade HPL Sheet — non-reflective, glare-free and scratch resistant — for schools, colleges, classrooms and offices.",
+      "Plusmark chalk boards: magnetic, non-magnetic and ceramic chalk boards with Hardcore Chalk Grade HPL Sheet and porcelain enamel surfaces for schools, colleges and classrooms.",
     coverProduct: "metallic-premium-chalk-board",
+    subcategories: [
+      {
+        slug: "chalk-boards-non-magnetic",
+        name: "Non-Magnetic Chalk Boards",
+        summary: "Hardcore Chalk Grade HPL Sheet with enhanced scratch resistance — non-reflective and glare-free.",
+        coverProduct: "metallic-premium-chalk-board",
+      },
+      {
+        slug: "chalk-boards-magnetic",
+        name: "Magnetic Chalk Boards",
+        summary: "Resin coated steel magnetic chalk boards with green surfaces that accept magnets.",
+        coverProduct: "metallic-premium-magnetic-chalk-board",
+      },
+      {
+        slug: "chalk-boards-ceramic",
+        name: "Ceramic Chalk Boards",
+        summary: "Ceramic steel / porcelain enamel steel magnetic green surfaces for very long product life.",
+        coverProduct: "metallic-premium-ceramic-chalk-board",
+      },
+    ],
+  },
+  {
+    slug: "double-sided-boards",
+    name: "Double-Sided Boards",
+    summary: "2-in-1 writing surfaces — write with marker on one side and chalk on the other — in premium aluminium frames.",
+    intro:
+      "Plusmark Double-Sided Boards feature two writing surfaces in one frame: a white board on the front for marker writing and a chalk board on the back for chalk writing. The non-magnetic, easy-to-clean surfaces sit in premium aluminium anodised frames with ABS dual-tone edges, offering quick wall-mount installation that allows horizontal or vertical hanging.",
+    seoTitle: "Double-Sided Boards — 2-in-1 White Board & Chalk Board",
+    seoDescription:
+      "Plusmark Double-Sided Boards with marker writing on one side and chalk writing on the other. Premium aluminium frames, non-magnetic surfaces for offices, classrooms and homes.",
+    coverProduct: "eco-premium-both-side-board",
   },
   {
     slug: "notice-boards",
@@ -33,28 +84,6 @@ export const categories: Category[] = [
     seoDescription:
       "Plusmark notice boards: Blazer Cloth, Velvet Cloth, Cork, Fabric and Combination boards in Metallic Premium, Eco Premium, Deluxe Standard and Eco Regular frames for schools, colleges, offices and institutions.",
     coverProduct: "metallic-premium-notice-board",
-  },
-  {
-    slug: "magnetic-boards",
-    name: "Magnetic Boards",
-    summary: "Resin Coated Steel Magnetic Boards that accept magnets, with white (marker) and green (chalk) writing surfaces.",
-    intro:
-      "Resin Coated Steel Magnetic Boards accept magnets and are compatible with magnetic accessories such as magnets, charts and holders. The resin coated writing surface is available for marker (white) and chalk (green) use.",
-    seoTitle: "Magnetic Boards — Resin Coated Steel Magnetic Boards",
-    seoDescription:
-      "Plusmark Resin Coated Steel Magnetic Boards in white (marker) and green (chalk) surfaces, compatible with magnets, charts and holders.",
-    coverProduct: "metallic-premium-magnetic-board",
-  },
-  {
-    slug: "ceramic-boards",
-    name: "Ceramic Boards",
-    summary: "Ceramic Steel Magnetic Boards with ceramic steel / porcelain enamel steel surfaces for very long product life.",
-    intro:
-      "Plusmark Ceramic Steel Magnetic Boards use a ceramic steel / porcelain enamel steel surface — hard and non-porous, suitable for continuous writing and frequent cleaning — in White Board (marker writing) and Chalk Board (chalk writing) options.",
-    seoTitle: "Ceramic Boards — Ceramic Steel / Porcelain Enamel Steel Boards",
-    seoDescription:
-      "Plusmark ceramic steel / porcelain enamel steel magnetic boards in white board and chalk board options, designed for very long product life under institutional use.",
-    coverProduct: "metallic-premium-ceramic-board",
   },
   {
     slug: "specialty-boards",
@@ -146,11 +175,30 @@ export const categories: Category[] = [
   },
 ];
 
-export const categoryMap = Object.fromEntries(categories.map((c) => [c.slug, c])) as Record<
-  CategorySlug,
-  Category
->;
+// Create a flattened map of all categories and subcategories
+const flattenedCategories = categories.flatMap((c) => {
+  const result: Category[] = [c];
+  if (c.subcategories) {
+    // Convert subcategories to full Category objects for the map
+    c.subcategories.forEach((sub) => {
+      result.push({
+        slug: sub.slug,
+        name: sub.name,
+        summary: sub.summary,
+        intro: sub.summary, // Use summary as intro for subcategories
+        seoTitle: `${sub.name} | ${c.name}`,
+        seoDescription: sub.summary,
+        coverProduct: sub.coverProduct,
+      });
+    });
+  }
+  return result;
+});
+
+export const categoryMap = Object.fromEntries(
+  flattenedCategories.map((c) => [c.slug, c]),
+) as Record<CategorySlug, Category>;
 
 export function getCategory(slug: string): Category | undefined {
-  return categories.find((c) => c.slug === slug);
+  return flattenedCategories.find((c) => c.slug === slug);
 }

@@ -2,6 +2,8 @@
  * Industries served — from the catalog "Our Happy Clients" list.
  * Product links are chosen from the catalog "Usage" / "Application" statements.
  */
+import { getCloudinaryUrl } from "../lib/cloudinary";
+
 export interface Industry {
   slug: string;
   name: string;
@@ -14,7 +16,7 @@ export interface Industry {
   imageAlt: string;
 }
 
-const scene = (slug: string) => `/images/industries/${slug}.webp`;
+const scene = (slug: string) => getCloudinaryUrl(`/images/industries/${slug}.webp`);
 
 export const industries: Industry[] = [
   {

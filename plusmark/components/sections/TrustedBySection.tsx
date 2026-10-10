@@ -1,9 +1,36 @@
 import { trustedClients } from "@/data/clients";
 import { Reveal } from "@/components/animations/Reveal";
 import { LogoMarquee } from "./LogoMarquee";
+import { adminDb } from "@/lib/firebase-admin";
+import type { TrustedClient } from "@/data/clients";
+
+async function getClients(): Promise<TrustedClient[]> {
+  try {
+    const db = adminDb();
+    const snapshot = await db.ref("clients").orderByChild("order").once("value");
+    const clients: TrustedClient[] = [];
+    
+    snapshot.forEach((child) => {
+      const data = child.val();
+      clients.push({
+        id: child.key as string,
+        name: data.name,
+        sector: data.sector,
+        logo: data.logo,
+      });
+    });
+    
+    return clients.length > 0 ? clients : trustedClients;
+  } catch (error) {
+    console.error("Error fetching clients from database, using static data:", error);
+    return trustedClients;
+  }
+}
 
 /** Home page: organizations Plusmark has supplied, as a slowly drifting strip of logo cards. */
-export function TrustedBySection() {
+export async function TrustedBySection() {
+  const clients = await getClients();
+
   return (
     <section aria-labelledby="trusted-title" className="border-y border-fog bg-mist/40 py-20 md:py-28">
       <Reveal className="container-x">
@@ -21,7 +48,7 @@ export function TrustedBySection() {
         </div>
       </Reveal>
       <Reveal delay={0.08} className="mt-10 md:mt-14">
-        <LogoMarquee clients={trustedClients} />
+        <LogoMarquee clients={clients} />
       </Reveal>
     </section>
   );

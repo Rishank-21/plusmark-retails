@@ -5,10 +5,15 @@
 
 export type CategorySlug =
   | "white-boards"
+  | "white-boards-magnetic"
+  | "white-boards-non-magnetic"
+  | "white-boards-ceramic"
   | "chalk-boards"
+  | "chalk-boards-magnetic"
+  | "chalk-boards-non-magnetic"
+  | "chalk-boards-ceramic"
+  | "double-sided-boards"
   | "notice-boards"
-  | "magnetic-boards"
-  | "ceramic-boards"
   | "specialty-boards"
   | "acrylic-door-cover-notice-boards"
   | "board-study-essentials"
@@ -17,6 +22,13 @@ export type CategorySlug =
   | "clipboards"
   | "school-benches"
   | "schedule-boards";
+
+export interface Subcategory {
+  slug: CategorySlug;
+  name: string;
+  summary: string;
+  coverProduct: string;
+}
 
 export interface Category {
   slug: CategorySlug;
@@ -29,6 +41,8 @@ export interface Category {
   seoDescription: string;
   /** Representative product slug used for category imagery. */
   coverProduct: string;
+  /** Subcategories for hierarchical organization. */
+  subcategories?: Subcategory[];
 }
 
 export interface Spec {

@@ -29,8 +29,10 @@ export interface TrustedClient {
   logo?: ClientLogo;
 }
 
+import { getClientLogoUrl } from "../lib/cloudinary";
+
 const logo = (id: string, width: number, height: number): ClientLogo => ({
-  src: `/images/clients/${id}.png`,
+  src: getClientLogoUrl(id),
   width,
   height,
 });
