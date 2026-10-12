@@ -37,7 +37,7 @@ export async function POST() {
       });
     });
 
-    const updates: Record<string, any> = {};
+    const updates: Record<string, unknown> = {};
     Object.entries(videos).forEach(([key, video], index) => {
       const newRef = db.ref("videos").push();
       updates[`videos/${newRef.key}`] = {

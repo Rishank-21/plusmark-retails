@@ -196,7 +196,7 @@ export function FaqSection() {
             <div className="mb-4 flex items-center justify-between text-xs text-steel">
               <span>
                 {searchQuery ? (
-                  <>Found <strong className="font-semibold text-graphite">{filteredItems.length}</strong> questions matching <span className="italic text-graphite">"{searchQuery}"</span></>
+                  <>Found <strong className="font-semibold text-graphite">{filteredItems.length}</strong> questions matching <span className="italic text-graphite">&ldquo;{searchQuery}&rdquo;</span></>
                 ) : (
                   <>
                     <span className="font-medium text-graphite">{activeGroup.title}</span>
@@ -242,7 +242,7 @@ export function FaqSection() {
                 <HelpCircle className="mx-auto size-10 text-alu-dark" />
                 <h4 className="mt-3 font-display text-lg font-semibold text-graphite">No questions matched your search</h4>
                 <p className="mx-auto mt-2 max-w-sm text-sm text-steel">
-                  Can't find what you are looking for? Our team is available right now to assist you directly.
+                  Can&apos;t find what you are looking for? Our team is available right now to assist you directly.
                 </p>
                 <div className="mt-6 flex justify-center gap-3">
                   <a

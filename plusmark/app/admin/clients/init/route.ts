@@ -20,7 +20,7 @@ export async function POST() {
     }
 
     // Initialize with static data
-    const updates: Record<string, any> = {};
+    const updates: Record<string, unknown> = {};
     trustedClients.forEach((client, index) => {
       const newRef = db.ref("clients").push();
       updates[`clients/${newRef.key}`] = {
