@@ -1,4 +1,4 @@
-import { products } from "@/data/products";
+import { getCatalog } from "@/lib/catalog";
 import { categoryMap } from "@/data/categories";
 import { company, contactChannels } from "@/data/company";
 import { getFramePricing } from "@/data/frame-pricing";
@@ -6,7 +6,8 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/animations/Reveal";
 import { EnquiryForm } from "./EnquiryForm";
 
-export function EnquirySection({ headingLevel = "h2" }: { headingLevel?: "h1" | "h2" }) {
+export async function EnquirySection({ headingLevel = "h2" }: { headingLevel?: "h1" | "h2" }) {
+  const products = await getCatalog();
   // Only concrete sizes are selectable; summaries like "Available in 6 different sizes" are not.
   const selectable = (sizes: string[]) => sizes.filter((s) => !/^available\b|\bsizes\b/i.test(s));
   const options = products.map((p) => {
@@ -27,7 +28,6 @@ export function EnquirySection({ headingLevel = "h2" }: { headingLevel?: "h1" | 
           <SectionHeading
             as={headingLevel}
             id="enquiry-title"
-            eyebrow="Request Enquiry"
             title="Tell us what you need."
             intro="Share the product, quantity and any size or colour requirements. Schools, institutions, dealers and government buyers are welcome."
           />

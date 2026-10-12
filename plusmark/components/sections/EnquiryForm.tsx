@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, CheckCircle2, Loader2, MessageCircle, AlertCircle } from "lucide-react";
+import { ArrowRight, CheckCircle2, ChevronDown, Loader2, MessageCircle, AlertCircle } from "lucide-react";
 import { requirementOptions } from "@/lib/enquiry-options";
 import { cn } from "@/lib/utils";
 
@@ -24,6 +24,7 @@ type Values = {
   email: string;
   product: string;
   size: string;
+  customSize: string;
   quantity: string;
   requirement: string;
   message: string;
@@ -37,6 +38,7 @@ const initial: Values = {
   email: "",
   product: "",
   size: "",
+  customSize: "",
   quantity: "",
   requirement: "",
   message: "",
@@ -74,7 +76,7 @@ export function EnquiryForm({ products, whatsapp }: { products: Option[]; whatsa
   const set = (k: keyof Values) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const value = e.target.value;
     // A new product has its own size list, so clear the previous size.
-    setValues((v) => ({ ...v, [k]: value, ...(k === "product" ? { size: "" } : {}) }));
+    setValues((v) => ({ ...v, [k]: value, ...(k === "product" ? { size: "", customSize: "" } : k === "size" && value !== OTHER_SIZE ? { customSize: "" } : {}) }));
     if (errors[k]) setErrors((er) => ({ ...er, [k]: undefined }));
   };
 
@@ -115,13 +117,13 @@ export function EnquiryForm({ products, whatsapp }: { products: Option[]; whatsa
 
   const submittedWaHref = whatsapp && lastSubmitted
     ? `https://wa.me/${whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(
-        `Hello Plusmark, I have submitted an enquiry on your website.\n*Name:* ${lastSubmitted.name}\n*Phone:* ${lastSubmitted.phone}\n*Product:* ${lastSubmitted.product || "General"}\n${lastSubmitted.size ? `*Size:* ${lastSubmitted.size}\n` : ""}${lastSubmitted.quantity ? `*Qty:* ${lastSubmitted.quantity}\n` : ""}${lastSubmitted.requirement ? `*Requirement:* ${lastSubmitted.requirement}\n` : ""}${lastSubmitted.message ? `*Message:* ${lastSubmitted.message}` : ""}`,
+        `Hello Plusmark, I have submitted an enquiry on your website.\n*Name:* ${lastSubmitted.name}\n*Phone:* ${lastSubmitted.phone}\n*Product:* ${lastSubmitted.product || "General"}\n${lastSubmitted.size ? `*Size:* ${lastSubmitted.size === OTHER_SIZE ? lastSubmitted.customSize : lastSubmitted.size}\n` : ""}${lastSubmitted.quantity ? `*Qty:* ${lastSubmitted.quantity}\n` : ""}${lastSubmitted.requirement ? `*Requirement:* ${lastSubmitted.requirement}\n` : ""}${lastSubmitted.message ? `*Message:* ${lastSubmitted.message}` : ""}`,
       )}`
     : null;
 
   const waHref = whatsapp
     ? `https://wa.me/${whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(
-        `Hello Plusmark, I would like to enquire about ${values.product || "your products"}.${values.size ? ` Size: ${values.size}.` : ""}${values.quantity ? ` Quantity: ${values.quantity}.` : ""}${values.name ? ` — ${values.name}` : ""}`,
+        `Hello Plusmark, I would like to enquire about ${values.product || "your products"}.${values.size ? ` Size: ${values.size === OTHER_SIZE ? values.customSize : values.size}.` : ""}${values.quantity ? ` Quantity: ${values.quantity}.` : ""}${values.name ? ` — ${values.name}` : ""}`,
       )}`
     : null;
 
@@ -145,7 +147,7 @@ export function EnquiryForm({ products, whatsapp }: { products: Option[]; whatsa
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            className="flex min-h-[28rem] flex-col items-start justify-center bg-white p-8 ring-1 ring-fog md:p-12"
+            className={cn(cardCls, "flex min-h-[28rem] flex-col items-start justify-center")}
             role="status"
           >
             <CheckCircle2 aria-hidden className="size-8 text-verdant" />
@@ -158,7 +160,7 @@ export function EnquiryForm({ products, whatsapp }: { products: Option[]; whatsa
                   href={submittedWaHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex h-11 items-center justify-center gap-2 bg-[#25D366] px-5 text-sm font-semibold text-white shadow-sm transition-opacity hover:opacity-90"
+                  className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 text-sm font-semibold text-white shadow-sm transition-opacity hover:opacity-90"
                 >
                   <MessageCircle aria-hidden className="size-4" />
                   Chat on WhatsApp with Admin
@@ -178,25 +180,32 @@ export function EnquiryForm({ products, whatsapp }: { products: Option[]; whatsa
             exit={{ opacity: 0 }}
             onSubmit={onSubmit}
             noValidate
-            className="bg-white p-6 ring-1 ring-fog md:p-10"
+            className={cardCls}
             aria-describedby={formError ? `${uid}-form-err` : undefined}
           >
+            <div className="mb-7 flex items-start justify-between gap-4 border-b border-fog pb-6">
+              <div>
+                <h3 className="font-display text-xl font-semibold text-graphite md:text-2xl">Send us your requirement</h3>
+                <p className="mt-1 text-sm text-steel">We usually reply within one working day.</p>
+              </div>
+              <span className="hidden shrink-0 rounded-full bg-verdant-soft px-3 py-1 text-xs font-semibold text-verdant sm:inline-flex">Free quote</span>
+            </div>
             <div className="grid gap-x-6 gap-y-5 md:grid-cols-2">
               <Field label="Name" required error={errors.name} htmlFor={`${uid}-name`} errId={`${uid}-name-err`}>
-                <input {...field("name")} autoComplete="name" required className={inputCls(!!errors.name)} />
+                <input {...field("name")} autoComplete="name" required placeholder="Your full name" className={inputCls(!!errors.name)} />
               </Field>
               <Field label="Company / Institution" htmlFor={`${uid}-company`}>
-                <input {...field("company")} autoComplete="organization" className={inputCls(false)} />
+                <input {...field("company")} autoComplete="organization" placeholder="School, office or company" className={inputCls(false)} />
               </Field>
               <Field label="Phone" required error={errors.phone} htmlFor={`${uid}-phone`} errId={`${uid}-phone-err`}>
-                <input {...field("phone")} type="tel" autoComplete="tel" inputMode="tel" required className={inputCls(!!errors.phone)} />
+                <input {...field("phone")} type="tel" autoComplete="tel" inputMode="tel" required placeholder="+91 98765 43210" className={inputCls(!!errors.phone)} />
               </Field>
               <Field label="Email" required error={errors.email} htmlFor={`${uid}-email`} errId={`${uid}-email-err`}>
-                <input {...field("email")} type="email" autoComplete="email" required className={inputCls(!!errors.email)} />
+                <input {...field("email")} type="email" autoComplete="email" required placeholder="you@example.com" className={inputCls(!!errors.email)} />
               </Field>
               <Field label="Product" htmlFor={`${uid}-product`}>
-                <select {...field("product")} className={inputCls(false)}>
-                  <option value="">Select a product (optional)</option>
+                <Select {...field("product")}>
+                  <option value="">Select a product</option>
                   {groups.map((g) => (
                     <optgroup key={g} label={g}>
                       {products
@@ -208,29 +217,34 @@ export function EnquiryForm({ products, whatsapp }: { products: Option[]; whatsa
                         ))}
                     </optgroup>
                   ))}
-                </select>
+                </Select>
               </Field>
               {sizes.length > 0 && (
                 <Field label="Size" htmlFor={`${uid}-size`}>
-                  <select {...field("size")} className={inputCls(false)}>
-                    <option value="">Select a size (optional)</option>
+                  <Select {...field("size")}>
+                    <option value="">Select a size</option>
                     {sizes.map((s) => (
                       <option key={s}>{s}</option>
                     ))}
                     <option>{OTHER_SIZE}</option>
-                  </select>
+                  </Select>
+                </Field>
+              )}
+              {values.size === OTHER_SIZE && (
+                <Field label="Custom Size" htmlFor={`${uid}-customSize`}>
+                  <input {...field("customSize")} placeholder="Enter your custom size" className={inputCls(false)} />
                 </Field>
               )}
               <Field label="Quantity" htmlFor={`${uid}-quantity`}>
                 <input {...field("quantity")} inputMode="numeric" placeholder="e.g. 25" className={inputCls(false)} />
               </Field>
               <Field label="Requirement" htmlFor={`${uid}-requirement`} className={sizes.length > 0 ? undefined : "md:col-span-2"}>
-                <select {...field("requirement")} className={inputCls(false)}>
-                  <option value="">Select requirement (optional)</option>
+                <Select {...field("requirement")}>
+                  <option value="">Select a requirement</option>
                   {requirementOptions.map((r) => (
                     <option key={r}>{r}</option>
                   ))}
-                </select>
+                </Select>
               </Field>
               <Field label="Message" error={errors.message} htmlFor={`${uid}-message`} errId={`${uid}-message-err`} className="md:col-span-2">
                 <textarea {...field("message")} rows={4} placeholder="Sizes, colours, delivery location or any other details" className={cn(inputCls(!!errors.message), "h-auto py-3")} />
@@ -254,7 +268,7 @@ export function EnquiryForm({ products, whatsapp }: { products: Option[]; whatsa
               <button
                 type="submit"
                 disabled={status === "sending"}
-                className="group inline-flex h-12 items-center justify-center gap-3 bg-graphite px-7 text-sm font-semibold text-white transition-colors hover:bg-ink disabled:opacity-70"
+                className="group inline-flex h-12 items-center justify-center gap-3 rounded-full bg-graphite px-8 text-sm font-semibold text-white shadow-[0_10px_24px_-12px_rgb(15_17_19/0.6)] transition-[background-color,transform] hover:-translate-y-0.5 hover:bg-ink disabled:translate-y-0 disabled:opacity-70"
               >
                 {status === "sending" ? (
                   <>
@@ -272,7 +286,7 @@ export function EnquiryForm({ products, whatsapp }: { products: Option[]; whatsa
                   href={waHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex h-12 items-center justify-center gap-2 px-5 text-sm font-semibold text-verdant ring-1 ring-line transition-colors hover:ring-verdant"
+                  className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 text-sm font-semibold text-white shadow-[0_10px_24px_-12px_rgb(37_211_102/0.8)] transition-[filter,transform] hover:-translate-y-0.5 hover:brightness-105"
                 >
                   <MessageCircle aria-hidden className="size-4" /> WhatsApp Enquiry
                 </a>
@@ -288,11 +302,27 @@ export function EnquiryForm({ products, whatsapp }: { products: Option[]; whatsa
   );
 }
 
+/** Borderless card with a soft shadow. */
+const cardCls = "rounded-3xl bg-white p-6 shadow-[0_1px_2px_rgb(15_17_19/0.04),0_30px_70px_-34px_rgb(15_17_19/0.3)] md:p-10";
+
+/** Borderless filled inputs; a soft brand ring appears on focus, red on error. */
 const inputCls = (err: boolean) =>
   cn(
-    "h-12 w-full bg-mist px-4 text-sm text-graphite ring-1 transition-[box-shadow,background-color] placeholder:text-alu-dark focus:bg-white focus:outline-none focus:ring-2",
-    err ? "ring-[#a3222a] focus:ring-[#a3222a]" : "ring-transparent focus:ring-graphite",
+    "h-12 w-full rounded-xl border-0 bg-mist px-4 text-sm text-graphite outline-none ring-2 transition-[box-shadow,background-color] placeholder:text-alu-dark hover:bg-fog/70 focus:bg-white",
+    err ? "bg-[#fdf0f0] ring-[#a3222a]/60 focus:ring-[#a3222a]/70" : "ring-transparent focus:ring-brand/25",
   );
+
+/** Native select with the browser arrow replaced by a chevron that matches the inputs. */
+function Select({ children, ...props }: React.SelectHTMLAttributes<HTMLSelectElement>) {
+  return (
+    <div className="relative">
+      <select {...props} className={cn(inputCls(false), "cursor-pointer appearance-none pr-10")}>
+        {children}
+      </select>
+      <ChevronDown aria-hidden className="pointer-events-none absolute right-3.5 top-1/2 size-4 -translate-y-1/2 text-steel" />
+    </div>
+  );
+}
 
 function Field({
   label,
@@ -313,7 +343,7 @@ function Field({
 }) {
   return (
     <div className={className}>
-      <label htmlFor={htmlFor} className="mb-2 block font-mono text-[0.64rem] uppercase tracking-[0.14em] text-steel">
+      <label htmlFor={htmlFor} className="mb-2 block text-sm font-medium text-graphite">
         {label}
         {required && <span aria-hidden className="text-accent"> *</span>}
       </label>

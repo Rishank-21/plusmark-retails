@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { ArrowRight, Sparkle } from "lucide-react";
+﻿import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import type { FeaturedProduct } from "@/data/featured";
 import { pad2 } from "@/lib/utils";
 
@@ -33,11 +33,7 @@ export function HeroProductBody({ product, index, style }: Props) {
   return (
     <div data-hero-idx={index} style={style} className="will-change-transform lg:pt-6">
       <p className="hidden text-[0.95rem] leading-relaxed text-steel lg:block">{product.description}</p>
-      <p className="mt-5 hidden items-start gap-2.5 text-sm font-medium text-graphite lg:flex">
-        <Sparkle aria-hidden className="mt-0.5 size-4 shrink-0 text-accent" />
-        {product.keyFeature}
-      </p>
-      <div className="pointer-events-auto mt-3 flex flex-wrap items-center gap-x-6 gap-y-2 lg:mt-8">
+      <div className="pointer-events-auto mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 lg:mt-8">
         <Link
           href={`/products/${product.slug}`}
           className="group inline-flex h-11 items-center gap-2.5 bg-graphite px-5 text-[0.8rem] font-semibold text-white transition-colors hover:bg-ink"

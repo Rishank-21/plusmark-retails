@@ -18,7 +18,7 @@ import { CountUp } from "@/components/animations/CountUp";
 import { Reveal } from "@/components/animations/Reveal";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { aplusLines } from "@/data/aplus";
-import { allVideos } from "@/data/media";
+import { getSiteVideos } from "@/lib/videos";
 import { getProduct, products } from "@/data/products";
 import { categories, categoryMap } from "@/data/categories";
 import { company } from "@/data/company";
@@ -89,7 +89,8 @@ const chapters = [
   { id: "enquiry", label: "Enquiry" },
 ];
 
-export default function ExperiencePage() {
+export default async function ExperiencePage() {
+  const siteVideos = await getSiteVideos();
   const showroom = SHOWROOM.map((s) => ({ ...s, product: getProduct(s.slug) })).filter(
     (s): s is (typeof s & { product: NonNullable<typeof s.product> }) => s.product !== undefined,
   );
@@ -194,7 +195,7 @@ export default function ExperiencePage() {
 
         <AplusStack lines={aplusLines} />
 
-        <VideoRing videos={allVideos} />
+        <VideoRing videos={siteVideos} />
 
         <ReviewWall id="xd-reviews" />
 

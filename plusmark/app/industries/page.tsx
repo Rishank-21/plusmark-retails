@@ -16,7 +16,6 @@ export default function IndustriesPage() {
     <>
       <PageHeader
         crumbs={[{ name: "Industries", path: "/industries" }]}
-        eyebrow="Industries & Applications"
         title="Trusted where learning and work happen."
         intro="With a strong focus on quality, reliability and customer satisfaction, Plusmark has earned long-term trust from schools, institutions and government organizations across India."
       />

@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { customCapabilities } from "@/data/custom";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -13,8 +13,7 @@ export function CustomTeaser() {
         <Reveal className="lg:sticky lg:top-28 lg:self-start">
           <SectionHeading
             id="custom-title"
-            eyebrow="Custom Solutions"
-            title="Made to your layout."
+            title="Made to your requirement."
             intro="Folder sizes, fabric colours, line layouts and schedule board designs — built to the requirements you share."
           />
           <div className="mt-10">

@@ -51,7 +51,7 @@ export const faqGroups: FaqGroup[] = [
     items: [
       {
         q: "Which board sizes are available?",
-        a: "Standard sizes depend on the series. Metallic Premium boards are shown in 2 × 3, 2 × 4 and 3 × 4 ft. Eco Premium boards range from 1 × 1 ft up to 3 × 4 ft. Each product page lists the sizes currently shown for that board; for other sizes please send an enquiry.",
+        a: "Standard sizes run from small 1 × 1 ft desk boards up to 8 × 4 ft classroom and lecture-hall boards. Metallic Premium and Deluxe Standard boards are made from 3 × 4 ft up to 8 × 4 ft; Eco Premium and Eco Regular boards from 1.5 × 2 ft up to 8 × 4 ft. Larger or non-standard sizes are made to order as per customer requirement. Just send an enquiry with the size you need.",
       },
       {
         q: "Can I order a custom design or layout?",

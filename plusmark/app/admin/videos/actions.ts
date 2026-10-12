@@ -1,7 +1,9 @@
 "use server";
 
 import { adminDb } from "@/lib/firebase-admin";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
+import { requireAdmin } from "@/lib/admin-auth";
+import { VIDEOS_TAG } from "@/lib/videos";
 import type { Video } from "@/data/media";
 import { videos as staticVideos } from "@/data/media";
 
@@ -11,27 +13,20 @@ export interface VideoWithId extends Video {
 }
 
 // Convert static videos to VideoWithId format
-const getStaticVideos = (): VideoWithId[] => {
-  const videoArray: VideoWithId[] = [];
-  const entries = Object.entries(staticVideos);
-  
-  entries.forEach(([key, video], index) => {
-    videoArray.push({
-      id: key,
-      ...video,
-      productSlugs: [], // Static videos don't have product mappings in admin
-    });
-  });
-  
-  return videoArray;
-};
+const getStaticVideos = (): VideoWithId[] =>
+  Object.entries(staticVideos).map(([key, video]) => ({
+    id: key,
+    ...video,
+    productSlugs: [], // Static videos don't have product mappings in admin
+  }));
 
 export async function getVideos(): Promise<VideoWithId[]> {
+  await requireAdmin();
   try {
     const db = adminDb();
     const snapshot = await db.ref("videos").orderByChild("order").once("value");
     const videos: VideoWithId[] = [];
-    
+
     const staticMap = staticVideos as Record<string, Video>;
     snapshot.forEach((child) => {
       const data = child.val();
@@ -43,10 +38,10 @@ export async function getVideos(): Promise<VideoWithId[]> {
         poster: data.poster || fallback?.poster || "",
         title: data.title || fallback?.title || "Product Video",
         caption: data.caption || fallback?.caption || "",
-        productSlugs: data.productSlugs || (fallback ? [] : []),
+        productSlugs: data.productSlugs || [],
       });
     });
-    
+
     // If database has videos, return them; otherwise return static data
     return videos.length > 0 ? videos : getStaticVideos();
   } catch (error) {
@@ -55,181 +50,70 @@ export async function getVideos(): Promise<VideoWithId[]> {
   }
 }
 
-/**
- * Upload video to Cloudinary from external URL or direct video file URL
- */
-export async function uploadVideoToCloudinary(videoUrl: string): Promise<{ success: boolean; cloudinaryUrl?: string; posterUrl?: string; error?: string }> {
-  try {
-    const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-    const apiKey = process.env.CLOUDINARY_API_KEY;
-    const apiSecret = process.env.CLOUDINARY_API_SECRET;
-
-    if (!cloudName || !apiKey || !apiSecret) {
-      return { success: false, error: "Cloudinary credentials not configured. Add them to .env.local" };
-    }
-
-    // Cloudinary Upload API endpoint
-    const uploadUrl = `https://api.cloudinary.com/v1_1/${cloudName}/video/upload`;
-
-    // Generate timestamp and signature
-    const timestamp = Math.floor(Date.now() / 1000);
-    const crypto = await import("crypto");
-    
-    // Parameters for signature (alphabetically sorted)
-    const paramsToSign = `folder=plusmark-videos&timestamp=${timestamp}${apiSecret}`;
-    const signature = crypto
-      .createHash("sha1")
-      .update(paramsToSign)
-      .digest("hex");
-
-    // Create form data
-    const formData = new FormData();
-    formData.append("file", videoUrl);
-    formData.append("api_key", apiKey);
-    formData.append("timestamp", timestamp.toString());
-    formData.append("signature", signature);
-    formData.append("folder", "plusmark-videos");
-    formData.append("resource_type", "video");
-
-    // Upload to Cloudinary
-    const response = await fetch(uploadUrl, {
-      method: "POST",
-      body: formData,
-    });
-
-    if (!response.ok) {
-      const error = await response.text();
-      console.error("Cloudinary upload failed:", error);
-      return { success: false, error: `Upload failed: ${response.status} ${response.statusText}` };
-    }
-
-    const result = await response.json();
-    
-    // Generate poster URL (Cloudinary auto-generates thumbnails for videos)
-    const posterUrl = result.secure_url.replace(/\.(mp4|mov|avi|webm)$/, ".jpg");
-    
-    // Return Cloudinary URLs
-    return {
-      success: true,
-      cloudinaryUrl: result.secure_url,
-      posterUrl: posterUrl,
-    };
-  } catch (error) {
-    console.error("Error uploading to Cloudinary:", error);
-    return { success: false, error: error instanceof Error ? error.message : "Unknown error occurred" };
-  }
+/** Only the fields we store; never trust extra keys sent from the browser. */
+function clean(video: Partial<VideoWithId>) {
+  const out: Record<string, unknown> = {};
+  if (video.src !== undefined) out.src = String(video.src).trim();
+  if (video.poster !== undefined) out.poster = String(video.poster).trim();
+  if (video.title !== undefined) out.title = String(video.title).trim();
+  if (video.caption !== undefined) out.caption = String(video.caption).trim();
+  if (video.productSlugs !== undefined) out.productSlugs = (video.productSlugs ?? []).map(String);
+  return out;
 }
 
-/**
- * Upload video file (base64) to Cloudinary
- */
-export async function uploadVideoFileToCloudinary(base64Data: string): Promise<{ success: boolean; cloudinaryUrl?: string; posterUrl?: string; error?: string }> {
-  try {
-    const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-    const apiKey = process.env.CLOUDINARY_API_KEY;
-    const apiSecret = process.env.CLOUDINARY_API_SECRET;
-
-    if (!cloudName || !apiKey || !apiSecret) {
-      return { success: false, error: "Cloudinary credentials not configured. Add them to .env.local" };
-    }
-
-    // Cloudinary Upload API endpoint
-    const uploadUrl = `https://api.cloudinary.com/v1_1/${cloudName}/video/upload`;
-
-    // Generate timestamp and signature
-    const timestamp = Math.floor(Date.now() / 1000);
-    const crypto = await import("crypto");
-    
-    const paramsToSign = `folder=plusmark-videos&timestamp=${timestamp}${apiSecret}`;
-    const signature = crypto
-      .createHash("sha1")
-      .update(paramsToSign)
-      .digest("hex");
-
-    // Create form data with base64 file
-    const formData = new FormData();
-    formData.append("file", base64Data);
-    formData.append("api_key", apiKey);
-    formData.append("timestamp", timestamp.toString());
-    formData.append("signature", signature);
-    formData.append("folder", "plusmark-videos");
-    formData.append("resource_type", "video");
-
-    // Upload to Cloudinary
-    const response = await fetch(uploadUrl, {
-      method: "POST",
-      body: formData,
-    });
-
-    if (!response.ok) {
-      const error = await response.text();
-      console.error("Cloudinary file upload failed:", error);
-      return { success: false, error: `Upload failed: ${response.status} ${response.statusText}` };
-    }
-
-    const result = await response.json();
-    
-    // Generate poster URL
-    const posterUrl = result.secure_url.replace(/\.(mp4|mov|avi|webm)$/, ".jpg");
-    
-    return {
-      success: true,
-      cloudinaryUrl: result.secure_url,
-      posterUrl: posterUrl,
-    };
-  } catch (error) {
-    console.error("Error uploading file to Cloudinary:", error);
-    return { success: false, error: error instanceof Error ? error.message : "Unknown error occurred" };
-  }
+/** Videos show on the home page, showroom, experience and product pages, so refresh them all. */
+function revalidate() {
+  revalidateTag(VIDEOS_TAG, { expire: 0 });
+  revalidatePath("/", "layout");
 }
 
 export async function addVideo(video: Omit<VideoWithId, "id">, order: number) {
+  await requireAdmin();
   const db = adminDb();
   const newRef = db.ref("videos").push();
-  
+
   await newRef.set({
-    ...video,
+    ...clean(video),
     order,
     createdAt: new Date().toISOString(),
   });
-  
-  revalidatePath("/");
-  revalidatePath("/showroom");
+
+  revalidate();
   return { success: true, id: newRef.key };
 }
 
 export async function updateVideo(id: string, video: Partial<VideoWithId>) {
+  await requireAdmin();
   const db = adminDb();
   await db.ref(`videos/${id}`).update({
-    ...video,
+    ...clean(video),
     updatedAt: new Date().toISOString(),
   });
-  
-  revalidatePath("/");
-  revalidatePath("/showroom");
+
+  revalidate();
   return { success: true };
 }
 
 export async function deleteVideo(id: string) {
+  await requireAdmin();
   const db = adminDb();
   await db.ref(`videos/${id}`).remove();
-  
-  revalidatePath("/");
-  revalidatePath("/showroom");
+
+  revalidate();
   return { success: true };
 }
 
 export async function reorderVideos(videoIds: string[]) {
+  await requireAdmin();
   const db = adminDb();
   const updates: Record<string, number> = {};
-  
+
   videoIds.forEach((id, index) => {
     updates[`videos/${id}/order`] = index;
   });
-  
+
   await db.ref().update(updates);
-  
-  revalidatePath("/");
-  revalidatePath("/showroom");
+
+  revalidate();
   return { success: true };
 }

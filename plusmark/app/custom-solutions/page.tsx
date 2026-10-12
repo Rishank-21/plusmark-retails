@@ -23,7 +23,6 @@ export default function CustomSolutionsPage() {
     <>
       <PageHeader
         crumbs={[{ name: "Custom Solutions", path: "/custom-solutions" }]}
-        eyebrow="Custom Solutions"
         title="Made to your requirement."
         intro="Several Plusmark boards are built to the size, layout or colour you specify. Here is what can be customised, as described in the Plusmark catalog."
       />

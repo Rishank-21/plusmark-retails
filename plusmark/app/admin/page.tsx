@@ -1,374 +1,387 @@
 import Link from "next/link";
 import {
-  Download,
-  Search,
-  ChevronLeft,
-  ChevronRight,
-  Inbox,
-  Users,
-  Video,
-  Package,
-  TrendingUp,
-  Clock,
-  CheckCircle,
   AlertCircle,
-  BarChart2,
+  ArrowRight,
   ArrowUpRight,
+  Building2,
+  CheckCircle2,
+  Clock,
+  ImageOff,
+  Inbox,
+  Package,
+  Plus,
+  TrendingUp,
+  Video,
 } from "lucide-react";
 import { requireAdmin } from "@/lib/admin-auth";
-import { ENQUIRY_STATUSES, enquiryStats, isEnquiryStatus, listEnquiries } from "@/lib/db";
+import { listEnquiries, type EnquiryRecord } from "@/lib/db";
 import { firebaseAdminConfigured } from "@/lib/firebase-admin";
+import { getCatalog } from "@/lib/catalog";
+import { categories } from "@/data/categories";
 import { cn } from "@/lib/utils";
-import { EnquiryCard } from "./EnquiryCard";
-import { dayLabel, requestNow, statusLabel } from "./ui";
+import { getVideos } from "./videos/actions";
+import { getClients } from "./clients/actions";
+import { PageTitle } from "./PageTitle";
+import { StatusBadge, dayKey, requestNow, statusLabel, timeAgo } from "./ui";
 
-export const metadata = { title: "Admin Dashboard — Plusmark" };
+export const metadata = { title: "Dashboard" };
 
-const PAGE_SIZE = 25;
+const DAY = 24 * 60 * 60 * 1000;
+const dayFmt = new Intl.DateTimeFormat("en-IN", { day: "numeric", month: "short", timeZone: "Asia/Kolkata" });
 
-export default async function AdminDashboard({ searchParams }: PageProps<"/admin">) {
+export default async function AdminDashboard() {
   await requireAdmin();
+  const now = requestNow();
 
-  const sp = await searchParams;
-  const one = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v) ?? "";
-  const q = one(sp.q).trim().slice(0, 100);
-  const statusParam = one(sp.status);
-  const status = isEnquiryStatus(statusParam) ? statusParam : undefined;
-  const page = Math.max(1, Number.parseInt(one(sp.page), 10) || 1);
+  // Each source is loaded on its own, so one failing (e.g. the database) doesn't blank the page.
+  const [enquiriesRes, catalog, videos, clients] = await Promise.all([
+    listEnquiries({ limit: 5000 }).then(
+      (r) => r.rows,
+      (err) => {
+        console.error("[admin] dashboard could not load enquiries", err);
+        return null;
+      },
+    ),
+    getCatalog(),
+    getVideos(),
+    getClients(),
+  ]);
+  const enquiries: EnquiryRecord[] = enquiriesRes ?? [];
 
-  let stats: Awaited<ReturnType<typeof enquiryStats>>;
-  let list: Awaited<ReturnType<typeof listEnquiries>>;
-  try {
-    [stats, list] = await Promise.all([
-      enquiryStats(),
-      listEnquiries({ q, status, limit: PAGE_SIZE, offset: (page - 1) * PAGE_SIZE }),
-    ]);
-  } catch (err) {
-    console.error("[admin] failed to load enquiries", err);
-    return (
-      <div
-        role="alert"
-        className="rounded-xl border border-red-200 bg-red-50 p-6 text-red-900"
-      >
-        <p className="font-semibold text-base mb-1">
-          ⚠️ Could not load enquiries from database.
-        </p>
-        <p className="text-xs text-red-700">
-          {firebaseAdminConfigured()
-            ? "Check server logs, service account permissions, and database connectivity."
-            : "Firebase Admin credentials are not set in the environment."}
-        </p>
-      </div>
-    );
-  }
-  const { rows, total } = list;
-  const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  const count = (s: EnquiryRecord["status"]) => enquiries.filter((e) => e.status === s).length;
+  const newCount = count("new");
+  const since = (days: number) => enquiries.filter((e) => Date.parse(e.createdAt) >= now - days * DAY).length;
+  const last7 = since(7);
+  const prev7 = since(14) - last7;
+  const trend = prev7 ? Math.round(((last7 - prev7) / prev7) * 100) : null;
 
-  const href = (patch: { q?: string; status?: string; page?: number }) => {
-    const p = new URLSearchParams();
-    const merged: { q?: string; status?: string; page?: number } = { q: q || undefined, status, ...patch };
-    if (merged.q) p.set("q", merged.q);
-    if (merged.status) p.set("status", merged.status);
-    if (merged.page && merged.page > 1) p.set("page", String(merged.page));
-    const s = p.toString();
-    return s ? `/admin?${s}` : "/admin";
-  };
+  // Last 14 days, oldest first.
+  const days = Array.from({ length: 14 }, (_, i) => {
+    const ms = now - (13 - i) * DAY;
+    const key = dayKey(ms);
+    return { key, label: dayFmt.format(new Date(ms)), n: enquiries.filter((e) => dayKey(Date.parse(e.createdAt)) === key).length };
+  });
+  const peak = Math.max(1, ...days.map((d) => d.n));
 
-  const exportHref = `/admin/export${(() => {
-    const p = new URLSearchParams();
-    if (q) p.set("q", q);
-    if (status) p.set("status", status);
-    const s = p.toString();
-    return s ? `?${s}` : "";
-  })()}`;
+  const topProducts = Object.entries(
+    enquiries.reduce<Record<string, number>>((acc, e) => {
+      const name = e.product || "General enquiry";
+      acc[name] = (acc[name] ?? 0) + 1;
+      return acc;
+    }, {}),
+  )
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5);
+  const topMax = Math.max(1, ...topProducts.map(([, n]) => n));
 
-  const pct = (n: number) => (stats.total ? Math.round((n / stats.total) * 100) : 0);
+  const recent = enquiries.slice(0, 6);
+  const noPhoto = catalog.filter((p) => !p.image).length;
+  const featured = catalog.filter((p) => p.featured).length;
+  const clientsNoLogo = clients.filter((c) => !c.logo?.src).length;
+  const videosLinked = videos.filter((v) => v.productSlugs?.length).length;
 
   return (
     <div className="space-y-8">
-      {/* Page Header */}
-      <div className="border-b border-line pb-5">
-        <h1 className="font-display text-2xl font-bold tracking-tight text-graphite sm:text-3xl">
-          Admin Dashboard
-        </h1>
-        <p className="mt-1 text-sm text-steel">
-          Overview of customer enquiries, product catalog, videos, and institutional client logos.
+      <PageTitle title="Dashboard" text="An overview of the website: new leads, the product catalog and the content on the home page.">
+        <Link
+          href="/"
+          target="_blank"
+          className="inline-flex h-10 items-center gap-2 rounded-lg border border-line bg-white px-4 text-sm font-medium text-graphite shadow-xs transition hover:bg-mist"
+        >
+          View website <ArrowUpRight aria-hidden className="size-4" />
+          <span className="sr-only">(opens in a new tab)</span>
+        </Link>
+      </PageTitle>
+
+      {enquiriesRes === null && (
+        <p role="alert" className="flex items-start gap-2 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-900">
+          <AlertCircle aria-hidden className="mt-0.5 size-4 shrink-0" />
+          {firebaseAdminConfigured()
+            ? "Enquiries could not be loaded from the database. Check the server logs."
+            : "Firebase Admin credentials are not set, so enquiries can't be shown."}
         </p>
-      </div>
+      )}
 
-      {/* Quick Action Navigation Cards */}
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
-        {[
-          {
-            href: "/admin/products",
-            label: "Product Catalog",
-            desc: "Manage sizes, specs & A+",
-            icon: Package,
-          },
-          {
-            href: "/admin/videos",
-            label: "Product Videos",
-            desc: "Upload & showroom reel",
-            icon: Video,
-          },
-          {
-            href: "/admin/clients",
-            label: "Client Brands",
-            desc: "Homepage institutional logos",
-            icon: Users,
-          },
-          {
-            href: exportHref,
-            label: "Export CSV",
-            desc: "Download enquiries data",
-            icon: Download,
-          },
-        ].map(({ href: cardHref, label, desc, icon: Icon }) => (
-          <Link
-            key={label}
-            href={cardHref}
-            className="group relative flex flex-col justify-between rounded-xl border border-line bg-white p-4 transition-all hover:border-slate-300 hover:shadow-xs"
-          >
-            <div className="flex items-center justify-between">
-              <div className="flex size-9 items-center justify-center rounded-lg bg-fog text-graphite transition-colors group-hover:bg-mist">
-                <Icon className="size-4 text-graphite" />
+      {/* Key numbers */}
+      <ul className="grid grid-cols-2 gap-3 lg:grid-cols-5">
+        <Kpi
+          href="/admin/enquiries?status=new"
+          icon={AlertCircle}
+          label="New enquiries"
+          value={newCount}
+          note={newCount ? "Waiting for a reply" : "All caught up"}
+          tone={newCount ? "alert" : "ok"}
+        />
+        <Kpi
+          href="/admin/enquiries"
+          icon={TrendingUp}
+          label="Last 7 days"
+          value={last7}
+          note={trend === null ? `${enquiries.length} in total` : `${trend >= 0 ? "+" : ""}${trend}% vs previous week`}
+        />
+        <Kpi href="/admin/products" icon={Package} label="Products live" value={catalog.length} note={`${categories.length} categories`} />
+        <Kpi href="/admin/videos" icon={Video} label="Videos" value={videos.length} note={`${videosLinked} on product pages`} />
+        <Kpi href="/admin/clients" icon={Building2} label="Client logos" value={clients.length} note={clientsNoLogo ? `${clientsNoLogo} without a logo` : "All have logos"} />
+      </ul>
+
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
+        {/* Activity chart */}
+        <Card title="Enquiries, last 14 days" action={<CardLink href="/admin/enquiries">Open inbox</CardLink>}>
+          <div className="flex h-44 items-end gap-1.5" role="img" aria-label={`Enquiries per day over the last 14 days: ${days.map((d) => `${d.label} ${d.n}`).join(", ")}`}>
+            {days.map((d, i) => (
+              <div key={d.key} className="group flex h-full flex-1 flex-col items-center justify-end gap-1.5">
+                <span className="text-[0.65rem] font-semibold text-graphite opacity-0 transition group-hover:opacity-100">{d.n}</span>
+                <span
+                  className={cn("w-full rounded-t-md transition-colors", d.n ? "bg-brand/80 group-hover:bg-brand" : "bg-fog")}
+                  style={{ height: `${Math.max(4, (d.n / peak) * 100)}%` }}
+                />
+                <span className={cn("text-[0.6rem] text-steel", i % 2 === 1 && "hidden sm:block")}>{d.label.split(" ")[0]}</span>
               </div>
-              <ArrowUpRight className="size-4 text-steel/40 transition-colors group-hover:text-graphite" />
-            </div>
-            <div className="mt-4">
-              <p className="font-semibold text-sm text-graphite group-hover:text-brand transition-colors">
-                {label}
-              </p>
-              <p className="text-xs text-steel mt-0.5">{desc}</p>
-            </div>
-          </Link>
-        ))}
-      </div>
-
-      {/* Stats Overview Counters */}
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5 sm:gap-4">
-        {[
-          {
-            label: "Total Enquiries",
-            value: stats.total,
-            sub: "All time received",
-            icon: BarChart2,
-            filter: undefined,
-          },
-          {
-            label: "New Unread",
-            value: stats.new,
-            sub: stats.new ? "Needs response" : "All caught up ✓",
-            icon: AlertCircle,
-            filter: "new" as const,
-            highlight: stats.new > 0,
-          },
-          {
-            label: "Contacted",
-            value: stats.contacted,
-            sub: `${pct(stats.contacted)}% of total`,
-            icon: Clock,
-            filter: "contacted" as const,
-          },
-          {
-            label: "Closed",
-            value: stats.closed,
-            sub: `${pct(stats.closed)}% completed`,
-            icon: CheckCircle,
-            filter: "closed" as const,
-          },
-          {
-            label: "Past 7 Days",
-            value: stats.last7,
-            sub: "Recent volume",
-            icon: TrendingUp,
-            filter: undefined,
-          },
-        ].map((c) => {
-          const active = status === c.filter;
-          return (
-            <Link
-              key={c.label}
-              href={href({ status: c.filter, page: undefined })}
-              className={cn(
-                "rounded-xl border p-4 transition-all hover:shadow-xs",
-                active
-                  ? "border-brand bg-accent-soft/40 ring-1 ring-brand/30"
-                  : "border-line bg-white hover:border-slate-300"
-              )}
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-steel">{c.label}</span>
-                <c.icon className={cn("size-3.5", active ? "text-brand" : "text-steel/50")} />
-              </div>
-              <p className={cn("mt-2 font-display text-2xl font-bold tracking-tight", c.highlight ? "text-red-600" : "text-graphite")}>
-                {c.value}
-              </p>
-              <p className="mt-0.5 text-[11px] text-steel/80">{c.sub}</p>
-            </Link>
-          );
-        })}
-      </div>
-
-      {/* Enquiries Inbox Section */}
-      <div className="rounded-xl border border-line bg-white shadow-xs overflow-hidden">
-        {/* Search & Filter Header */}
-        <div className="border-b border-line bg-fog/20 p-4 sm:p-5">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2">
-              <Inbox className="size-4 text-graphite" />
-              <h2 className="font-semibold text-sm sm:text-base text-graphite">Enquiry Inbox</h2>
-              <span className="rounded-full bg-fog px-2 py-0.5 font-mono text-[11px] text-steel">
-                {total}
-              </span>
-            </div>
-            {status && (
-              <span className="text-xs font-medium text-brand">
-                Filtered: {statusLabel[status]}
-              </span>
-            )}
+            ))}
           </div>
 
-          <form method="get" action="/admin" role="search">
-            <div className="flex flex-col gap-2.5 sm:flex-row">
-              <div className="relative flex-1">
-                <Search
-                  aria-hidden
-                  className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-steel/60 pointer-events-none"
-                />
-                <label htmlFor="admin-q" className="sr-only">
-                  Search enquiries
-                </label>
-                <input
-                  id="admin-q"
-                  name="q"
-                  defaultValue={q}
-                  placeholder="Search name, phone, email, product..."
-                  className="w-full rounded-lg border border-line bg-white pl-10 pr-3.5 py-2 text-xs text-graphite placeholder:text-steel/50 focus:border-brand focus:ring-1 focus:ring-brand outline-none transition"
-                />
-              </div>
-
-              <select
-                id="admin-status"
-                name="status"
-                defaultValue={status ?? ""}
-                className="rounded-lg border border-line bg-white px-3.5 py-2 text-xs text-graphite focus:border-brand focus:ring-1 focus:ring-brand outline-none transition cursor-pointer sm:w-44"
-              >
-                <option value="">All statuses</option>
-                {ENQUIRY_STATUSES.map((s) => (
-                  <option key={s} value={s}>
-                    {statusLabel[s]}
-                  </option>
-                ))}
-              </select>
-
-              <button
-                type="submit"
-                className="rounded-lg bg-graphite px-4 py-2 text-xs font-semibold text-white hover:bg-black transition cursor-pointer"
-              >
-                Apply Filter
-              </button>
-
-              {(q || status) && (
-                <Link
-                  href="/admin"
-                  className="inline-flex items-center justify-center rounded-lg border border-line bg-white px-3.5 py-2 text-xs font-medium text-steel hover:bg-fog hover:text-graphite transition"
-                >
-                  Clear
-                </Link>
-              )}
+          {/* Status split */}
+          <div className="mt-6 border-t border-line pt-5">
+            <div className="flex h-2.5 overflow-hidden rounded-full bg-fog">
+              {(["new", "contacted", "closed"] as const).map((s) => {
+                const n = count(s);
+                return n ? <span key={s} className={statusBar[s]} style={{ width: `${(n / Math.max(1, enquiries.length)) * 100}%` }} /> : null;
+              })}
             </div>
-          </form>
-        </div>
-
-        {/* List of Enquiries */}
-        <div>
-          {rows.length === 0 ? (
-            <div className="flex flex-col items-center justify-center p-12 text-center">
-              <Inbox className="size-10 text-steel/40 mb-3" />
-              <p className="font-semibold text-sm text-graphite">
-                {q || status ? "No enquiries match your search filter." : "No enquiries yet."}
-              </p>
-              <p className="text-xs text-steel mt-1">
-                Submissions from the website quote form will appear here.
-              </p>
-            </div>
-          ) : (
-            <div>
-              <div className="border-b border-line bg-fog/10 px-5 py-2 text-[11px] text-steel flex justify-between">
-                <span>
-                  Showing {(page - 1) * PAGE_SIZE + 1}–{(page - 1) * PAGE_SIZE + rows.length} of {total}
-                </span>
-                <span>Page {page} of {pages}</span>
-              </div>
-
-              {groups(rows, requestNow()).map((g) => (
-                <section key={g.key} aria-labelledby={`day-${g.key}`}>
-                  <h3
-                    id={`day-${g.key}`}
-                    className="flex items-center gap-2 border-b border-line bg-fog/30 px-5 py-2 text-[11px] font-mono uppercase tracking-wider text-steel"
-                  >
-                    <span>{g.label}</span>
-                    <span className="flex-1 h-px bg-line" />
-                    <span className="font-sans normal-case tracking-normal">
-                      {g.rows.length} {g.rows.length === 1 ? "enquiry" : "enquiries"}
-                    </span>
-                  </h3>
-                  <ul className="divide-y divide-line">
-                    {g.rows.map((r) => (
-                      <li key={r.id}>
-                        <EnquiryCard r={r} now={requestNow()} />
-                      </li>
-                    ))}
-                  </ul>
-                </section>
+            <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm">
+              {(["new", "contacted", "closed"] as const).map((s) => (
+                <li key={s}>
+                  <Link href={`/admin/enquiries?status=${s}`} className="inline-flex items-center gap-2 text-steel hover:text-graphite">
+                    <span aria-hidden className={cn("size-2.5 rounded-full", statusBar[s])} />
+                    {statusLabel[s]} <span className="font-semibold text-graphite">{count(s)}</span>
+                  </Link>
+                </li>
               ))}
-            </div>
-          )}
-        </div>
-
-        {/* Pagination Controls */}
-        {pages > 1 && (
-          <div className="flex items-center justify-between border-t border-line bg-fog/20 px-5 py-3 text-xs text-steel">
-            <span>
-              Page {page} of {pages}
-            </span>
-            <div className="flex gap-2">
-              {page > 1 && (
-                <Link
-                  href={href({ page: page - 1 })}
-                  className="inline-flex items-center gap-1 rounded-lg border border-line bg-white px-3 py-1.5 font-medium text-graphite hover:bg-fog transition"
-                >
-                  <ChevronLeft className="size-3.5" />
-                  <span>Previous</span>
-                </Link>
-              )}
-              {page < pages && (
-                <Link
-                  href={href({ page: page + 1 })}
-                  className="inline-flex items-center gap-1 rounded-lg border border-line bg-white px-3 py-1.5 font-medium text-graphite hover:bg-fog transition"
-                >
-                  <span>Next</span>
-                  <ChevronRight className="size-3.5" />
-                </Link>
-              )}
-            </div>
+            </ul>
           </div>
-        )}
+        </Card>
+
+        {/* Recent */}
+        <Card title="Latest enquiries" action={<CardLink href="/admin/enquiries">See all</CardLink>}>
+          {recent.length ? (
+            <ul className="-mx-2 divide-y divide-line">
+              {recent.map((e) => (
+                <li key={e.id}>
+                  <Link href={`/admin/enquiries/${e.id}`} className="flex items-center gap-3 rounded-lg px-2 py-3 transition hover:bg-mist">
+                    <span aria-hidden className="flex size-9 shrink-0 items-center justify-center rounded-full bg-accent-soft text-xs font-semibold text-accent">
+                      {initials(e.name)}
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-sm font-semibold text-graphite">{e.name || "Unnamed"}</span>
+                      <span className="block truncate text-xs text-steel">{e.product || "General enquiry"}</span>
+                    </span>
+                    <span className="flex shrink-0 flex-col items-end gap-1">
+                      <StatusBadge status={e.status} />
+                      <span className="text-[0.68rem] text-steel">{timeAgo(e.createdAt, now)}</span>
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <Empty icon={Inbox} text="No enquiries yet. Submissions from the website form will show here." />
+          )}
+        </Card>
       </div>
+
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+        {/* Demand */}
+        <Card title="Most enquired products" action={<CardLink href="/admin/enquiries">Inbox</CardLink>}>
+          {topProducts.length ? (
+            <ol className="space-y-3.5">
+              {topProducts.map(([name, n], i) => (
+                <li key={name}>
+                  <div className="flex items-baseline justify-between gap-3 text-sm">
+                    <span className="flex min-w-0 items-baseline gap-2">
+                      <span className="font-mono text-[0.68rem] text-steel">{String(i + 1).padStart(2, "0")}</span>
+                      <span className="truncate font-medium text-graphite">{name}</span>
+                    </span>
+                    <span className="shrink-0 text-xs text-steel">
+                      {n} {n === 1 ? "enquiry" : "enquiries"}
+                    </span>
+                  </div>
+                  <span className="mt-1.5 block h-1.5 overflow-hidden rounded-full bg-fog">
+                    <span className="block h-full rounded-full bg-flame" style={{ width: `${(n / topMax) * 100}%` }} />
+                  </span>
+                </li>
+              ))}
+            </ol>
+          ) : (
+            <Empty icon={Package} text="Once enquiries come in, the products people ask about most will be listed here." />
+          )}
+        </Card>
+
+        {/* Content health */}
+        <Card title="Website content">
+          <ul className="divide-y divide-line">
+            <Health
+              href="/admin/products"
+              icon={Package}
+              label="Products in the catalog"
+              value={`${catalog.length}`}
+              detail={`${featured} featured on the home page`}
+            />
+            <Health
+              href="/admin/products"
+              icon={ImageOff}
+              label="Products without a photo"
+              value={`${noPhoto}`}
+              detail={noPhoto ? "Add photos so they show properly" : "Every product has a photo"}
+              ok={!noPhoto}
+            />
+            <Health href="/admin/videos" icon={Video} label="Videos in the film reel" value={`${videos.length}`} detail={`${videosLinked} also shown on product pages`} />
+            <Health
+              href="/admin/clients"
+              icon={Building2}
+              label="Client logos"
+              value={`${clients.length}`}
+              detail={clientsNoLogo ? `${clientsNoLogo} shown by name only` : "All have logos"}
+              ok={!clientsNoLogo}
+            />
+          </ul>
+        </Card>
+      </div>
+
+      {/* Quick actions */}
+      <section aria-labelledby="quick-title">
+        <h2 id="quick-title" className="mb-3 text-sm font-semibold text-graphite">
+          Quick actions
+        </h2>
+        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            { href: "/admin/products?new=1", label: "Add a product", icon: Package },
+            { href: "/admin/videos?new=1", label: "Add a video", icon: Video },
+            { href: "/admin/clients?new=1", label: "Add a client logo", icon: Building2 },
+            { href: "/admin/enquiries?status=new", label: "Reply to new enquiries", icon: Inbox },
+          ].map(({ href, label, icon: Icon }) => (
+            <li key={href}>
+              <Link href={href} className="group flex items-center gap-3 rounded-2xl border border-line bg-white p-4 transition hover:border-steel/30 hover:shadow-sm">
+                <span className="flex size-10 items-center justify-center rounded-xl bg-mist text-graphite ring-1 ring-fog transition group-hover:bg-graphite group-hover:text-white">
+                  <Icon aria-hidden className="size-4" />
+                </span>
+                <span className="flex-1 text-sm font-semibold text-graphite">{label}</span>
+                <Plus aria-hidden className="size-4 text-steel transition group-hover:text-graphite" />
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
     </div>
   );
 }
 
-function groups(rows: Awaited<ReturnType<typeof listEnquiries>>["rows"], now: number) {
-  const dayKeyFmt = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kolkata" });
-  const dk = (ms: number) => dayKeyFmt.format(new Date(ms));
-  const result: { key: string; label: string; rows: typeof rows }[] = [];
-  for (const r of rows) {
-    const key = dk(Date.parse(r.createdAt));
-    const last = result.at(-1);
-    if (last?.key === key) last.rows.push(r);
-    else result.push({ key, label: dayLabel(r.createdAt, now), rows: [r] });
-  }
-  return result;
+const statusBar = { new: "bg-accent", contacted: "bg-[#d99a00]", closed: "bg-verdant" } as const;
+
+const initials = (name: string) =>
+  name
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((w) => w[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase() || "?";
+
+function Kpi({
+  href,
+  icon: Icon,
+  label,
+  value,
+  note,
+  tone,
+}: {
+  href: string;
+  icon: React.ComponentType<{ className?: string }>;
+  label: string;
+  value: number;
+  note: string;
+  tone?: "alert" | "ok";
+}) {
+  return (
+    <li>
+      <Link
+        href={href}
+        className={cn(
+          "group flex h-full flex-col rounded-2xl border bg-white p-4 transition hover:shadow-sm",
+          tone === "alert" ? "border-accent/40 ring-1 ring-accent/15" : "border-line hover:border-steel/30",
+        )}
+      >
+        <span className="flex items-center justify-between">
+          <span className="text-xs font-medium text-steel">{label}</span>
+          <Icon aria-hidden className={cn("size-4", tone === "alert" ? "text-accent" : "text-steel/60")} />
+        </span>
+        <span className="mt-2 font-display text-3xl font-bold tracking-tight text-graphite">{value}</span>
+        <span className={cn("mt-1 inline-flex items-center gap-1 text-[0.72rem]", tone === "ok" ? "text-verdant" : "text-steel")}>
+          {tone === "ok" && <CheckCircle2 aria-hidden className="size-3" />}
+          {tone === "alert" && <Clock aria-hidden className="size-3" />}
+          {note}
+        </span>
+      </Link>
+    </li>
+  );
+}
+
+function Card({ title, action, children }: { title: string; action?: React.ReactNode; children: React.ReactNode }) {
+  return (
+    <section className="rounded-2xl border border-line bg-white p-5 md:p-6">
+      <div className="mb-5 flex items-center justify-between gap-3">
+        <h2 className="font-display text-base font-semibold text-graphite">{title}</h2>
+        {action}
+      </div>
+      {children}
+    </section>
+  );
+}
+
+function CardLink({ href, children }: { href: string; children: React.ReactNode }) {
+  return (
+    <Link href={href} className="group inline-flex items-center gap-1 text-xs font-semibold text-brand hover:text-graphite">
+      {children}
+      <ArrowRight aria-hidden className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+    </Link>
+  );
+}
+
+function Health({
+  href,
+  icon: Icon,
+  label,
+  value,
+  detail,
+  ok,
+}: {
+  href: string;
+  icon: React.ComponentType<{ className?: string }>;
+  label: string;
+  value: string;
+  detail: string;
+  ok?: boolean;
+}) {
+  return (
+    <li>
+      <Link href={href} className="-mx-2 flex items-center gap-3 rounded-lg px-2 py-3 transition hover:bg-mist">
+        <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-mist text-steel ring-1 ring-fog">
+          <Icon aria-hidden className="size-4" />
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="block text-sm font-medium text-graphite">{label}</span>
+          <span className={cn("block text-xs", ok === false ? "text-[#a3222a]" : ok ? "text-verdant" : "text-steel")}>{detail}</span>
+        </span>
+        <span className="font-display text-xl font-bold text-graphite">{value}</span>
+      </Link>
+    </li>
+  );
+}
+
+function Empty({ icon: Icon, text }: { icon: React.ComponentType<{ className?: string }>; text: string }) {
+  return (
+    <div className="flex flex-col items-center justify-center py-8 text-center">
+      <Icon className="size-7 text-steel/40" />
+      <p className="mt-2 max-w-xs text-sm text-steel">{text}</p>
+    </div>
+  );
 }

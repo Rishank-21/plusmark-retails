@@ -1,25 +1,20 @@
+import { requireAdmin } from "@/lib/admin-auth";
+import { products } from "@/data/products";
 import { getVideos } from "./actions";
 import { VideosManager } from "./VideosManager";
+import { PageTitle } from "../PageTitle";
 
-export const metadata = {
-  title: "Manage Videos — Plusmark Admin",
-};
+export const metadata = { title: "Videos" };
 
 export default async function AdminVideosPage() {
+  await requireAdmin();
   const videos = await getVideos();
+  const productOptions = products.map((p) => ({ slug: p.slug, name: p.name })).sort((a, b) => a.name.localeCompare(b.name));
 
   return (
     <div className="space-y-6">
-      <div className="border-b border-line pb-5">
-        <h1 className="font-display text-2xl font-bold tracking-tight text-graphite sm:text-3xl">
-          Manage Videos
-        </h1>
-        <p className="mt-1 text-sm text-steel">
-          Preview, upload, link to products, and reorder product videos for the showroom reel.
-        </p>
-      </div>
-
-      <VideosManager initialVideos={videos} />
+      <PageTitle title="Videos" text="Product and installation videos for the home page film reel and product pages." />
+      <VideosManager initialVideos={videos} products={productOptions} />
     </div>
   );
 }

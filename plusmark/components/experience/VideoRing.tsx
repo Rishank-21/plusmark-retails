@@ -4,6 +4,7 @@ import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { Play, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { Video } from "@/data/media";
+import { videoEmbed, withAutoplay } from "@/lib/video-embed";
 
 /**
  * Pinned 3D carousel of the Drive films (CSS 3D, no WebGL): scrolling spins the ring,
@@ -60,7 +61,7 @@ export function VideoRing({ videos }: { videos: Video[] }) {
           >
             {videos.map((v, i) => (
               <li
-                key={v.src}
+                key={`${v.src}-${i}`}
                 className="absolute -translate-x-1/2 -translate-y-1/2 [backface-visibility:hidden]"
                 style={{ transform: `rotateY(${(360 / n) * i}deg) translateZ(${radius}px)` }}
               >
@@ -106,7 +107,21 @@ export function VideoRing({ videos }: { videos: Video[] }) {
         {playing && (
           <div>
             <div className="relative aspect-video bg-[#15123a]">
-              <video key={playing.src} className="size-full" src={playing.src} poster={playing.poster} controls autoPlay playsInline />
+              {(() => {
+                const embed = videoEmbed(playing.src).embedUrl;
+                return embed ? (
+                  <iframe
+                    key={playing.src}
+                    src={withAutoplay(embed)}
+                    title={playing.title}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="size-full border-0"
+                  />
+                ) : (
+                  <video key={playing.src} className="size-full" src={playing.src} poster={playing.poster} controls autoPlay playsInline />
+                );
+              })()}
             </div>
             <div className="flex items-start justify-between gap-4 p-5 md:p-6">
               <div>

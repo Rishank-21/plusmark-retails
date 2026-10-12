@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { adminDb } from "@/lib/firebase-admin";
+import { isAdmin } from "@/lib/admin-auth";
 import { trustedClients } from "@/data/clients";
 
 /**
@@ -7,6 +8,7 @@ import { trustedClients } from "@/data/clients";
  * Only run this once to migrate from static data to database.
  */
 export async function POST() {
+  if (!(await isAdmin())) return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
   try {
     const db = adminDb();
     const snapshot = await db.ref("clients").once("value");

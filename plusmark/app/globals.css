@@ -35,6 +35,8 @@
 
   --animate-rise: rise 0.9s var(--ease-premium) both;
   --animate-fade: fade 1s var(--ease-premium) both;
+  --animate-shimmer: shimmer 3s ease-in-out infinite;
+  --animate-drawer: drawer-in 0.35s var(--ease-premium) both;
 
   @keyframes rise {
     from { opacity: 0; transform: translateY(18px); }
@@ -51,6 +53,15 @@
   @keyframes fade {
     from { opacity: 0; }
     to { opacity: 1; }
+  }
+  /* Admin side panel */
+  @keyframes drawer-in {
+    from { transform: translateX(40px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
   }
   /* A+ showcase: banner settles in, story segment fills while it is on show */
   @keyframes aplus-in {

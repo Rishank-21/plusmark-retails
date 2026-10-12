@@ -10,6 +10,7 @@ export const enquirySchema = z.object({
   email: z.string().trim().email("Please enter a valid email address").max(160),
   product: z.string().trim().max(160).optional().default(""),
   size: z.string().trim().max(80).optional().default(""),
+  customSize: z.string().trim().max(100).optional().default(""),
   quantity: z.string().trim().max(60).optional().default(""),
   requirement: z.string().trim().max(160).optional().default(""),
   message: z.string().trim().max(3000).optional().default(""),

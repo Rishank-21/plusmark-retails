@@ -4,7 +4,7 @@ import { ProductCard } from "@/components/products/ProductCard";
 import { EnquiryBand } from "@/components/sections/EnquiryBand";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { categories } from "@/data/categories";
-import { allSeries, products } from "@/data/products";
+import { getCatalog } from "@/lib/catalog";
 import { buildMetadata } from "@/lib/seo";
 import { itemListSchema } from "@/lib/structured-data";
 import { toFilterItem } from "@/lib/filter";
@@ -16,13 +16,14 @@ export const metadata = buildMetadata({
   path: "/products",
 });
 
-export default function ProductsPage() {
+export default async function ProductsPage() {
+  const products = await getCatalog();
+  const allSeries = Array.from(new Set(products.map((p) => p.series)));
   const cards = Object.fromEntries(products.map((p) => [p.slug, <ProductCard key={p.slug} product={p} headingLevel="h2" />]));
   return (
     <>
       <PageHeader
         crumbs={[{ name: "Products", path: "/products" }]}
-        eyebrow={`${products.length} products · ${categories.length} categories`}
         title={<>Premium Display &amp; Educational Systems</>}
         intro="The complete Plusmark catalogue — writing boards, notice and display boards, stands, clipboards and school benches, manufactured in India for schools, institutions, offices and government organisations."
       />

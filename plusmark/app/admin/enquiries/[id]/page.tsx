@@ -32,14 +32,14 @@ export default async function EnquiryDetailPage({ params }: PageProps<"/admin/en
     ["Phone", e.phone],
     ["Email", e.email],
     ["Product", e.product],
-    ["Size", e.size],
+    ["Size", e.size === "Other / custom size" && e.customSize ? e.customSize : e.size],
     ["Quantity", e.quantity],
     ["Requirement", e.requirement],
   ];
 
   return (
     <>
-      <Link href="/admin" className="inline-flex items-center gap-1.5 text-sm text-steel hover:text-graphite">
+      <Link href="/admin/enquiries" className="inline-flex items-center gap-1.5 text-sm text-steel hover:text-graphite">
         <ArrowLeft aria-hidden className="size-4" /> All enquiries
       </Link>
 
@@ -103,7 +103,7 @@ export default async function EnquiryDetailPage({ params }: PageProps<"/admin/en
               )}
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
-              <Fact label="Size" value={e.size} />
+              <Fact label="Size" value={e.size === "Other / custom size" && e.customSize ? e.customSize : e.size} />
               <Fact label="Qty" value={e.quantity} />
               <Fact label="Need" value={e.requirement} />
             </div>

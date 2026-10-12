@@ -23,13 +23,14 @@ import type { Enquiry } from "./enquiry";
 const DEFAULT_ADMIN_PHONE = "+919913967888";
 
 export function enquiryText(e: Enquiry) {
+  const sizeText = e.size === "Other / custom size" && e.customSize ? e.customSize : e.size || "-";
   return [
     `Name: ${e.name}`,
     `Company / Institution: ${e.company || "-"}`,
     `Phone: ${e.phone}`,
     `Email: ${e.email}`,
     `Product: ${e.product || "-"}`,
-    `Size: ${e.size || "-"}`,
+    `Size: ${sizeText}`,
     `Quantity: ${e.quantity || "-"}`,
     `Requirement: ${e.requirement || "-"}`,
     "",
@@ -38,12 +39,13 @@ export function enquiryText(e: Enquiry) {
 }
 
 export function enquirySmsText(e: Enquiry) {
+  const sizeText = e.size === "Other / custom size" && e.customSize ? e.customSize : e.size;
   const parts = [
     `Plusmark Enquiry:`,
     `Name: ${e.name}`,
     `Phone: ${e.phone}`,
     e.product ? `Product: ${e.product}` : null,
-    e.size ? `Size: ${e.size}` : null,
+    sizeText ? `Size: ${sizeText}` : null,
     e.quantity ? `Qty: ${e.quantity}` : null,
     e.requirement ? `Req: ${e.requirement}` : null,
     e.company ? `Company: ${e.company}` : null,
@@ -53,6 +55,7 @@ export function enquirySmsText(e: Enquiry) {
 }
 
 export function enquiryWhatsappText(e: Enquiry) {
+  const sizeText = e.size === "Other / custom size" && e.customSize ? e.customSize : e.size || "N/A";
   return `🔔 *New Website Enquiry — Plusmark Boards*
 
 👤 *Name:* ${e.name}
@@ -60,7 +63,7 @@ export function enquiryWhatsappText(e: Enquiry) {
 ✉️ *Email:* ${e.email}
 🏢 *Company:* ${e.company || "N/A"}
 📦 *Product:* ${e.product || "General"}
-📐 *Size:* ${e.size || "N/A"}
+📐 *Size:* ${sizeText}
 🔢 *Quantity:* ${e.quantity || "N/A"}
 📋 *Requirement:* ${e.requirement || "N/A"}
 

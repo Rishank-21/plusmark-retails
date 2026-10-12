@@ -2,20 +2,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { categories } from "@/data/categories";
-import { getProduct, getProductsByCategory } from "@/data/products";
-import { getCategorySubcategories, getAllProductsForCategory } from "@/data/subcategories";
+import { getCatalog, productsForCategory } from "@/lib/catalog";
+import { getCategorySubcategories } from "@/data/subcategories";
 import { pad2, cn } from "@/lib/utils";
 
-export function CategoryGrid({ exclude, compact }: { exclude?: string; compact?: boolean }) {
+export async function CategoryGrid({ exclude, compact }: { exclude?: string; compact?: boolean }) {
+  const catalog = await getCatalog();
   const list = categories.filter((c) => c.slug !== exclude);
   return (
     <ul className={cn("grid gap-4 sm:grid-cols-2", compact ? "lg:grid-cols-4" : "lg:grid-cols-3 xl:grid-cols-4")}>
       {list.map((c, i) => {
-        const cover = getProduct(c.coverProduct);
+        const inCategory = productsForCategory(catalog, c.slug);
+        const cover = catalog.find((p) => p.slug === c.coverProduct) ?? inCategory[0];
         const subConfig = getCategorySubcategories(c.slug);
-        const count = subConfig
-          ? getAllProductsForCategory(c.slug).length
-          : getProductsByCategory(c.slug).length;
+        const count = inCategory.length;
         return (
           <li key={c.slug} className="group relative overflow-hidden rounded-3xl bg-white ring-1 ring-fog shadow-[var(--shadow-soft)] transition-[box-shadow,transform] duration-500 ease-[var(--ease-premium)] hover:-translate-y-1 hover:shadow-[var(--shadow-lift)] motion-reduce:hover:translate-y-0">
             <div className="relative m-2 mb-0 aspect-[16/10] overflow-hidden rounded-[1.1rem] studio-bg">

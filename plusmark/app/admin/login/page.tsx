@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { LockKeyhole } from "lucide-react";
 import { adminConfigured, isAdmin } from "@/lib/admin-auth";
 import { LoginForm } from "./LoginForm";
 
@@ -9,13 +10,16 @@ export default async function AdminLoginPage() {
   const configured = adminConfigured();
 
   return (
-    <div className="mx-auto mt-10 max-w-sm bg-white p-8 ring-1 ring-line md:mt-20">
-      <h1 className="font-display text-2xl font-semibold">Admin login</h1>
-      <p className="mt-2 text-sm text-steel">View and manage enquiries submitted on the website.</p>
+    <div className="w-full max-w-sm rounded-2xl bg-white p-8 shadow-[var(--shadow-lift)] ring-1 ring-line">
+      <span className="flex size-11 items-center justify-center rounded-xl bg-graphite text-white">
+        <LockKeyhole aria-hidden className="size-5" />
+      </span>
+      <h1 className="mt-5 font-display text-2xl font-semibold">Admin login</h1>
+      <p className="mt-1.5 text-sm text-steel">Manage enquiries, products, videos and client logos.</p>
       {configured ? (
         <LoginForm />
       ) : (
-        <p role="alert" className="mt-6 bg-[#fdf0f0] p-4 text-sm leading-relaxed text-[#a3222a]">
+        <p role="alert" className="mt-6 rounded-lg bg-[#fdf0f0] p-4 text-sm leading-relaxed text-[#a3222a]">
           The admin panel is not configured. Set <code className="font-mono">ADMIN_PASSWORD</code> and{" "}
           <code className="font-mono">ADMIN_SESSION_SECRET</code> (at least 32 characters) in the server environment, then
           restart.

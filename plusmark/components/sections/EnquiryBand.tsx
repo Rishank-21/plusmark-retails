@@ -116,7 +116,7 @@ export function EnquiryBand({
         </Reveal>
 
         <Reveal delay={0.08}>
-          <div className="rounded-[var(--card-radius,0px)] bg-mist px-6 pb-3 pt-6 ring-1 ring-fog sm:px-8 sm:pt-8">
+          <div className="rounded-[var(--card-radius,0px)] px-6 pb-3 pt-6 sm:px-8 sm:pt-8">
             <h3 className="eyebrow">What to include</h3>
             <ol className="mt-3 divide-y divide-line">
               {checklist.map((c, i) => (

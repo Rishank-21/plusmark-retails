@@ -27,6 +27,7 @@ export interface EnquiryRecord {
   email: string;
   product: string;
   size: string;
+  customSize: string;
   quantity: string;
   requirement: string;
   message: string;
@@ -49,6 +50,7 @@ function toRecord(id: string, v: Partial<Stored> | null): EnquiryRecord | undefi
     email: str(v.email),
     product: str(v.product),
     size: str(v.size),
+    customSize: str(v.customSize),
     quantity: str(v.quantity),
     requirement: str(v.requirement),
     message: str(v.message),
@@ -69,6 +71,7 @@ export async function insertEnquiry(e: Enquiry, ip = ""): Promise<string> {
     email: e.email,
     product: e.product,
     size: e.size,
+    customSize: e.customSize,
     quantity: e.quantity,
     requirement: e.requirement,
     message: e.message,

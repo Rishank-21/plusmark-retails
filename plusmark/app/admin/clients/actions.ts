@@ -2,15 +2,17 @@
 
 import { adminDb } from "@/lib/firebase-admin";
 import { revalidatePath } from "next/cache";
+import { requireAdmin } from "@/lib/admin-auth";
 import type { TrustedClient } from "@/data/clients";
 import { trustedClients } from "@/data/clients";
 
 export async function getClients(): Promise<TrustedClient[]> {
+  await requireAdmin();
   try {
     const db = adminDb();
     const snapshot = await db.ref("clients").orderByChild("order").once("value");
     const clients: TrustedClient[] = [];
-    
+
     snapshot.forEach((child) => {
       const data = child.val();
       clients.push({
@@ -20,7 +22,7 @@ export async function getClients(): Promise<TrustedClient[]> {
         logo: data.logo,
       });
     });
-    
+
     // If database has clients, return them; otherwise return static data
     return clients.length > 0 ? clients : trustedClients;
   } catch (error) {
@@ -30,61 +32,56 @@ export async function getClients(): Promise<TrustedClient[]> {
 }
 
 export async function addClient(client: Omit<TrustedClient, "id">, order: number) {
+  await requireAdmin();
   const db = adminDb();
   const newRef = db.ref("clients").push();
-  
+
   await newRef.set({
     ...client,
+    // Firebase rejects `undefined`, so drop an empty logo explicitly.
+    logo: client.logo ?? null,
     order,
     createdAt: new Date().toISOString(),
   });
-  
+
   revalidatePath("/");
   return { success: true, id: newRef.key };
 }
 
 export async function updateClient(id: string, client: Partial<TrustedClient>) {
+  await requireAdmin();
   const db = adminDb();
   await db.ref(`clients/${id}`).update({
-    ...client,
+    ...(client.name !== undefined && { name: client.name }),
+    ...(client.sector !== undefined && { sector: client.sector }),
+    logo: client.logo ?? null,
     updatedAt: new Date().toISOString(),
   });
-  
+
   revalidatePath("/");
   return { success: true };
 }
 
 export async function deleteClient(id: string) {
+  await requireAdmin();
   const db = adminDb();
   await db.ref(`clients/${id}`).remove();
-  
+
   revalidatePath("/");
   return { success: true };
 }
 
 export async function reorderClients(clientIds: string[]) {
+  await requireAdmin();
   const db = adminDb();
   const updates: Record<string, number> = {};
-  
+
   clientIds.forEach((id, index) => {
     updates[`clients/${id}/order`] = index;
   });
-  
+
   await db.ref().update(updates);
-  
+
   revalidatePath("/");
   return { success: true };
-}
-
-export async function uploadClientLogo(id: string, formData: FormData) {
-  // For now, we'll handle logo uploads as base64 or external URLs
-  // In a production system, you'd upload to Firebase Storage or another CDN
-  const file = formData.get("logo") as File;
-  if (!file) throw new Error("No file provided");
-  
-  // For simplicity, we'll store the logo URL in the database
-  // In production, upload to storage and get URL
-  const logoUrl = `/images/clients/${id}.png`; // Placeholder
-  
-  return { success: true, url: logoUrl };
 }

@@ -13,7 +13,7 @@ import { EnquirySection } from "@/components/sections/EnquirySection";
 import { CountUp } from "@/components/animations/CountUp";
 import { Reveal } from "@/components/animations/Reveal";
 import { JsonLd } from "@/components/ui/JsonLd";
-import { allVideos } from "@/data/media";
+import { getSiteVideos } from "@/lib/videos";
 import { getProduct, products } from "@/data/products";
 import { categories, categoryMap } from "@/data/categories";
 import { company } from "@/data/company";
@@ -116,7 +116,8 @@ const STORY: { slug: string; specs: { label: string; value: string }[]; parts: P
   },
 ];
 
-export default function ShowroomPage() {
+export default async function ShowroomPage() {
+  const siteVideos = await getSiteVideos();
   const story = STORY.map((s) => ({ ...s, product: getProduct(s.slug) })).filter(
     (s): s is typeof s & { product: Product } => s.product !== undefined,
   );
@@ -179,7 +180,7 @@ export default function ShowroomPage() {
 
       <IndustriesSection id="xe-industries" className="relative z-10 scroll-mt-20" />
 
-      <VideoRing videos={allVideos} />
+      <VideoRing videos={siteVideos} />
 
       {/* Amazon A+ banner showcase ("Every board, explained.") */}
       <ShowroomAplus />

@@ -138,11 +138,11 @@ export async function getProductVideosFromDb(slug: string, categorySlug: string)
     if (WALL_BOARD_CATEGORIES.has(categorySlug)) {
       const snapshotVal = snapshot.val();
       if (snapshotVal) {
-        const installVideo = Object.values(snapshotVal).find((v: unknown): v is { src: string; poster: string; title: string; caption: string } => 
+        const installVideo = Object.values(snapshotVal).find((v: any) => 
           typeof v === 'object' && v !== null && 
-          'title' in v && typeof (v as Record<string, unknown>).title === 'string' && 
-          (String((v as Record<string, unknown>).title).includes("Installation") || String((v as Record<string, unknown>).title).includes("installation"))
-        );
+          typeof v.title === 'string' && 
+          (v.title.includes("Installation") || v.title.includes("installation"))
+        ) as { src: string; poster: string; title: string; caption: string } | undefined;
         
         if (installVideo) {
           productVideos.push(installVideo);

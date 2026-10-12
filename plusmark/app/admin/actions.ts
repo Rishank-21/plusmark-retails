@@ -57,5 +57,5 @@ export async function removeEnquiry(formData: FormData) {
   await requireAdmin();
   await deleteEnquiry(parseId(formData));
   revalidatePath("/admin", "layout");
-  redirect("/admin");
+  redirect("/admin/enquiries");
 }

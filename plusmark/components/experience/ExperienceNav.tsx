@@ -98,7 +98,7 @@ export function ExperienceNav({
               open && "brightness-0 invert",
             )}
           >
-            <Logo className="h-9 sm:h-11 lg:h-9 xl:h-10 2xl:h-12" />
+            <Logo className="h-9 w-auto sm:h-11 lg:h-9 xl:h-10 2xl:h-12" />
           </Link>
 
           <nav aria-label="Primary" className="hidden min-w-0 lg:block">

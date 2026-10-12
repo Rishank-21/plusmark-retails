@@ -113,10 +113,10 @@ export function Navbar() {
               />
             </Link>
             <a
-              href="https://www.amazon.in/s?k=plusmark+retail&crid=2HJSPM7CNLEYV&sprefix=plusmark%2Caps%2C380&ref=nb_sb_ss_mvt-t11-ranker_1_8"
+              href="https://www.amazon.in/stores/PLUSMARKRETAIL/page/80295B88-1EB8-4F7C-A64B-2522D35BEA28?lp_asin=B0HHBTPTPQ&ref_=ast_bln"
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden h-10 items-center rounded-full bg-graphite px-5 text-[0.8rem] font-semibold text-white transition-colors hover:bg-ink sm:inline-flex"
+              className="hidden h-10 items-center rounded-full bg-[#FF9900] px-5 text-[0.8rem] font-semibold text-[#131921] shadow-[inset_0_-2px_0_rgb(0_0_0/0.12)] transition-colors hover:bg-[#FA8900] sm:inline-flex"
             >
               Buy on Amazon
             </a>
@@ -185,10 +185,10 @@ export function Navbar() {
                 Request Enquiry <ArrowRight aria-hidden className="size-4" />
               </Link>
               <a
-                href="https://www.amazon.in/s?k=plusmark+retail&crid=2HJSPM7CNLEYV&sprefix=plusmark%2Caps%2C380&ref=nb_sb_ss_mvt-t11-ranker_1_8"
+                href="https://www.amazon.in/stores/PLUSMARKRETAIL/page/80295B88-1EB8-4F7C-A64B-2522D35BEA28?lp_asin=B0HHBTPTPQ&ref_=ast_bln"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-3 flex h-14 items-center justify-center rounded-full bg-graphite text-sm font-semibold text-white transition-colors hover:bg-ink"
+                className="mt-3 flex h-14 items-center justify-center rounded-full bg-[#FF9900] text-sm font-semibold text-[#131921] transition-colors hover:bg-[#FA8900]"
               >
                 Buy on Amazon
               </a>

@@ -27,7 +27,6 @@ export function Footer() {
             boards, school benches and all types of board stands.
           </p>
           <p className="mt-6 font-display text-lg text-white">{company.tagline}</p>
-          <p className="eyebrow mt-1 !text-alu-dark">{company.subline}</p>
         </div>
 
         <nav aria-label="Footer" className="md:col-span-2">
@@ -91,13 +90,6 @@ export function Footer() {
                 Request Enquiry →
               </Link>
             </li>
-          </ul>
-          <ul className="mt-8 flex flex-wrap gap-2 text-[0.7rem] text-alu">
-            {["Made in India", "GEM Portal Approved", "Pan India Supply"].map((t) => (
-              <li key={t} className="rounded-full px-3 py-1 ring-1 ring-white/15">
-                {t}
-              </li>
-            ))}
           </ul>
         </div>
       </div>

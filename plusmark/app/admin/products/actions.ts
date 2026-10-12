@@ -1,8 +1,10 @@
 "use server";
 
 import { adminDb } from "@/lib/firebase-admin";
-import { revalidatePath } from "next/cache";
-import type { Product, CategorySlug, Series, Spec } from "@/data/types";
+import { revalidatePath, revalidateTag } from "next/cache";
+import { requireAdmin } from "@/lib/admin-auth";
+import { CATALOG_TAG } from "@/lib/catalog";
+import type { CategorySlug, Series, Spec } from "@/data/types";
 import { products as staticProducts } from "@/data/products";
 
 export interface ProductData {
@@ -28,101 +30,120 @@ export interface ProductData {
   aplusImages?: Array<{ label: string; alt: string; src: string }>; // A+ listing images
 }
 
-// Convert static products to ProductData format
-const getStaticProducts = (): ProductData[] => {
-  return staticProducts.map((product, index) => ({
-    id: product.slug, // Use slug as ID for static products
-    slug: product.slug,
-    name: product.name,
-    categorySlug: product.categorySlug,
-    series: product.series,
-    shortDescription: product.shortDescription,
-    description: product.description,
-    features: product.features,
-    specifications: product.specifications,
-    applications: product.applications,
-    variants: product.variants,
-    colors: product.colors,
-    sizes: product.sizes,
-    notes: product.notes,
-    highlights: product.highlights,
-    catalogDetail: product.catalogDetail || "full",
-    featured: product.featured || false,
-    image: product.image,
-    gallery: product.gallery || [],
-  }));
-};
+const FIELDS = [
+  "slug", "name", "categorySlug", "series", "shortDescription", "description", "features", "specifications",
+  "applications", "variants", "colors", "sizes", "notes", "highlights", "catalogDetail", "featured", "image",
+  "gallery", "aplusImages",
+] as const satisfies readonly (keyof ProductData)[];
 
+/** Keep only known fields; Firebase rejects `undefined`, so those are stored as null (= removed). */
+function clean(p: Partial<ProductData>) {
+  const out: Record<string, unknown> = {};
+  for (const k of FIELDS) if (k in p) out[k] = p[k] ?? null;
+  return out;
+}
+
+function fromStatic(): ProductData[] {
+  return staticProducts.map((p) => ({
+    id: p.slug, // static products use their slug as ID
+    slug: p.slug,
+    name: p.name,
+    categorySlug: p.categorySlug,
+    series: p.series,
+    shortDescription: p.shortDescription,
+    description: p.description,
+    features: p.features,
+    specifications: p.specifications,
+    applications: p.applications,
+    variants: p.variants,
+    colors: p.colors,
+    sizes: p.sizes,
+    notes: p.notes,
+    highlights: p.highlights,
+    catalogDetail: p.catalogDetail || "full",
+    featured: p.featured || false,
+    image: p.image,
+    gallery: p.gallery || [],
+  }));
+}
+
+/**
+ * The catalog in data/products.ts, with any admin edits from the database laid over it.
+ * A database entry with the same slug replaces the built-in product, `deleted: true` hides it,
+ * and entries with a new slug are added. Editing one product never hides the others.
+ */
 export async function getProducts(): Promise<ProductData[]> {
+  await requireAdmin();
+  const bySlug = new Map(fromStatic().map((p) => [p.slug, p]));
   try {
-    const db = adminDb();
-    const snapshot = await db.ref("products").orderByChild("name").once("value");
-    const products: ProductData[] = [];
-    
+    const snapshot = await adminDb().ref("products").once("value");
     snapshot.forEach((child) => {
-      const data = child.val();
-      products.push({
+      const d = child.val() ?? {};
+      const slug: string = d.slug || (child.key as string);
+      if (d.deleted) {
+        bySlug.delete(slug);
+        return;
+      }
+      const base = bySlug.get(slug);
+      bySlug.set(slug, {
+        ...base,
         id: child.key as string,
-        slug: data.slug,
-        name: data.name,
-        categorySlug: data.categorySlug,
-        series: data.series,
-        shortDescription: data.shortDescription,
-        description: data.description,
-        features: data.features || [],
-        specifications: data.specifications || [],
-        applications: data.applications || [],
-        variants: data.variants || [],
-        colors: data.colors || [],
-        sizes: data.sizes || [],
-        notes: data.notes || [],
-        highlights: data.highlights || [],
-        catalogDetail: data.catalogDetail || "full",
-        featured: data.featured || false,
-        image: data.image,
-        gallery: data.gallery || [],
-      });
+        slug,
+        name: d.name ?? base?.name ?? slug,
+        categorySlug: d.categorySlug ?? base?.categorySlug,
+        series: d.series ?? base?.series,
+        shortDescription: d.shortDescription ?? base?.shortDescription ?? "",
+        description: d.description ?? base?.description,
+        features: d.features ?? base?.features ?? [],
+        specifications: d.specifications ?? base?.specifications ?? [],
+        applications: d.applications ?? base?.applications ?? [],
+        variants: d.variants ?? base?.variants ?? [],
+        colors: d.colors ?? base?.colors ?? [],
+        sizes: d.sizes ?? base?.sizes ?? [],
+        notes: d.notes ?? base?.notes ?? [],
+        highlights: d.highlights ?? base?.highlights ?? [],
+        catalogDetail: d.catalogDetail ?? base?.catalogDetail ?? "full",
+        featured: d.featured ?? base?.featured ?? false,
+        image: d.image ?? base?.image,
+        gallery: d.gallery ?? base?.gallery ?? [],
+        aplusImages: d.aplusImages ?? base?.aplusImages ?? [],
+      } as ProductData);
     });
-    
-    // If database has products, return them; otherwise return static data
-    return products.length > 0 ? products : getStaticProducts();
   } catch (error) {
     console.error("Error fetching products, returning static data:", error);
-    return getStaticProducts();
   }
+  return [...bySlug.values()].sort((a, b) => a.name.localeCompare(b.name));
+}
+
+/** Products appear on many pages (home, catalog, categories, enquiry form), so refresh them all. */
+function revalidate() {
+  revalidateTag(CATALOG_TAG, { expire: 0 });
+  revalidatePath("/", "layout");
 }
 
 export async function addProduct(product: Omit<ProductData, "id">) {
-  const db = adminDb();
-  const newRef = db.ref("products").push();
-  
-  await newRef.set({
-    ...product,
-    createdAt: new Date().toISOString(),
-  });
-  
-  revalidatePath("/products");
-  revalidatePath("/admin/products");
+  await requireAdmin();
+  const newRef = adminDb().ref("products").push();
+  await newRef.set({ ...clean(product), createdAt: new Date().toISOString() });
+  revalidate();
   return { success: true, id: newRef.key };
 }
 
 export async function updateProduct(id: string, product: Partial<ProductData>) {
-  const db = adminDb();
-  await db.ref(`products/${id}`).update({
-    ...product,
-    updatedAt: new Date().toISOString(),
-  });
-  
-  revalidatePath("/products");
-  revalidatePath("/admin/products");
+  await requireAdmin();
+  await adminDb()
+    .ref(`products/${id}`)
+    .update({ ...clean(product), deleted: null, updatedAt: new Date().toISOString() });
+  revalidate();
   return { success: true };
 }
 
-export async function deleteProduct(id: string) {
-  const db = adminDb();
-  await db.ref(`products/${id}`).remove();
-  
-  revalidatePath("/products");
-  revalidatePath("/admin/products");
+export async function deleteProduct(id: string, slug: string) {
+  await requireAdmin();
+  const ref = adminDb().ref(`products/${id}`);
+  // Built-in products can't be removed from the code, so leave a marker that hides them.
+  if (staticProducts.some((p) => p.slug === slug)) await ref.set({ slug, deleted: true, updatedAt: new Date().toISOString() });
+  else await ref.remove();
+  revalidate();
   return { success: true };
 }

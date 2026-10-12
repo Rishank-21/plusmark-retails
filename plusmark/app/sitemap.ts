@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
 import { categories } from "@/data/categories";
-import { products } from "@/data/products";
+import { getCatalog } from "@/lib/catalog";
 import { absoluteUrl } from "@/lib/seo";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const products = await getCatalog();
   const now = new Date();
   const staticRoutes: Array<[string, number, MetadataRoute.Sitemap[number]["changeFrequency"]]> = [
     ["/", 1, "weekly"],
@@ -37,7 +38,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: "monthly" as const,
       priority: p.catalogDetail === "full" ? 0.7 : 0.5,
-      images: [absoluteUrl(p.image)],
+      images: [/^https?:\/\//.test(p.image) ? p.image : absoluteUrl(p.image)],
     })),
   ];
 }

@@ -56,9 +56,9 @@ export function EnquiryCard({ r, now }: { r: EnquiryRecord; now: number }) {
           <span className="text-steel">Product: </span>
           <span className="font-medium">{r.product || "Not specified"}</span>
         </p>
-        {(r.size || r.quantity || r.requirement) && (
+        {(r.size || r.customSize || r.quantity || r.requirement) && (
           <div className="mt-2 flex flex-wrap gap-2">
-            <Fact label="Size" value={r.size} />
+            <Fact label="Size" value={r.size === "Other / custom size" && r.customSize ? r.customSize : r.size} />
             <Fact label="Qty" value={r.quantity} />
             <Fact label="Need" value={r.requirement} />
           </div>

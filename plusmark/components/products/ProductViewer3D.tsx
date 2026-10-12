@@ -115,7 +115,7 @@ export function ProductViewer3D({ model, fallback, alt, name, representative, pr
       className={cn(
         // Plain white stage: product photos and the 3D board show their true colours (a tinted
         // studio gradient made white boards read beige).
-        "group relative aspect-[4/3] w-full overflow-hidden bg-white ring-1 ring-fog",
+        "group relative aspect-[4/3] w-full overflow-hidden bg-white",
         fullscreen && "!aspect-auto h-full",
         zoomable && "cursor-crosshair",
       )}
@@ -222,8 +222,8 @@ export function ProductViewer3D({ model, fallback, alt, name, representative, pr
                 aria-pressed={view === "3d"}
                 aria-label="Show interactive 3D model"
                 className={cn(
-                  "flex size-16 flex-col items-center justify-center gap-1 bg-white font-mono text-[0.55rem] uppercase tracking-[0.12em] text-steel ring-1 transition md:size-20",
-                  view === "3d" ? "ring-2 ring-accent" : "ring-fog hover:ring-line",
+                  "flex size-16 flex-col items-center justify-center gap-1 rounded-lg bg-white font-mono text-[0.55rem] uppercase tracking-[0.12em] text-steel transition md:size-20",
+                  view === "3d" ? "ring-2 ring-accent" : "opacity-70 hover:opacity-100",
                 )}
               >
                 <Box aria-hidden className="size-4" />
@@ -239,8 +239,8 @@ export function ProductViewer3D({ model, fallback, alt, name, representative, pr
                 aria-pressed={view === i}
                 aria-label={`Show photo ${i + 1} of ${photos.length}`}
                 className={cn(
-                  "relative block size-16 overflow-hidden bg-white ring-1 transition md:size-20",
-                  view === i ? "ring-2 ring-accent" : "ring-fog hover:ring-line",
+                  "relative block size-16 overflow-hidden rounded-lg bg-white transition md:size-20",
+                  view === i ? "ring-2 ring-accent" : "opacity-70 hover:opacity-100",
                 )}
               >
                 <Image src={src} alt="" fill sizes="80px" className="object-contain" />

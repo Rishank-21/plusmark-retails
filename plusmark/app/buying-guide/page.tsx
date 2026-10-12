@@ -93,8 +93,10 @@ const surfaces = [
 const sizeTips = [
   { size: "1 × 1 – 1.5 × 2 ft", use: "Desks, cabins, reception counters, small notices" },
   { size: "2 × 2 – 2 × 3 ft", use: "Offices, staff rooms, tuition classes" },
-  { size: "2 × 4 ft", use: "Meeting rooms, small classrooms, corridors" },
-  { size: "3 × 4 ft", use: "Classrooms, training halls, boardrooms" },
+  { size: "2 × 4 – 3 × 4 ft", use: "Meeting rooms, small classrooms, corridors" },
+  { size: "4 × 4 – 5 × 4 ft", use: "Classrooms, coaching centres, boardrooms" },
+  { size: "6 × 4 – 8 × 4 ft", use: "Large classrooms, lecture halls, training halls, auditoriums" },
+  { size: "Custom", use: "Any larger size or special layout, made to your requirement" },
 ];
 
 export default function BuyingGuidePage() {
@@ -103,13 +105,12 @@ export default function BuyingGuidePage() {
     <>
       <PageHeader
         crumbs={[{ name: "Buying Guide", path: "/buying-guide" }]}
-        eyebrow="Buying Guide"
         title={
           <>
             Choose the <span className="text-gradient">right board.</span>
           </>
         }
-        intro="Four construction series, six writing and display surfaces and sizes from 1 × 1 ft to 3 × 4 ft. This guide helps you match the board to how often it will be used and where it will hang."
+        intro="Four construction series, six writing and display surfaces and standard sizes from 1 × 1 ft up to 8 × 4 ft, with larger custom sizes made to order. This guide helps you match the board to how often it will be used and where it will hang."
       />
 
       {/* Series comparison */}
@@ -118,9 +119,8 @@ export default function BuyingGuidePage() {
           <Reveal className="mb-12">
             <SectionHeading
               id="series-title"
-              eyebrow="Step 1 · Series"
-              title="Pick a series by how hard the board will work."
-              intro="Every series is available across white, chalk and notice boards. The series sets the frame, corners and grade of surface."
+              title="Four series, one for every budget and workload."
+              intro="Start with how often the board will be used. A classroom board written on all day needs a heavier frame and a harder surface than one in an office cabin. Every series comes in white, chalk and notice boards."
             />
           </Reveal>
           <ul className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -138,11 +138,7 @@ export default function BuyingGuidePage() {
                 {s.highlight && (
                   <div aria-hidden className="pointer-events-none absolute -right-16 -top-16 size-48 rounded-full bg-flame/30 blur-3xl" />
                 )}
-                <p className={s.highlight ? "chip chip-dark" : "chip"}>
-                  <span aria-hidden className="chip-dot" />
-                  {s.badge}
-                </p>
-                <h3 className="relative mt-6 font-display text-2xl font-semibold">{s.name}</h3>
+                <h3 className="relative font-display text-2xl font-semibold">{s.name}</h3>
                 <dl className="relative mt-6 space-y-4 text-sm">
                   {[
                     ["Corners", s.corners],
@@ -172,7 +168,6 @@ export default function BuyingGuidePage() {
           <Reveal className="mb-12">
             <SectionHeading
               id="surface-title"
-              eyebrow="Step 2 · Surface"
               title="Then choose the surface for how you write or display."
             />
           </Reveal>
@@ -200,7 +195,6 @@ export default function BuyingGuidePage() {
           <Reveal>
             <SectionHeading
               id="size-title"
-              eyebrow="Step 3 · Size"
               title="Size it to the room and the viewing distance."
               intro="A general guide only — available sizes vary by series and product. Check the product page, or ask us for a custom size."
             />

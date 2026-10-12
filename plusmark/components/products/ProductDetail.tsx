@@ -2,7 +2,6 @@ import Link from "next/link";
 import { ArrowRight, Check, Info, ShieldCheck } from "lucide-react";
 import type { Product } from "@/data/types";
 import { categoryMap } from "@/data/categories";
-import { getRelatedProducts } from "@/data/products";
 import { representativeModels } from "@/data/visuals";
 import { company } from "@/data/company";
 import { getFramePricing } from "@/data/frame-pricing";
@@ -14,8 +13,10 @@ import { ButtonLink } from "@/components/ui/Button";
 import { ProductViewer3D } from "./ProductViewer3D";
 import { ProductCard } from "./ProductCard";
 import { EnquiryBand } from "@/components/sections/EnquiryBand";
-import { getProductAplus } from "@/data/aplus";
+import { getProductAplus, type AplusImage } from "@/data/aplus";
 import { AplusDescription } from "./AplusDescription";
+import { ProductVideos } from "./ProductMedia";
+import type { Video } from "@/data/media";
 
 /** Display-only swatch hints for catalog colour names. The name is always shown. */
 const SWATCH: Record<string, string[]> = {
@@ -56,11 +57,31 @@ function Block({ id, title, children }: { id: string; title: string; children: R
   );
 }
 
-export function ProductDetail({ product }: { product: Product }) {
+export function ProductDetail({
+  product,
+  related,
+  adminAplus = [],
+  videos = [],
+}: {
+  product: Product;
+  related: Product[];
+  adminAplus?: AplusImage[];
+  /** Videos linked to this product in /admin/videos. */
+  videos?: Video[];
+}) {
   const category = categoryMap[product.categorySlug];
-  const related = getRelatedProducts(product, 4);
   const listing = product.catalogDetail === "listing";
-  const aplusSets = getProductAplus(product.slug);
+  const builtInSets = getProductAplus(product.slug);
+  const aplusSets = adminAplus.length
+    ? [
+        // Every set needs a tab label once there is more than one.
+        ...builtInSets.map((s) => ({ ...s, variant: s.variant ?? "Overview" })),
+        {
+          variant: builtInSets.length ? "More details" : undefined,
+          set: { id: `admin-${product.slug}`, name: product.name, images: adminAplus },
+        },
+      ]
+    : builtInSets;
 
   return (
     <article>
@@ -239,6 +260,8 @@ export function ProductDetail({ product }: { product: Product }) {
           </p>
         </Block>
       </div>
+
+      <ProductVideos videos={videos} />
 
       {related.length > 0 && (
         <section className="border-t border-fog bg-mist py-16 md:py-20" aria-labelledby="related-title">

@@ -1,23 +1,21 @@
-import { categories } from "@/data/categories";
-import { getProductsByCategory, products } from "@/data/products";
-import { getCategorySubcategories, getAllProductsForCategory } from "@/data/subcategories";
+﻿import { categories } from "@/data/categories";
+import { getCatalog, liveSubcategoryConfig, productsForCategory } from "@/lib/catalog";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ProductCard } from "@/components/products/ProductCard";
 import { CategoryGrid } from "@/components/products/CategoryGrid";
 import { Reveal } from "@/components/animations/Reveal";
 import { HomeCollection } from "./HomeCollection";
 
-export function CollectionSection() {
+export async function CollectionSection() {
+  const products = await getCatalog();
   const featured = products.filter((p) => p.featured).map((p) => p.slug);
   const tabs = [
     { slug: "featured", name: "Featured", products: featured, href: "/products" },
     ...categories
       .filter((c) => c.slug !== "schedule-boards")
       .map((c) => {
-        const subConfig = getCategorySubcategories(c.slug);
-        const prods = subConfig
-          ? getAllProductsForCategory(c.slug)
-          : getProductsByCategory(c.slug);
+        const subConfig = liveSubcategoryConfig(products, c.slug);
+        const prods = productsForCategory(products, c.slug);
         return {
           slug: c.slug,
           name: c.name,
@@ -39,7 +37,6 @@ export function CollectionSection() {
         <Reveal className="mb-14 flex flex-col justify-between gap-8 md:flex-row md:items-end">
           <SectionHeading
             id="collection-title"
-            eyebrow="The Collection"
             title="Premium Display & Educational Systems"
             intro="Writing boards, notice and display boards, stands, clipboards and school benches — one manufacturing partner for classrooms, offices and institutions."
           />

@@ -37,7 +37,6 @@ export function ProcessSection() {
         <Reveal className="mb-14 md:mb-20">
           <SectionHeading
             id="process-title"
-            eyebrow="How ordering works"
             title={
               <>
                 From enquiry to installation, <span className="text-gradient">in five steps.</span>

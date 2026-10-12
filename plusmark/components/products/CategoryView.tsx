@@ -1,6 +1,5 @@
 import type { Category } from "@/data/types";
-import { getProductsByCategory } from "@/data/products";
-import { getCategorySubcategories, getAllProductsForCategory } from "@/data/subcategories";
+import { getCatalog, liveSubcategoryConfig, productsForCategory } from "@/lib/catalog";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { ProductCard } from "./ProductCard";
 import { SubcategoryProductList } from "./SubcategoryProductList";
@@ -10,11 +9,10 @@ import { JsonLd } from "@/components/ui/JsonLd";
 import { Reveal } from "@/components/animations/Reveal";
 import { itemListSchema } from "@/lib/structured-data";
 
-export function CategoryView({ category }: { category: Category }) {
-  const subcategoryConfig = getCategorySubcategories(category.slug);
-  const list = subcategoryConfig
-    ? getAllProductsForCategory(category.slug)
-    : getProductsByCategory(category.slug);
+export async function CategoryView({ category }: { category: Category }) {
+  const catalog = await getCatalog();
+  const subcategoryConfig = liveSubcategoryConfig(catalog, category.slug);
+  const list = productsForCategory(catalog, category.slug);
   const listingOnly = list.every((p) => p.catalogDetail === "listing");
   return (
     <>

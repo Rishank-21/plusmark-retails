@@ -1,8 +1,6 @@
-import Link from "next/link";
 import Image from "next/image";
 import { School, GraduationCap, Truck, Factory, Presentation, Landmark } from "lucide-react";
 import { industries } from "@/data/industries";
-import { getProduct } from "@/data/products";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/animations/Reveal";
 import { TiltCard } from "./IndustryCard";
@@ -37,7 +35,6 @@ export function IndustriesSection({
             <SectionHeading
               as={headingLevel}
               id="industries-title"
-              eyebrow="Industries & Applications"
               title="Trusted where learning and work happen."
               intro="Plusmark has earned long-term trust from schools, institutions and government organizations across India."
             />
@@ -70,19 +67,7 @@ export function IndustriesSection({
                       <h3 className="font-display text-xl font-semibold text-graphite transition-colors duration-500 group-hover:text-accent">
                         {ind.name}
                       </h3>
-                      <p className="mb-5 mt-3 text-sm leading-relaxed text-steel">{ind.summary}</p>
-                      <ul className="mt-auto flex flex-wrap items-center gap-x-2.5 gap-y-1.5 border-t border-line pt-4 text-[0.78rem] [&>li+li]:before:mr-2.5 [&>li+li]:before:text-line [&>li+li]:before:content-['|']">
-                        {ind.products.map((slug) => {
-                          const p = getProduct(slug);
-                          return p ? (
-                            <li key={slug} className="inline-flex items-center">
-                              <Link href={`/products/${slug}`} className="font-medium text-accent transition-colors hover:text-graphite hover:underline">
-                                {p.name}
-                              </Link>
-                            </li>
-                          ) : null;
-                        })}
-                      </ul>
+                      <p className="mt-3 text-sm leading-relaxed text-steel">{ind.summary}</p>
                     </div>
                   </article>
                 </TiltCard>
