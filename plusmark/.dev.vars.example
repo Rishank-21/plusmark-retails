@@ -1,0 +1,41 @@
+# Copy this file to .dev.vars for local `wrangler dev`.
+# Never commit the real .dev.vars file.
+NEXT_PUBLIC_SITE_URL=https://www.plusmarkboards.com
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=drt0rpkn2
+NEXT_PUBLIC_WHATSAPP_NUMBER=+919913967888
+NEXT_PUBLIC_CONTACT_PHONE=+919913967888
+NEXT_PUBLIC_CONTACT_EMAIL=
+
+ADMIN_PASSWORD=replace-with-a-long-random-password
+ADMIN_SESSION_SECRET=replace-with-at-least-32-random-characters
+
+FIREBASE_TARGET_PROJECT_ID=plusmarkleads
+FIREBASE_TARGET_STORAGE_BUCKET=plusmarkleads.firebasestorage.app
+FIREBASE_TARGET_DATABASE_URL=https://plusmarkleads-default-rtdb.firebaseio.com
+# Paste the complete service-account JSON on one line.
+FIREBASE_TARGET_SERVICE_ACCOUNT={"type":"service_account","project_id":"plusmarkleads","private_key_id":"replace","private_key":"-----BEGIN PRIVATE KEY-----\\nreplace\\n-----END PRIVATE KEY-----\\n","client_email":"replace@plusmarkleads.iam.gserviceaccount.com","client_id":"replace","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token"}
+
+NEXT_PUBLIC_FIREBASE_API_KEY=
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=plusmarkleads.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_DATABASE_URL=https://plusmarkleads-default-rtdb.firebaseio.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=plusmarkleads
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=plusmarkleads.firebasestorage.app
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=323167780898
+NEXT_PUBLIC_FIREBASE_APP_ID=
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=
+
+FAST2SMS_API_KEY=
+TWILIO_ACCOUNT_SID=
+TWILIO_AUTH_TOKEN=
+TWILIO_PHONE_NUMBER=
+ADMIN_SMS_PHONE=+919913967888
+TWILIO_WHATSAPP_FROM=whatsapp:+14155238886
+WHATSAPP_API_TOKEN=
+WHATSAPP_PHONE_NUMBER_ID=
+CALLMEBOT_PHONE=
+CALLMEBOT_API_KEY=
+ADMIN_WHATSAPP_NUMBER=+919913967888
+ENQUIRY_WEBHOOK_URL=
+RESEND_API_KEY=
+ENQUIRY_TO_EMAIL=
+ENQUIRY_FROM_EMAIL=

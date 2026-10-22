@@ -2,15 +2,18 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Inbox, LayoutDashboard, Package, Video, Users } from "lucide-react";
+import { Box, Inbox, LayoutDashboard, Package, Video, Users, MapPin, UserRound } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
   { href: "/admin", label: "Dashboard", desc: "Website overview", icon: LayoutDashboard },
   { href: "/admin/enquiries", label: "Enquiries", desc: "Inbox & leads", icon: Inbox },
   { href: "/admin/products", label: "Products", desc: "Catalog & photos", icon: Package },
+  { href: "/admin/hero", label: "Home hero", desc: "3D showcase & models", icon: Box },
   { href: "/admin/videos", label: "Videos", desc: "Film reel & product videos", icon: Video },
   { href: "/admin/clients", label: "Clients", desc: "Logos on the home page", icon: Users },
+  { href: "/admin/leads", label: "Leads", desc: "Field lead pipeline", icon: UserRound },
+  { href: "/admin/visits", label: "Visits", desc: "Assignments & visits", icon: MapPin },
 ];
 
 function isActive(pathname: string, href: string) {

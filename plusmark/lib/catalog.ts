@@ -16,7 +16,7 @@ import type { AplusImage } from "@/data/aplus";
 import { products as builtIn } from "@/data/products";
 import { categoryMap } from "@/data/categories";
 import { subcategoryConfigs } from "@/data/subcategories";
-import { adminDb, firebaseAdminConfigured } from "@/lib/firebase-admin";
+import { websiteFirestore, websiteFirebaseConfigured } from "@/lib/firebase-admin";
 
 export const CATALOG_TAG = "catalog";
 
@@ -26,7 +26,11 @@ const CLOUD = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || "drt0rpkn2";
 /** Image sources next/image can render with the current next.config (anything else is dropped). */
 export function isAllowedImage(src: unknown): src is string {
   if (typeof src !== "string" || !src) return false;
-  return src.startsWith("/") || src.startsWith(`https://res.cloudinary.com/${CLOUD}/image/upload/`) || src.startsWith("data:image/");
+  return src.startsWith("/")
+    || src.startsWith(`https://res.cloudinary.com/${CLOUD}/image/upload/`)
+    || src.startsWith("https://firebasestorage.googleapis.com/")
+    || src.startsWith("https://storage.googleapis.com/")
+    || src.startsWith("data:image/");
 }
 
 const strings = (v: unknown): string[] | undefined =>
@@ -90,7 +94,7 @@ function toProduct(d: Stored, base: Product | undefined): Product | null {
     imageAlt: base && !photosChanged && base.name === name ? base.imageAlt : `${name} — ${category.name} by ${BRAND}`,
     gallery,
     // The 3D model shows the built-in board, so drop it once the photos are replaced.
-    model: photosChanged ? undefined : base?.model,
+    model: typeof d.model === "string" && d.model.trim() ? d.model : photosChanged ? undefined : base?.model,
     modelFallback: image,
     featured: typeof d.featured === "boolean" ? d.featured : base?.featured ?? false,
     seoTitle: `${name} | ${category.name}`,
@@ -112,17 +116,17 @@ function aplusImages(v: unknown, productName: string): AplusImage[] {
 
 async function loadCatalog(): Promise<CatalogData> {
   const fallback = { products: builtIn, aplus: {} };
-  if (!firebaseAdminConfigured()) return fallback;
+  if (!websiteFirebaseConfigured()) return fallback;
   try {
-    const snapshot = await adminDb().ref("products").once("value");
-    if (!snapshot.exists()) return fallback;
+    const snapshot = await websiteFirestore().collection("website_products").get();
+    if (snapshot.empty) return fallback;
 
     const bySlug = new Map(builtIn.map((p) => [p.slug, p]));
     const order = builtIn.map((p) => p.slug);
     const aplus: Record<string, AplusImage[]> = {};
     snapshot.forEach((child) => {
-      const d = (child.val() ?? {}) as Stored;
-      const slug = typeof d.slug === "string" && d.slug ? d.slug : (child.key as string);
+      const d = (child.data() ?? {}) as Stored;
+      const slug = typeof d.slug === "string" && d.slug ? d.slug : child.id;
       if (d.deleted) {
         bySlug.delete(slug);
         return;

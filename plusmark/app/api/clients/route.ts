@@ -1,17 +1,16 @@
 import { NextResponse } from "next/server";
-import { adminDb } from "@/lib/firebase-admin";
+import { websiteFirestore } from "@/lib/firebase-admin";
 import type { TrustedClient } from "@/data/clients";
 
 export async function GET() {
   try {
-    const db = adminDb();
-    const snapshot = await db.ref("clients").orderByChild("order").once("value");
+    const snapshot = await websiteFirestore().collection("website_clients").get();
     const clients: TrustedClient[] = [];
     
     snapshot.forEach((child) => {
-      const data = child.val();
+      const data = child.data();
       clients.push({
-        id: child.key as string,
+        id: child.id,
         name: data.name,
         sector: data.sector,
         logo: data.logo,

@@ -6,7 +6,7 @@
 import "server-only";
 import { unstable_cache } from "next/cache";
 import { allVideos, type Video } from "@/data/media";
-import { adminDb, firebaseAdminConfigured } from "@/lib/firebase-admin";
+import { websiteFirestore, websiteFirebaseConfigured } from "@/lib/firebase-admin";
 import { videoEmbed } from "@/lib/video-embed";
 
 export const VIDEOS_TAG = "videos";
@@ -14,13 +14,13 @@ export const VIDEOS_TAG = "videos";
 type SiteVideo = Video & { productSlugs: string[] };
 
 async function load(): Promise<SiteVideo[] | null> {
-  if (!firebaseAdminConfigured()) return null;
+  if (!websiteFirebaseConfigured()) return null;
   try {
-    const snap = await adminDb().ref("videos").once("value");
-    if (!snap.exists()) return null;
+    const snap = await websiteFirestore().collection("website_videos").get();
+    if (snap.empty) return null;
     const rows: (SiteVideo & { order: number })[] = [];
     snap.forEach((child) => {
-      const d = child.val() ?? {};
+      const d = child.data() ?? {};
       if (typeof d.src !== "string" || !d.src) return;
       rows.push({
         src: d.src,

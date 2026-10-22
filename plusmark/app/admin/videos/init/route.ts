@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { adminDb } from "@/lib/firebase-admin";
+import { websiteFirestore } from "@/lib/firebase-admin";
 import { isAdmin } from "@/lib/admin-auth";
 import { videos } from "@/data/media";
 
@@ -9,10 +9,10 @@ import { videos } from "@/data/media";
 export async function POST() {
   if (!(await isAdmin())) return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
   try {
-    const db = adminDb();
-    const snapshot = await db.ref("videos").once("value");
+    const collection = websiteFirestore().collection("website_videos");
+    const snapshot = await collection.get();
     
-    if (snapshot.exists()) {
+    if (!snapshot.empty) {
       return NextResponse.json({ 
         success: false, 
         message: "Videos already exist in database. Use the admin panel to manage them." 
@@ -39,10 +39,10 @@ export async function POST() {
       });
     });
 
-    const updates: Record<string, unknown> = {};
+    const batch = websiteFirestore().batch();
     Object.entries(videos).forEach(([key, video], index) => {
-      const newRef = db.ref("videos").push();
-      updates[`videos/${newRef.key}`] = {
+      const newRef = collection.doc();
+      batch.set(newRef, {
         src: video.src,
         poster: video.poster,
         title: video.title,
@@ -50,10 +50,9 @@ export async function POST() {
         productSlugs: videoProductMap[key] || [],
         order: index,
         createdAt: new Date().toISOString(),
-      };
+      });
     });
-
-    await db.ref().update(updates);
+    await batch.commit();
 
     return NextResponse.json({ 
       success: true, 

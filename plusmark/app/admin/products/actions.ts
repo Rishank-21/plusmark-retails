@@ -1,6 +1,6 @@
 "use server";
 
-import { adminDb } from "@/lib/firebase-admin";
+import { websiteFirestore } from "@/lib/firebase-admin";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { requireAdmin } from "@/lib/admin-auth";
 import { CATALOG_TAG } from "@/lib/catalog";
@@ -76,10 +76,10 @@ export async function getProducts(): Promise<ProductData[]> {
   await requireAdmin();
   const bySlug = new Map(fromStatic().map((p) => [p.slug, p]));
   try {
-    const snapshot = await adminDb().ref("products").once("value");
+    const snapshot = await websiteFirestore().collection("website_products").get();
     snapshot.forEach((child) => {
-      const d = child.val() ?? {};
-      const slug: string = d.slug || (child.key as string);
+      const d = child.data() ?? {};
+      const slug: string = d.slug || child.id;
       if (d.deleted) {
         bySlug.delete(slug);
         return;
@@ -87,7 +87,7 @@ export async function getProducts(): Promise<ProductData[]> {
       const base = bySlug.get(slug);
       bySlug.set(slug, {
         ...base,
-        id: child.key as string,
+        id: child.id,
         slug,
         name: d.name ?? base?.name ?? slug,
         categorySlug: d.categorySlug ?? base?.categorySlug,
@@ -123,27 +123,26 @@ function revalidate() {
 
 export async function addProduct(product: Omit<ProductData, "id">) {
   await requireAdmin();
-  const newRef = adminDb().ref("products").push();
+  const newRef = websiteFirestore().collection("website_products").doc();
   await newRef.set({ ...clean(product), createdAt: new Date().toISOString() });
   revalidate();
-  return { success: true, id: newRef.key };
+  return { success: true, id: newRef.id };
 }
 
 export async function updateProduct(id: string, product: Partial<ProductData>) {
   await requireAdmin();
-  await adminDb()
-    .ref(`products/${id}`)
-    .update({ ...clean(product), deleted: null, updatedAt: new Date().toISOString() });
+  await websiteFirestore().collection("website_products").doc(id)
+    .set({ ...clean(product), deleted: null, updatedAt: new Date().toISOString() }, { merge: true });
   revalidate();
   return { success: true };
 }
 
 export async function deleteProduct(id: string, slug: string) {
   await requireAdmin();
-  const ref = adminDb().ref(`products/${id}`);
+  const ref = websiteFirestore().collection("website_products").doc(id);
   // Built-in products can't be removed from the code, so leave a marker that hides them.
   if (staticProducts.some((p) => p.slug === slug)) await ref.set({ slug, deleted: true, updatedAt: new Date().toISOString() });
-  else await ref.remove();
+  else await ref.delete();
   revalidate();
   return { success: true };
 }

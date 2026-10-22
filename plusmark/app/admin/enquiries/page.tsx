@@ -3,7 +3,7 @@ import { Download, Search, ChevronLeft, ChevronRight, Inbox, TrendingUp, Clock, 
 import { PageTitle } from "../PageTitle";
 import { requireAdmin } from "@/lib/admin-auth";
 import { ENQUIRY_STATUSES, enquiryStats, isEnquiryStatus, listEnquiries } from "@/lib/db";
-import { firebaseAdminConfigured } from "@/lib/firebase-admin";
+import { websiteFirebaseConfigured } from "@/lib/firebase-admin";
 import { cn } from "@/lib/utils";
 import { EnquiryCard } from "../EnquiryCard";
 import { dayLabel, requestNow, statusLabel } from "../ui";
@@ -40,7 +40,7 @@ export default async function AdminEnquiries({ searchParams }: PageProps<"/admin
           ⚠️ Could not load enquiries from database.
         </p>
         <p className="text-xs text-red-700">
-          {firebaseAdminConfigured()
+          {websiteFirebaseConfigured()
             ? "Check server logs, service account permissions, and database connectivity."
             : "Firebase Admin credentials are not set in the environment."}
         </p>

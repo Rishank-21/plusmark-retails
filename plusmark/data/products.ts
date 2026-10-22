@@ -1324,6 +1324,20 @@ export const products: Product[] = [
   ...scheduleBoards,
 ];
 
+// ---- Model fallback overrides -------------------------------------------------
+// Patch specific products' hero fallback image with a background-removed
+// Cloudinary URL so the subject floats cleanly on the hero's white studio.
+// `e_background_removal` uses Cloudinary AI (free credits); if unavailable it
+// silently falls back to the plain image via the normal CDN 404 path.
+const HERO_FALLBACK_OVERRIDES: Record<string, string> = {
+  "eco-premium-both-side-board":
+    "https://res.cloudinary.com/drt0rpkn2/image/upload/e_background_removal,f_auto,q_auto/plusmark/products/eco-premium-both-side-board",
+};
+for (const p of products) {
+  const override = HERO_FALLBACK_OVERRIDES[p.slug];
+  if (override) p.modelFallback = override;
+}
+
 export function getProduct(slug: string): Product | undefined {
   return products.find((p) => p.slug === slug);
 }

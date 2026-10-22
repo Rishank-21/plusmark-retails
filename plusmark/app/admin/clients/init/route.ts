@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { adminDb } from "@/lib/firebase-admin";
+import { websiteFirestore } from "@/lib/firebase-admin";
 import { isAdmin } from "@/lib/admin-auth";
 import { trustedClients } from "@/data/clients";
 
@@ -10,11 +10,11 @@ import { trustedClients } from "@/data/clients";
 export async function POST() {
   if (!(await isAdmin())) return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
   try {
-    const db = adminDb();
-    const snapshot = await db.ref("clients").once("value");
+    const collection = websiteFirestore().collection("website_clients");
+    const snapshot = await collection.get();
     
     // Check if data already exists
-    if (snapshot.exists()) {
+    if (!snapshot.empty) {
       return NextResponse.json({ 
         success: false, 
         message: "Clients already exist in database. Use the admin panel to manage them." 
@@ -22,19 +22,18 @@ export async function POST() {
     }
 
     // Initialize with static data
-    const updates: Record<string, unknown> = {};
+    const batch = websiteFirestore().batch();
     trustedClients.forEach((client, index) => {
-      const newRef = db.ref("clients").push();
-      updates[`clients/${newRef.key}`] = {
+      const newRef = collection.doc();
+      batch.set(newRef, {
         name: client.name,
         sector: client.sector,
         logo: client.logo,
         order: index,
         createdAt: new Date().toISOString(),
-      };
+      });
     });
-
-    await db.ref().update(updates);
+    await batch.commit();
 
     return NextResponse.json({ 
       success: true, 

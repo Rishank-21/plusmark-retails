@@ -1,5 +1,5 @@
 /**
- * Enquiry storage on Firebase Realtime Database (server-side, Admin SDK).
+ * Enquiry storage on the website Firestore database (server-side, Admin SDK).
  *
  * Data layout:  /enquiries/{pushId} = { createdAt: <ms>, status, name, company, phone, email,
  *                                       product, size, quantity, requirement, message, ip }
@@ -8,11 +8,11 @@
 import "server-only";
 import type { Enquiry } from "./enquiry";
 import { isEnquiryStatus, type EnquiryStatus } from "./db-shared";
-import { adminDb } from "./firebase-admin";
+import { websiteFirestore, websiteFirebaseConfigured } from "./firebase-admin";
 
 export { ENQUIRY_STATUSES, isEnquiryStatus, type EnquiryStatus } from "./db-shared";
 
-const PATH = "enquiries";
+const COLLECTION = "website_enquiries";
 /** Upper bound of records loaded for listing/search. Plenty for an enquiry inbox. */
 const MAX_SCAN = 5000;
 
@@ -77,8 +77,10 @@ export async function insertEnquiry(e: Enquiry, ip = ""): Promise<string> {
     message: e.message,
     ip,
   };
-  const ref = await adminDb().ref(PATH).push(data);
-  return ref.key!;
+  if (!websiteFirebaseConfigured()) throw new Error("Website Firebase credentials are not configured.");
+  const ref = websiteFirestore().collection(COLLECTION).doc();
+  await ref.set(data);
+  return ref.id;
 }
 
 /**
@@ -87,10 +89,11 @@ export async function insertEnquiry(e: Enquiry, ip = ""): Promise<string> {
  * (An enquiry inbox is small; the MAX_SCAN cap keeps this bounded.)
  */
 async function loadAll(): Promise<EnquiryRecord[]> {
-  const snap = await adminDb().ref(PATH).get();
+  if (!websiteFirebaseConfigured()) return [];
+  const snap = await websiteFirestore().collection(COLLECTION).get();
   const out: EnquiryRecord[] = [];
   snap.forEach((child) => {
-    const r = toRecord(child.key!, child.val());
+    const r = toRecord(child.id, child.data() as Partial<Stored>);
     if (r) out.push(r);
   });
   out.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
@@ -119,21 +122,23 @@ export async function listEnquiries(opts: ListOptions = {}): Promise<{ rows: Enq
 
 export async function getEnquiry(id: string): Promise<EnquiryRecord | undefined> {
   if (!isEnquiryId(id)) return undefined;
-  const snap = await adminDb().ref(`${PATH}/${id}`).get();
-  return snap.exists() ? toRecord(id, snap.val()) : undefined;
+  if (!websiteFirebaseConfigured()) return undefined;
+  const snap = await websiteFirestore().collection(COLLECTION).doc(id).get();
+  return snap.exists ? toRecord(id, snap.data() as Partial<Stored>) : undefined;
 }
 
 export async function updateEnquiryStatus(id: string, status: EnquiryStatus) {
   if (!isEnquiryId(id)) throw new Error("Invalid enquiry id");
-  const ref = adminDb().ref(`${PATH}/${id}`);
-  // Only update existing records — never create a stub node from a stale/forged id.
-  if (!(await ref.child("createdAt").get()).exists()) return;
+  if (!websiteFirebaseConfigured()) throw new Error("Website Firebase credentials are not configured.");
+  const ref = websiteFirestore().collection(COLLECTION).doc(id);
+  if (!(await ref.get()).exists) return;
   await ref.update({ status });
 }
 
 export async function deleteEnquiry(id: string) {
   if (!isEnquiryId(id)) throw new Error("Invalid enquiry id");
-  await adminDb().ref(`${PATH}/${id}`).remove();
+  if (!websiteFirebaseConfigured()) throw new Error("Website Firebase credentials are not configured.");
+  await websiteFirestore().collection(COLLECTION).doc(id).delete();
 }
 
 export async function enquiryStats(): Promise<Record<EnquiryStatus | "total" | "last7", number>> {

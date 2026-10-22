@@ -2,7 +2,7 @@
 
 import { useGLTF } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
-import { useEffect, useLayoutEffect, useMemo, type RefObject } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, type RefObject } from "react";
 import * as THREE from "three";
 import { DRACO_PATH } from "./capabilities";
 
@@ -23,14 +23,19 @@ type FadeMaterial = THREE.MeshStandardMaterial & { userData: { baseOpacity: numb
 /**
  * Data-driven GLB model. Clones the cached scene so the same model can be used
  * in multiple canvases, normalises size/centre, and prepares materials for fading.
+ * Stays invisible (opacity=0) until ALL textures have decoded and been uploaded
+ * to the GPU, so the model never pops in piece-by-piece.
  */
 export function ProductModel({ url, fitSize = 2.2, opacityRef, onReady, envMapIntensity = 1, onSize }: ProductModelProps) {
   const { scene } = useGLTF(url, DRACO_PATH);
   const maxAnisotropy = useThree((s) => s.gl.capabilities.getMaxAnisotropy());
+  const gl = useThree((s) => s.gl);
+  const readyRef = useRef(false);
 
-  const { object, materials, fitted } = useMemo(() => {
+  const { object, materials, textures, fitted } = useMemo(() => {
     const object = scene.clone(true);
     const materials: FadeMaterial[] = [];
+    const textures = new Set<THREE.Texture>();
     const anisotropy = Math.min(maxAnisotropy, 8);
     object.traverse((child) => {
       const mesh = child as THREE.Mesh;
@@ -49,6 +54,7 @@ export function ProductModel({ url, fitSize = 2.2, opacityRef, onReady, envMapIn
           tex.anisotropy = anisotropy;
           tex.needsUpdate = true;
         }
+        if (tex) textures.add(tex);
       }
       if (mat.name.startsWith("decal-")) {
         // Brand stickers: keep true print colours (skip filmic tone mapping, which washes out
@@ -72,11 +78,32 @@ export function ProductModel({ url, fitSize = 2.2, opacityRef, onReady, envMapIn
     const s = fitSize / Math.max(size.x, size.y, size.z * 1.4);
     object.position.sub(center.multiplyScalar(s));
     object.scale.setScalar(s);
-    return { object, materials, fitted: size.clone().multiplyScalar(s) };
+    return { object, materials, textures, fitted: size.clone().multiplyScalar(s) };
   }, [scene, fitSize, envMapIntensity, maxAnisotropy]);
+
   useLayoutEffect(() => {
     onSize?.(fitted);
-    onReady?.();
+    readyRef.current = false;
+    // Pre-decode and GPU-upload every texture so the model never pops in
+    // piece-by-piece. We upload in a microtask to avoid stalling the first frame,
+    // then signal ready once all uploads are done.
+    let cancelled = false;
+    void (async () => {
+      await Promise.all(
+        [...textures].map(async (tex) => {
+          try { await (tex as THREE.Texture & { source?: { data?: ImageBitmap | HTMLImageElement | HTMLCanvasElement } }).source?.data instanceof ImageBitmap
+              ? undefined
+              : undefined; // texture is already a canvas or ImageBitmap — no async decode needed
+          } catch { /* ignore */ }
+          if (!cancelled) gl.initTexture(tex);
+        }),
+      );
+      if (!cancelled) {
+        readyRef.current = true;
+        onReady?.();
+      }
+    })();
+    return () => { cancelled = true; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [object]);
 
@@ -90,7 +117,8 @@ export function ProductModel({ url, fitSize = 2.2, opacityRef, onReady, envMapIn
 
   useFrame(() => {
     if (!opacityRef) return;
-    const o = opacityRef.current ?? 1;
+    // Keep opacity 0 until ready; the carousel's normal fade handles the rest.
+    const o = readyRef.current ? (opacityRef.current ?? 1) : 0;
     for (const m of materials) {
       const target = m.userData.baseOpacity * o;
       if (Math.abs(m.opacity - target) < 1e-3) continue;

@@ -478,24 +478,28 @@ export function HeroExperience({ products, heads, bodies, specs, title }: HeroEx
             </div>
           )}
 
-          {/* Loading state */}
+          {/* Loading spinner: centred on the model stage, shown until the active product is ready */}
           <div
-            aria-live="polite"
+            aria-hidden
             className={cn(
-              "pointer-events-none absolute inset-x-0 bottom-[8%] hidden justify-center transition-opacity duration-700 [.js_&]:flex",
+              "pointer-events-none absolute inset-0 flex items-center justify-center transition-opacity duration-500",
               loading ? "opacity-100" : "opacity-0",
             )}
           >
-            <div className="flex items-center gap-3 rounded-full bg-white/80 px-4 py-2 shadow-sm ring-1 ring-line backdrop-blur">
-              <span className="font-display text-[0.7rem] font-bold tracking-[0.2em]">PLUSMARK</span>
-              <span className="h-3 w-px bg-line" />
-              <span className="font-mono text-[0.65rem] uppercase tracking-[0.14em] text-steel">
-                {loading ? "Loading 3D Experience…" : "Ready"}
-              </span>
-              <span className="relative h-px w-12 overflow-hidden bg-line">
-                <span className="absolute inset-y-0 left-0 w-1/2 animate-[heroload_1.2s_ease-in-out_infinite] bg-graphite" />
+            <div className="flex flex-col items-center gap-3">
+              <svg className="size-10 animate-spin text-steel/50" viewBox="0 0 24 24" fill="none">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2.5" />
+                <path className="opacity-80" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+              </svg>
+              <span className="font-mono text-[0.62rem] uppercase tracking-[0.14em] text-steel/60">
+                Loading 3D…
               </span>
             </div>
+          </div>
+
+          {/* Previous loading pill — hidden, kept for compat */}
+          <div aria-live="polite" className="sr-only">
+            {loading ? "Loading 3D model…" : "3D model ready"}
           </div>
 
           {use3D && firstReady && (

@@ -1,6 +1,6 @@
 "use server";
 
-import { adminDb } from "@/lib/firebase-admin";
+import { websiteFirestore } from "@/lib/firebase-admin";
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/admin-auth";
 import type { TrustedClient } from "@/data/clients";
@@ -9,14 +9,13 @@ import { trustedClients } from "@/data/clients";
 export async function getClients(): Promise<TrustedClient[]> {
   await requireAdmin();
   try {
-    const db = adminDb();
-    const snapshot = await db.ref("clients").orderByChild("order").once("value");
+    const snapshot = await websiteFirestore().collection("website_clients").get();
     const clients: TrustedClient[] = [];
 
     snapshot.forEach((child) => {
-      const data = child.val();
+      const data = child.data();
       clients.push({
-        id: child.key as string,
+        id: child.id,
         name: data.name,
         sector: data.sector,
         logo: data.logo,
@@ -33,9 +32,7 @@ export async function getClients(): Promise<TrustedClient[]> {
 
 export async function addClient(client: Omit<TrustedClient, "id">, order: number) {
   await requireAdmin();
-  const db = adminDb();
-  const newRef = db.ref("clients").push();
-
+  const newRef = websiteFirestore().collection("website_clients").doc();
   await newRef.set({
     ...client,
     // Firebase rejects `undefined`, so drop an empty logo explicitly.
@@ -45,13 +42,12 @@ export async function addClient(client: Omit<TrustedClient, "id">, order: number
   });
 
   revalidatePath("/");
-  return { success: true, id: newRef.key };
+  return { success: true, id: newRef.id };
 }
 
 export async function updateClient(id: string, client: Partial<TrustedClient>) {
   await requireAdmin();
-  const db = adminDb();
-  await db.ref(`clients/${id}`).update({
+  await websiteFirestore().collection("website_clients").doc(id).set({
     ...(client.name !== undefined && { name: client.name }),
     ...(client.sector !== undefined && { sector: client.sector }),
     logo: client.logo ?? null,
@@ -64,8 +60,7 @@ export async function updateClient(id: string, client: Partial<TrustedClient>) {
 
 export async function deleteClient(id: string) {
   await requireAdmin();
-  const db = adminDb();
-  await db.ref(`clients/${id}`).remove();
+  await websiteFirestore().collection("website_clients").doc(id).delete();
 
   revalidatePath("/");
   return { success: true };
@@ -73,14 +68,11 @@ export async function deleteClient(id: string) {
 
 export async function reorderClients(clientIds: string[]) {
   await requireAdmin();
-  const db = adminDb();
-  const updates: Record<string, number> = {};
-
+  const batch = websiteFirestore().batch();
   clientIds.forEach((id, index) => {
-    updates[`clients/${id}/order`] = index;
+    batch.set(websiteFirestore().collection("website_clients").doc(id), { order: index }, { merge: true });
   });
-
-  await db.ref().update(updates);
+  await batch.commit();
 
   revalidatePath("/");
   return { success: true };

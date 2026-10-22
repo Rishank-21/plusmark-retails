@@ -1,6 +1,6 @@
 "use server";
 
-import { adminDb } from "@/lib/firebase-admin";
+import { websiteFirestore } from "@/lib/firebase-admin";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { requireAdmin } from "@/lib/admin-auth";
 import { VIDEOS_TAG } from "@/lib/videos";
@@ -23,14 +23,13 @@ const getStaticVideos = (): VideoWithId[] =>
 export async function getVideos(): Promise<VideoWithId[]> {
   await requireAdmin();
   try {
-    const db = adminDb();
-    const snapshot = await db.ref("videos").orderByChild("order").once("value");
+    const snapshot = await websiteFirestore().collection("website_videos").get();
     const videos: VideoWithId[] = [];
 
     const staticMap = staticVideos as Record<string, Video>;
     snapshot.forEach((child) => {
-      const data = child.val();
-      const key = child.key as string;
+      const data = child.data();
+      const key = child.id;
       const fallback = staticMap[key];
       videos.push({
         id: key,
@@ -69,9 +68,7 @@ function revalidate() {
 
 export async function addVideo(video: Omit<VideoWithId, "id">, order: number) {
   await requireAdmin();
-  const db = adminDb();
-  const newRef = db.ref("videos").push();
-
+  const newRef = websiteFirestore().collection("website_videos").doc();
   await newRef.set({
     ...clean(video),
     order,
@@ -79,13 +76,12 @@ export async function addVideo(video: Omit<VideoWithId, "id">, order: number) {
   });
 
   revalidate();
-  return { success: true, id: newRef.key };
+  return { success: true, id: newRef.id };
 }
 
 export async function updateVideo(id: string, video: Partial<VideoWithId>) {
   await requireAdmin();
-  const db = adminDb();
-  await db.ref(`videos/${id}`).update({
+  await websiteFirestore().collection("website_videos").doc(id).set({
     ...clean(video),
     updatedAt: new Date().toISOString(),
   });
@@ -96,8 +92,7 @@ export async function updateVideo(id: string, video: Partial<VideoWithId>) {
 
 export async function deleteVideo(id: string) {
   await requireAdmin();
-  const db = adminDb();
-  await db.ref(`videos/${id}`).remove();
+  await websiteFirestore().collection("website_videos").doc(id).delete();
 
   revalidate();
   return { success: true };
@@ -105,14 +100,11 @@ export async function deleteVideo(id: string) {
 
 export async function reorderVideos(videoIds: string[]) {
   await requireAdmin();
-  const db = adminDb();
-  const updates: Record<string, number> = {};
-
+  const batch = websiteFirestore().batch();
   videoIds.forEach((id, index) => {
-    updates[`videos/${id}/order`] = index;
+    batch.set(websiteFirestore().collection("website_videos").doc(id), { order: index }, { merge: true });
   });
-
-  await db.ref().update(updates);
+  await batch.commit();
 
   revalidate();
   return { success: true };

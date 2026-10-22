@@ -5,6 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:cloudflare": "opennextjs-cloudflare build",
+    "preview:cloudflare": "npm run build:cloudflare && wrangler dev",
+    "deploy:cloudflare": "npm run build:cloudflare && opennextjs-cloudflare deploy",
+    "upload:cloudflare": "opennextjs-cloudflare upload",
     "start": "next start",
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit",
@@ -12,10 +16,12 @@
     "assets:renders": "node scripts/render-products.mts",
     "assets:placeholders": "node scripts/generate-placeholders.mts",
     "assets:photos": "node scripts/import-photos.mts",
-    "assets": "npm run assets:models && npm run assets:renders && npm run assets:placeholders"
+    "assets": "npm run assets:models && npm run assets:renders && npm run assets:placeholders",
+    "migrate:plusmarkleads": "node scripts/migrate-to-plusmarkleads.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
+    "@opennextjs/cloudflare": "^1.20.13",
     "@react-three/drei": "^10.7.9",
     "@react-three/fiber": "^9.8.1",
     "firebase": "12.19.0",
@@ -23,7 +29,7 @@
     "framer-motion": "^13.4.4",
     "gsap": "^3.15.0",
     "lucide-react": "^1.48.0",
-    "next": "16.3.6",
+    "next": "^16.4.2",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "three": "^0.186.1",
@@ -44,7 +50,8 @@
     "eslint-config-next": "16.3.6",
     "sharp": "^0.35.4",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wrangler": "^4.151.3"
   },
   "engines": {
     "node": ">=22.18"

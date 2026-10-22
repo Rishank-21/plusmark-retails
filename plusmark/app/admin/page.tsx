@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { requireAdmin } from "@/lib/admin-auth";
 import { listEnquiries, type EnquiryRecord } from "@/lib/db";
-import { firebaseAdminConfigured } from "@/lib/firebase-admin";
+import { websiteFirebaseConfigured } from "@/lib/firebase-admin";
 import { getCatalog } from "@/lib/catalog";
 import { categories } from "@/data/categories";
 import { cn } from "@/lib/utils";
@@ -96,7 +96,7 @@ export default async function AdminDashboard() {
       {enquiriesRes === null && (
         <p role="alert" className="flex items-start gap-2 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-900">
           <AlertCircle aria-hidden className="mt-0.5 size-4 shrink-0" />
-          {firebaseAdminConfigured()
+          {websiteFirebaseConfigured()
             ? "Enquiries could not be loaded from the database. Check the server logs."
             : "Firebase Admin credentials are not set, so enquiries can't be shown."}
         </p>
