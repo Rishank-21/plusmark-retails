@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "main": ".open-next/worker.js",
-  "name": "plusmark-retail",
+  "name": "plusmark-retails",
   "compatibility_date": "2026-10-22",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   "assets": {
