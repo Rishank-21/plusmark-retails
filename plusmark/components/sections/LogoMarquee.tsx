@@ -14,7 +14,7 @@ const SECTOR_ICON: Record<ClientSector, LucideIcon> = {
 };
 
 /** Seconds per organization: the strip drifts at the same unhurried pace however long the list gets. */
-const SECONDS_PER_ITEM = 2.2;
+const SECONDS_PER_ITEM = 5;
 
 /** Logo height the files are requested at (px); CSS sets the shown height per breakpoint. */
 const LOGO_PX = 72;
@@ -23,8 +23,8 @@ function ClientCard({ client }: { client: TrustedClient }) {
   const Icon = SECTOR_ICON[client.sector];
   const logo = client.logo;
   return (
-    <div className="flex h-20 min-w-[280px] items-center gap-4 rounded-2xl bg-white px-6 ring-1 ring-fog shadow-[var(--shadow-soft)] transition-[box-shadow,transform] duration-500 ease-[var(--ease-premium)] hover:-translate-y-1 hover:shadow-[var(--shadow-lift)] hover:ring-graphite/20 sm:h-24 sm:min-w-[320px] sm:px-7 md:h-28 md:min-w-[360px] md:gap-5 md:px-8 lg:h-32 lg:min-w-[400px] lg:px-9">
-      <span className="flex h-12 shrink-0 items-center sm:h-14 md:h-16 lg:h-18">
+    <div className="flex h-16 min-w-[220px] items-center gap-3 px-4 sm:h-24 sm:min-w-[320px] sm:gap-4 sm:px-7 md:h-28 md:min-w-[360px] md:gap-5 md:px-8 lg:h-32 lg:min-w-[400px] lg:px-9">
+      <span className="flex h-10 shrink-0 items-center sm:h-14 md:h-16 lg:h-18">
         {logo ? (
           // The name sits right beside the logo, so the image itself is decorative.
           <Image
@@ -41,7 +41,7 @@ function ClientCard({ client }: { client: TrustedClient }) {
           </span>
         )}
       </span>
-      <span className="whitespace-nowrap font-display text-base font-semibold text-graphite sm:text-lg md:text-xl lg:text-[1.3rem]">
+      <span className="whitespace-nowrap font-display text-sm font-semibold text-graphite sm:text-lg md:text-xl lg:text-[1.3rem]">
         {client.name}
       </span>
     </div>
@@ -72,9 +72,7 @@ export function LogoMarquee({ clients }: { clients: TrustedClient[] }) {
     <ul
       aria-hidden={copy || undefined}
       className={
-        copy
-          ? "flex shrink-0 motion-reduce:hidden"
-          : "flex shrink-0 motion-reduce:flex-wrap motion-reduce:justify-center motion-reduce:gap-4"
+        "flex shrink-0 flex-nowrap"
       }
     >
       {clients.map((c) => (
@@ -90,7 +88,7 @@ export function LogoMarquee({ clients }: { clients: TrustedClient[] }) {
     <div ref={root} data-marquee={paused ? "paused" : inView ? "run" : "held"}>
       <div className="marquee mask-fade-x mx-auto max-w-[120rem] overflow-hidden py-4 pl-[8%] motion-reduce:px-5 motion-reduce:[mask-image:none]">
         <div
-          className="marquee-track motion-reduce:block motion-reduce:w-auto motion-reduce:animate-none"
+          className="marquee-track"
           style={{ animationDuration: `${clients.length * SECONDS_PER_ITEM}s` }}
         >
           {list(false)}

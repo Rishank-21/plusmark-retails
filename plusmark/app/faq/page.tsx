@@ -5,15 +5,17 @@ import { FaqAccordion } from "@/components/ui/FaqAccordion";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { Reveal } from "@/components/animations/Reveal";
 import { EnquiryBand } from "@/components/sections/EnquiryBand";
+import { RelatedGuides } from "@/components/sections/RelatedGuides";
+import { categories } from "@/data/categories";
 import { allFaqs, faqGroups } from "@/data/faq";
 import { contactChannels, whatsappHref } from "@/data/company";
 import { buildMetadata } from "@/lib/seo";
 import { faqSchema } from "@/lib/structured-data";
 
 export const metadata = buildMetadata({
-  title: "FAQ — White Boards, Chalk Boards, Notice Boards & Ordering",
+  title: "Board FAQ — Surfaces, Sizes & Ordering",
   description:
-    "Answers to common questions about Plusmark boards: series differences, HPL vs melamine, magnetic vs ceramic, sizes, customisation, Pan India supply, GEM Portal approval and warranty.",
+    "Answers on Plusmark boards: series differences, HPL vs melamine, magnetic vs ceramic, sizes, customisation, Pan India supply, GEM Portal approval and warranty.",
   path: "/faq",
 });
 
@@ -95,6 +97,7 @@ export default function FaqPage() {
           </div>
         </div>
       </section>
+      <RelatedGuides slugs={categories.map((c) => c.slug)} title="Guides" />
       <EnquiryBand />
     </>
   );

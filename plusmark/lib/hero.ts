@@ -18,18 +18,33 @@ import { getCatalog } from "@/lib/catalog";
 import { websiteFirebaseConfigured, websiteFirestore } from "@/lib/firebase-admin";
 
 /** The admin-saved slug order, or null when none/unavailable. */
-async function savedSequence(): Promise<string[] | null> {
-  if (!websiteFirebaseConfigured()) return null;
+type HeroOverride = {
+  model?: string;
+  image?: string;
+  fit?: number;
+  yaw?: number;
+  keyFeature?: string;
+  heroSpecs?: Array<{ label: string; value: string }>;
+};
+
+type HeroConfig = {
+  sequence: string[] | null;
+  overrides: Record<string, HeroOverride>;
+};
+
+async function savedConfig(): Promise<HeroConfig> {
+  const empty = { sequence: null, overrides: {} };
+  if (!websiteFirebaseConfigured()) return empty;
   try {
     const snap = await websiteFirestore().collection("website_config").doc("hero").get();
-    const value = snap.data()?.heroSequence;
-    if (!Array.isArray(value)) return null;
-    const slugs = value.filter((s): s is string => typeof s === "string");
-    return slugs.length ? slugs : null;
+    const data = snap.data() ?? {};
+    const value = data.heroSequence;
+    const sequence = Array.isArray(value) ? value.filter((s): s is string => typeof s === "string") : null;
+    const overrides = data.heroOverrides && typeof data.heroOverrides === "object" ? data.heroOverrides as Record<string, HeroOverride> : {};
+    return { sequence: sequence?.length ? sequence : null, overrides };
   } catch {
-    return null;
+    return empty;
   }
-
 }
 
 async function featuredFromCatalogSlug(slug: string): Promise<FeaturedProduct | undefined> {
@@ -56,28 +71,42 @@ async function featuredFromCatalogSlug(slug: string): Promise<FeaturedProduct | 
  * result is passed to the client HeroExperience as plain data.
  */
 export async function getHeroProducts(): Promise<FeaturedProduct[]> {
-  const slugs = await savedSequence();
+  const config = await savedConfig();
+  const slugs = config.sequence;
   if (slugs) {
     const catalog = await getCatalog();
-    const byAdmin = (await Promise.all(slugs.map(async (slug) =>
-      (() => {
-        const catalogProduct = catalog.find((product) => product.slug === slug);
-        const featured = featuredProducts.find((p) => p.slug === slug);
-        if (!featured) return undefined;
-        return catalogProduct
+    const byAdmin = (await Promise.all(slugs.map(async (slug): Promise<FeaturedProduct | undefined> => {
+      const catalogProduct = catalog.find((product) => product.slug === slug);
+      const featured = featuredProducts.find((p) => p.slug === slug);
+      if (!featured && !catalogProduct) return undefined;
+      const base = featured ?? (catalogProduct ? await featuredFromCatalogSlug(slug) : undefined);
+      if (!base) return undefined;
+      const override = config.overrides[slug] ?? {};
+      return catalogProduct
           ? {
-              ...featured,
+              ...base,
               name: catalogProduct.name,
               category: categoryMap[catalogProduct.categorySlug].name,
               categorySlug: catalogProduct.categorySlug,
               description: catalogProduct.shortDescription,
-              model: catalogProduct.model,
-              fallbackImage: catalogProduct.modelFallback,
+              model: override.model ?? catalogProduct.model,
+              fallbackImage: override.image ?? catalogProduct.modelFallback,
               imageAlt: catalogProduct.imageAlt,
+              fit: override.fit ?? base.fit,
+              yaw: override.yaw ?? base.yaw,
+              keyFeature: override.keyFeature ?? base.keyFeature,
+              heroSpecs: override.heroSpecs ?? base.heroSpecs,
             }
-          : featured;
-      })() ?? await featuredFromCatalogSlug(slug)
-    ))).filter((p): p is FeaturedProduct => Boolean(p));
+          : {
+              ...base,
+              model: override.model ?? base.model,
+              fallbackImage: override.image ?? base.fallbackImage,
+              fit: override.fit ?? base.fit,
+              yaw: override.yaw ?? base.yaw,
+              keyFeature: override.keyFeature ?? base.keyFeature,
+              heroSpecs: override.heroSpecs ?? base.heroSpecs,
+            };
+    }))).filter((p): p is FeaturedProduct => Boolean(p));
     if (byAdmin.length) return byAdmin;
   }
   return featuredProducts;

@@ -154,7 +154,7 @@ export function AplusStack({ lines }: { lines: AplusLine[] }) {
                     View product <ArrowUpRight aria-hidden className="size-4" />
                   </Link>
                 )}
-                <a href={line.amazonUrl} target="_blank" rel="noopener noreferrer" className="xd-btn-ghost justify-center">
+                <a href={line.amazonUrl} target="_blank" rel="noopener noreferrer" className="xd-btn-ghost !border-transparent !bg-[#ffd966] !text-[#131921] justify-center hover:!bg-[#f7ca00]">
                   Buy on Amazon <ArrowUpRight aria-hidden className="size-4" />
                   <span className="sr-only">(opens in a new tab)</span>
                 </a>
@@ -211,7 +211,7 @@ export function AplusStack({ lines }: { lines: AplusLine[] }) {
               View {line.short.toLowerCase()} <ArrowUpRight aria-hidden className="size-4" />
             </Link>
           )}
-          <a href={line.amazonUrl} target="_blank" rel="noopener noreferrer" className="xd-btn-ghost">
+          <a href={line.amazonUrl} target="_blank" rel="noopener noreferrer" className="xd-btn-ghost !border-transparent !bg-[#ffd966] !text-[#131921] hover:!bg-[#f7ca00]">
             Buy on Amazon <ArrowUpRight aria-hidden className="size-4" />
             <span className="sr-only">(opens in a new tab)</span>
           </a>

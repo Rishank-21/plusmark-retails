@@ -1,11 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import type { Category, Product } from "@/data/types";
 import type { CategorySubcategoriesConfig } from "@/data/subcategories";
+import { subcategoryPageSlug } from "@/data/categories";
 import { ProductCard } from "./ProductCard";
 import { cn } from "@/lib/utils";
+
+const PILL = "rounded-full px-4 py-2 text-xs font-semibold transition-all duration-200";
+const PILL_COUNT = "flex items-center gap-1.5";
+const PILL_IDLE = "bg-mist text-steel hover:bg-fog hover:text-graphite";
 
 interface SubcategoryProductListProps {
   category: Category;
@@ -55,6 +61,15 @@ export function SubcategoryProductList({
       ? allProducts
       : allProducts.filter((p) => activeSubcategory?.productSlugs.includes(p.slug));
 
+  // White Boards and Chalk Boards have dedicated subcategory pages; the filter is then a real
+  // navigation to an indexable landing page rather than an in-place tab, so those pages receive
+  // contextual internal links. Categories without pages keep the client-side tablist.
+  const pageHref = (id: string) => {
+    const slug = subcategoryPageSlug(category.slug, id);
+    return slug ? `/products/${slug}` : null;
+  };
+  const asLinks = config.subcategories.every((sub) => pageHref(sub.id));
+
   return (
     <div>
       {/* Subcategory Selector Tabs */}
@@ -63,56 +78,70 @@ export function SubcategoryProductList({
           <span className="font-mono text-[0.68rem] uppercase tracking-[0.14em] text-steel">
             {config.filterLabel}:
           </span>
-          <div
-            role="tablist"
-            aria-label={`${category.name} types`}
-            className="flex flex-wrap gap-2"
-          >
-            <button
-              type="button"
-              role="tab"
-              aria-selected={activeTab === "all"}
-              onClick={() => selectTab("all")}
-              className={cn(
-                "rounded-full px-4 py-2 text-xs font-semibold transition-all duration-200",
-                activeTab === "all"
-                  ? "bg-graphite text-white shadow-sm"
-                  : "bg-mist text-steel hover:bg-fog hover:text-graphite"
-              )}
+          {asLinks ? (
+            <nav aria-label={`${category.name} types`} className="flex flex-wrap gap-2">
+              <Link
+                href={`/products/${category.slug}`}
+                aria-current="page"
+                className={cn(PILL, "bg-graphite text-white shadow-sm")}
+              >
+                {config.allLabel} ({allProducts.length})
+              </Link>
+              {config.subcategories.map((sub) => {
+                const count = allProducts.filter((p) => sub.productSlugs.includes(p.slug)).length;
+                return (
+                  <Link key={sub.id} href={pageHref(sub.id)!} className={cn(PILL, PILL_COUNT, PILL_IDLE)}>
+                    <span>{sub.label}</span>
+                    <span className="font-mono text-[0.68rem]">({count})</span>
+                  </Link>
+                );
+              })}
+            </nav>
+          ) : (
+            <div
+              role="tablist"
+              aria-label={`${category.name} types`}
+              className="flex flex-wrap gap-2"
             >
-              {config.allLabel} ({allProducts.length})
-            </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={activeTab === "all"}
+                onClick={() => selectTab("all")}
+                className={cn(
+                  PILL,
+                  activeTab === "all" ? "bg-graphite text-white shadow-sm" : PILL_IDLE
+                )}
+              >
+                {config.allLabel} ({allProducts.length})
+              </button>
 
-            {config.subcategories.map((sub) => {
-              const count = allProducts.filter((p) => sub.productSlugs.includes(p.slug)).length;
-              const isSelected = activeTab === sub.id;
-              return (
-                <button
-                  key={sub.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={isSelected}
-                  onClick={() => selectTab(sub.id)}
-                  className={cn(
-                    "flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-semibold transition-all duration-200",
-                    isSelected
-                      ? "bg-accent text-white shadow-sm"
-                      : "bg-mist text-steel hover:bg-fog hover:text-graphite"
-                  )}
-                >
-                  <span>{sub.label}</span>
-                  <span
-                    className={cn(
-                      "font-mono text-[0.68rem]",
-                      isSelected ? "text-white/80" : "text-steel"
-                    )}
+              {config.subcategories.map((sub) => {
+                const count = allProducts.filter((p) => sub.productSlugs.includes(p.slug)).length;
+                const isSelected = activeTab === sub.id;
+                return (
+                  <button
+                    key={sub.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={isSelected}
+                    onClick={() => selectTab(sub.id)}
+                    className={cn(PILL, PILL_COUNT, isSelected ? "bg-accent text-white shadow-sm" : PILL_IDLE)}
                   >
-                    ({count})
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+                    <span>{sub.label}</span>
+                    <span
+                      className={cn(
+                        "font-mono text-[0.68rem]",
+                        isSelected ? "text-white/80" : "text-steel"
+                      )}
+                    >
+                      ({count})
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
         </div>
 
         {/* Short contextual description of active selection */}

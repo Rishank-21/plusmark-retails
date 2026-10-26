@@ -69,13 +69,20 @@ const MT_SHOTS = "1,4,5,6,7,8,9";
 const MT_VARIANT = "1,4,5,9";
 const ECO_SHOTS = "1,4,5,6,7-1,7,8";
 const ECO_VARIANT = "1,4,5,8";
+/*
+ * Pure white boards lead with shot 5 (held to scale) instead of shot 1: in the studio shot the
+ * white writing surface and the white backdrop are the same colour, so the card and the page stage
+ * read as an empty frame. Same photos, only the order differs.
+ */
+const MT_SHOTS_WHITE_LEAD = "5,1,4,6,7,8,9";
+const ECO_SHOTS_WHITE_LEAD = "5,1,4,6,7-1,7,8";
 
 /** slug → ordered image sources. The first source becomes the main product image. */
 const SOURCES: Record<string, string[]> = {
   // White boards
-  "metallic-premium-white-board": [`mt:Non. Mag. WB/2x3 Feet|${MT_SHOTS}`],
-  "eco-premium-white-board": [`eco:ECO WB/2x3 Feet|${ECO_SHOTS}`],
-  "eco-premium-both-side-board": [`eco:ECO Both side/2x3 Feet|${ECO_SHOTS}`],
+  "metallic-premium-white-board": [`mt:Non. Mag. WB/2x3 Feet|${MT_SHOTS_WHITE_LEAD}`],
+  "eco-premium-white-board": [`eco:ECO WB/2x3 Feet|${ECO_SHOTS_WHITE_LEAD}`],
+  "eco-premium-both-side-board": [`eco:ECO Both side/2x3 Feet|${ECO_SHOTS_WHITE_LEAD}`],
   "deluxe-standard-white-board": ["local:Images-03"],
   "eco-regular-white-board": ["local:Images-04"],
   // Chalk boards
@@ -100,13 +107,13 @@ const SOURCES: Record<string, string[]> = {
   "eco-regular-notice-board": ["local:Images-11"],
   // Magnetic boards: white (marker) set, then the green (chalk) variant.
   "metallic-premium-magnetic-board": [
-    `mt:Metallic Mag. WB/2x3 Feet|${MT_SHOTS}`,
+    `mt:Metallic Mag. WB/2x3 Feet|${MT_SHOTS_WHITE_LEAD}`,
     `mt:Metallic Mag. CB/2x3 Feet|${MT_VARIANT}`,
   ],
   "deluxe-standard-magnetic-board": ["local:Images-13"],
   // The Amazon "Eco Magnetic" listings (white + chalk) are shown on this product page (see data/aplus.ts).
   "eco-regular-magnetic-board": [
-    `eco:ECO Magnetic W-B/2x3 Feet|${ECO_SHOTS}`,
+    `eco:ECO Magnetic W-B/2x3 Feet|${ECO_SHOTS_WHITE_LEAD}`,
     `eco:ECO Magnetic C-B/2x3 Feet|${ECO_VARIANT}`,
   ],
   // Ceramic boards

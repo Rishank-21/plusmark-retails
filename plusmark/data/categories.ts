@@ -7,9 +7,9 @@ export const categories: Category[] = [
     summary: "Marker boards in Magnetic, Non-Magnetic, and Ceramic variants with High Gloss Marker Grade HPL Sheet and premium writing surfaces.",
     intro:
       "Plusmark white boards are available in three types: Non-Magnetic boards with High Gloss Marker Grade HPL Sheet and Melamine surfaces in four construction series (Metallic Premium, Eco Premium, Deluxe Standard, Eco Regular), Magnetic boards with resin coated steel surfaces that accept magnets, and Ceramic boards with porcelain enamel steel surfaces for maximum durability and longevity.",
-    seoTitle: "White Boards — Magnetic, Non-Magnetic & Ceramic Marker Boards",
+    seoTitle: "White Boards — Magnetic, Non-Magnetic & Ceramic",
     seoDescription:
-      "Plusmark white boards: magnetic, non-magnetic and ceramic marker boards with High Gloss HPL Sheet, resin coated steel and porcelain enamel surfaces for offices, schools and institutions.",
+      "Plusmark white boards: magnetic, non-magnetic and ceramic marker boards with High Gloss HPL, resin coated steel and porcelain enamel surfaces.",
     coverProduct: "metallic-premium-white-board",
     subcategories: [
       {
@@ -17,18 +17,24 @@ export const categories: Category[] = [
         name: "Non-Magnetic White Boards",
         summary: "High Gloss Marker Grade HPL Sheet and Melamine writing surfaces in Metallic Premium, Eco Premium, Deluxe Standard and Eco Regular series.",
         coverProduct: "metallic-premium-white-board",
+        seoDescription:
+          "Plusmark non-magnetic white boards with High Gloss Marker Grade HPL Sheet and melamine surfaces in four frame series. Made in India, Pan India supply.",
       },
       {
         slug: "white-boards-magnetic",
         name: "Magnetic White Boards",
         summary: "Resin coated steel magnetic white boards that accept magnets, charts and holders.",
         coverProduct: "metallic-premium-magnetic-board",
+        seoDescription:
+          "Plusmark magnetic white boards with resin coated steel surfaces that hold magnets, charts and holders. Four frame series, Made in India, Pan India supply.",
       },
       {
         slug: "white-boards-ceramic",
         name: "Ceramic White Boards",
         summary: "Ceramic steel / porcelain enamel steel magnetic surfaces for very long product life.",
         coverProduct: "metallic-premium-ceramic-board",
+        seoDescription:
+          "Plusmark ceramic white boards with porcelain enamel steel surfaces for maximum durability and very long product life. Made in India, Pan India supply.",
       },
     ],
   },
@@ -38,9 +44,9 @@ export const categories: Category[] = [
     summary: "Chalk boards in Magnetic, Non-Magnetic, and Ceramic variants with Chalk Grade HPL Sheet — non-reflective, glare-free surfaces.",
     intro:
       "Plusmark chalk boards are available in three types: Non-Magnetic boards with Chalk Grade HPL Sheet surfaces that are non-reflective and glare-free in four construction series (Metallic Premium, Eco Premium, Deluxe Standard, Eco Regular), Magnetic boards with resin coated steel green surfaces that accept magnets, and Ceramic boards with porcelain enamel steel green surfaces for maximum durability.",
-    seoTitle: "Chalk Boards — Magnetic, Non-Magnetic & Ceramic HPL Chalk Boards",
+    seoTitle: "Chalk Boards — Magnetic, Non-Magnetic & Ceramic",
     seoDescription:
-      "Plusmark chalk boards: magnetic, non-magnetic and ceramic chalk boards with Hardcore Chalk Grade HPL Sheet and porcelain enamel surfaces for schools, colleges and classrooms.",
+      "Plusmark chalk boards: magnetic, non-magnetic and ceramic boards with Hardcore Chalk Grade HPL Sheet and porcelain enamel surfaces for schools.",
     coverProduct: "metallic-premium-chalk-board",
     subcategories: [
       {
@@ -48,18 +54,24 @@ export const categories: Category[] = [
         name: "Non-Magnetic Chalk Boards",
         summary: "Hardcore Chalk Grade HPL Sheet with enhanced scratch resistance — non-reflective and glare-free.",
         coverProduct: "metallic-premium-chalk-board",
+        seoDescription:
+          "Plusmark non-magnetic chalk boards with Hardcore Chalk Grade HPL Sheet — non-reflective and glare-free for classrooms. Made in India, Pan India supply.",
       },
       {
         slug: "chalk-boards-magnetic",
         name: "Magnetic Chalk Boards",
         summary: "Resin coated steel magnetic chalk boards with green surfaces that accept magnets.",
         coverProduct: "metallic-premium-magnetic-chalk-board",
+        seoDescription:
+          "Plusmark magnetic chalk boards with resin coated steel green surfaces that accept magnets. Four frame series, Made in India, Pan India supply.",
       },
       {
         slug: "chalk-boards-ceramic",
         name: "Ceramic Chalk Boards",
         summary: "Ceramic steel / porcelain enamel steel magnetic green surfaces for very long product life.",
         coverProduct: "metallic-premium-ceramic-chalk-board",
+        seoDescription:
+          "Plusmark ceramic chalk boards with porcelain enamel steel green surfaces for maximum durability and very long product life. Made in India, Pan India supply.",
       },
     ],
   },
@@ -69,9 +81,9 @@ export const categories: Category[] = [
     summary: "2-in-1 writing surfaces — write with marker on one side and chalk on the other — in premium aluminium frames.",
     intro:
       "Plusmark Double-Sided Boards feature two writing surfaces in one frame: a white board on the front for marker writing and a chalk board on the back for chalk writing. The non-magnetic, easy-to-clean surfaces sit in premium aluminium anodised frames with ABS dual-tone edges, offering quick wall-mount installation that allows horizontal or vertical hanging.",
-    seoTitle: "Double-Sided Boards — 2-in-1 White Board & Chalk Board",
+    seoTitle: "Double-Sided Boards — 2-in-1 White & Chalk Board",
     seoDescription:
-      "Plusmark Double-Sided Boards with marker writing on one side and chalk writing on the other. Premium aluminium frames, non-magnetic surfaces for offices, classrooms and homes.",
+      "Plusmark double-sided boards: marker writing on one side, chalk on the other. Premium aluminium frames for offices, classrooms and homes.",
     coverProduct: "eco-premium-both-side-board",
   },
   {
@@ -80,9 +92,9 @@ export const categories: Category[] = [
     summary: "Pin-up notice boards with Blazer Cloth, Velvet Cloth, Cork and Fabric surfaces — in Metallic Premium, Eco Premium, Deluxe Standard and Eco Regular series.",
     intro:
       "Plusmark notice boards cover all pin-up surface types from the catalog — Blazer Cloth and Velvet Cloth boards in four frame series (Metallic Premium, Eco Premium, Deluxe Standard and Eco Regular), high-quality natural Cork Notice Boards, Fabric Notice Boards in the customer's preferred colour, and Combination Boards that pair a dry wipe white board surface with a fabric pin-up surface in a single frame.",
-    seoTitle: "Notice Boards — Blazer Cloth, Velvet Cloth, Cork, Fabric & Combination Boards",
+    seoTitle: "Notice Boards — Cork, Fabric, Blazer & Velvet",
     seoDescription:
-      "Plusmark notice boards: Blazer Cloth, Velvet Cloth, Cork, Fabric and Combination boards in Metallic Premium, Eco Premium, Deluxe Standard and Eco Regular frames for schools, colleges, offices and institutions.",
+      "Plusmark notice boards in Blazer Cloth, Velvet Cloth, Cork, Fabric and Combination surfaces, with four aluminium frame series. Made in India.",
     coverProduct: "metallic-premium-notice-board",
   },
   {
@@ -91,9 +103,9 @@ export const categories: Category[] = [
     summary: "Acrylic folder display boards for organised display of charts, reports, SOPs and production data.",
     intro:
       "Specialty Display Boards for specific display needs — Acrylic Folder Display Boards give clear visibility through transparent front folders, ideal for organised display of charts, reports, SOPs and production data. Folder size and quantity made as per customer requirement in a strong aluminium frame.",
-    seoTitle: "Specialty Display Boards — Acrylic Folder Display Boards",
+    seoTitle: "Specialty Display Boards — Acrylic Folder Boards",
     seoDescription:
-      "Plusmark Acrylic Folder Display Boards with transparent front folders in a strong aluminium frame — folder size and quantity as per customer requirement for industrial and institutional use.",
+      "Plusmark acrylic folder display boards with transparent front folders in a strong aluminium frame. Folder size and quantity made to order.",
     coverProduct: "acrylic-folder-display-board",
   },
   {
@@ -102,7 +114,7 @@ export const categories: Category[] = [
     summary: "Lockable notice boards with transparent acrylic door covers that protect notices from dust and handling.",
     intro:
       "Acrylic Door Covered (ADC) notice boards protect displayed notices behind a transparent acrylic door with a locking system, available in Deluxe 45 mm Triple Aluminium Framing (single and double door) and ECO lightweight aluminium framing.",
-    seoTitle: "Acrylic Door Cover Notice Boards — Lockable ADC Notice Boards",
+    seoTitle: "Lockable ADC Notice Boards — Acrylic Door Cover",
     seoDescription:
       "Plusmark ADC notice boards with transparent acrylic door covers, secure locking and Deluxe 45 mm Triple Aluminium Framing, in single and double door designs.",
     coverProduct: "deluxe-45mm-adc-notice-board-double-door",
@@ -113,7 +125,7 @@ export const categories: Category[] = [
     summary: "Practice boards for handwriting, lockable key hanger boards and a foldable homework table.",
     intro:
       "The Board & Study Essentials collection covers the Four Line & Square Line Practice Board for handwriting improvement, the lockable Key Hanger Board and the foldable Homework Table — a student study table with a white board writing surface.",
-    seoTitle: "Board & Study Essentials — Practice Boards, Key Hanger Boards & Homework Tables",
+    seoTitle: "Board & Study Essentials — Practice & Homework",
     seoDescription:
       "Plusmark Four Line & Square Line Practice Board, lockable Key Hanger Board and foldable Homework Table (student study table) with white board writing surface.",
     coverProduct: "four-line-square-line-practice-board",
@@ -124,9 +136,9 @@ export const categories: Category[] = [
     summary: "Grooved boards and black perforated boards with letter and figure sets for information display.",
     intro:
       "Display boards for hotels, reception areas, offices and public places — grooved boards in nine landscape and portrait sizes, black perforated boards with golden anodized frames, and letter and figure sets in 12, 18, 24 and 36 mm sizes.",
-    seoTitle: "Display Boards — Grooved Boards, Perforated Boards & Letter Sets",
+    seoTitle: "Display Boards — Grooved, Perforated & Letters",
     seoDescription:
-      "Plusmark grooved boards and black perforated display boards with golden anodized frame, plus letter sets of 112 and figure sets of 100 for hotels, offices and receptions.",
+      "Plusmark grooved boards and black perforated display boards with golden anodized frames, plus letter and figure sets for hotels and offices.",
     coverProduct: "perforated-board",
   },
   {
@@ -186,9 +198,12 @@ const flattenedCategories = categories.flatMap((c) => {
         name: sub.name,
         summary: sub.summary,
         intro: sub.summary, // Use summary as intro for subcategories
-        seoTitle: `${sub.name} | ${c.name}`,
-        seoDescription: sub.summary,
+        // The name already carries the parent term ("Magnetic White Boards"), so appending the
+        // parent again only wastes title budget before the brand suffix is applied.
+        seoTitle: sub.seoTitle ?? sub.name,
+        seoDescription: sub.seoDescription ?? sub.summary,
         coverProduct: sub.coverProduct,
+        parentSlug: c.slug,
       });
     });
   }
@@ -201,4 +216,20 @@ export const categoryMap = Object.fromEntries(
 
 export function getCategory(slug: string): Category | undefined {
   return flattenedCategories.find((c) => c.slug === slug);
+}
+
+/** The parent category of a flattened subcategory entry, or undefined for top-level categories. */
+export function getParentCategory(slug: string): Category | undefined {
+  const parentSlug = getCategory(slug)?.parentSlug;
+  return parentSlug ? getCategory(parentSlug) : undefined;
+}
+
+/**
+ * The subcategory landing-page slug for a filter id, when that page actually exists.
+ * Filter configs exist for more categories than have dedicated subcategory pages, so callers
+ * must fall back to the `?type=` filter view when this returns undefined.
+ */
+export function subcategoryPageSlug(parentSlug: string, filterId: string): CategorySlug | undefined {
+  const candidate = `${parentSlug}-${filterId}`;
+  return categoryMap[candidate as CategorySlug] ? (candidate as CategorySlug) : undefined;
 }

@@ -4,27 +4,27 @@
  */
 export const gallery: Record<string, string[]> = {
   "metallic-premium-white-board": [
+    "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/metallic-premium-white-board/2",
     "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/metallic-premium-white-board",
     "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/metallic-premium-white-board/1",
-    "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/metallic-premium-white-board/2",
     "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/metallic-premium-white-board/3",
     "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/metallic-premium-white-board/4",
     "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/metallic-premium-white-board/5",
     "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/metallic-premium-white-board/6",
   ],
   "eco-premium-white-board": [
+    "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/eco-premium-white-board/2",
     "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/eco-premium-white-board",
     "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/eco-premium-white-board/1",
-    "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/eco-premium-white-board/2",
     "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/eco-premium-white-board/3",
     "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/eco-premium-white-board/4",
     "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/eco-premium-white-board/5",
     "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/eco-premium-white-board/6",
   ],
   "eco-premium-both-side-board": [
+    "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/eco-premium-both-side-board/2",
     "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/eco-premium-both-side-board",
     "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/eco-premium-both-side-board/1",
-    "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/eco-premium-both-side-board/2",
     "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/eco-premium-both-side-board/3",
     "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/eco-premium-both-side-board/4",
     "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/eco-premium-both-side-board/5",
@@ -113,9 +113,9 @@ export const gallery: Record<string, string[]> = {
     "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/eco-regular-notice-board",
   ],
   "metallic-premium-magnetic-board": [
+    "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/metallic-premium-magnetic-board/2",
     "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/metallic-premium-magnetic-board",
     "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/metallic-premium-magnetic-board/1",
-    "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/metallic-premium-magnetic-board/2",
     "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/metallic-premium-magnetic-board/3",
     "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/metallic-premium-magnetic-board/4",
     "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/metallic-premium-magnetic-board/5",
@@ -129,9 +129,9 @@ export const gallery: Record<string, string[]> = {
     "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/deluxe-standard-magnetic-board",
   ],
   "eco-regular-magnetic-board": [
+    "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/eco-regular-magnetic-board/2",
     "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/eco-regular-magnetic-board",
     "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/eco-regular-magnetic-board/1",
-    "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/eco-regular-magnetic-board/2",
     "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/eco-regular-magnetic-board/3",
     "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/eco-regular-magnetic-board/4",
     "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/products/eco-regular-magnetic-board/5",

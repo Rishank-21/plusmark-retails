@@ -13,6 +13,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { ProductViewer3D } from "./ProductViewer3D";
 import { ProductCard } from "./ProductCard";
 import { EnquiryBand } from "@/components/sections/EnquiryBand";
+import { RelatedGuides } from "@/components/sections/RelatedGuides";
 import { getProductAplus, type AplusImage } from "@/data/aplus";
 import { AplusDescription } from "./AplusDescription";
 import { ProductVideos } from "./ProductMedia";
@@ -70,6 +71,9 @@ export function ProductDetail({
   videos?: Video[];
 }) {
   const category = categoryMap[product.categorySlug];
+  // Products filed under a subcategory keep the parent in the trail, so the breadcrumb matches
+  // the silo (Home › Products › White Boards › Magnetic White Boards › Product).
+  const parentCategory = category.parentSlug ? categoryMap[category.parentSlug] : undefined;
   const listing = product.catalogDetail === "listing";
   const builtInSets = getProductAplus(product.slug);
   const aplusSets = adminAplus.length
@@ -85,11 +89,14 @@ export function ProductDetail({
 
   return (
     <article>
-      <div className="studio-bg pb-14 pt-[100px] md:pt-[120px]">
+      <div className="bg-white pb-14 pt-[100px] md:pt-[120px]">
         <div className="container-x">
           <Breadcrumbs
             items={[
               { name: "Products", path: "/products" },
+              ...(parentCategory
+                ? [{ name: parentCategory.name, path: `/products/${parentCategory.slug}` }]
+                : []),
               { name: category.name, path: `/products/${category.slug}` },
               { name: product.name, path: `/products/${product.slug}` },
             ]}
@@ -129,7 +136,11 @@ export function ProductDetail({
                 </ul>
               )}
               <div className="mt-8 flex flex-wrap items-center gap-4">
-                <ButtonLink href={`/contact?product=${product.slug}#enquiry`} magnetic>
+                <ButtonLink
+                  href={`/contact?product=${product.slug}#enquiry`}
+                  magnetic
+                  className="!bg-[#08a63a] !text-white shadow-[0_10px_30px_-10px_rgb(8_166_58/0.55)] hover:!bg-[#078b31] hover:shadow-[0_16px_40px_-12px_rgb(8_166_58/0.6)]"
+                >
                   Request Enquiry
                 </ButtonLink>
                 <a href="#specifications" className="group inline-flex items-center gap-2 text-sm font-semibold">
@@ -285,6 +296,11 @@ export function ProductDetail({
           </div>
         </section>
       )}
+
+      <RelatedGuides
+        slugs={[product.slug, product.categorySlug, category.parentSlug ?? ""].filter(Boolean)}
+        title="Guides covering this board"
+      />
 
       <EnquiryBand title={`Request an enquiry for the ${product.name}`} product={product.slug} productName={product.name} />
       <JsonLd data={productSchema(product)} />

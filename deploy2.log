@@ -1,0 +1,76 @@
+
+> plusmark@0.1.0 deploy:cloudflare
+> npm run build:cloudflare && opennextjs-cloudflare deploy
+
+
+> plusmark@0.1.0 build:cloudflare
+> opennextjs-cloudflare build
+
+
+┌─────────────────────────────┐
+│ OpenNext — Cloudflare build │
+└─────────────────────────────┘
+
+WARN OpenNext is not fully compatible with Windows.
+WARN For optimal performance, it is recommended to use Windows Subsystem for Linux (WSL).
+WARN While OpenNext may function on Windows, it could encounter unpredictable failures during runtime.
+App directory: C:\Users\palha\plusmark-retails\plusmark
+Next.js version : 16.4.2
+@opennextjs/cloudflare version: 1.20.13
+@opennextjs/aws version: 4.1.12
+workerd compatibility_date: 2026-10-22
+
+┌─────────────────────────────────┐
+│ OpenNext — Building Next.js app │
+└─────────────────────────────────┘
+
+
+> plusmark@0.1.0 build
+> next build
+
+▲ Next.js 16.4.2 (Turbopack)
+- Environments: .env
+✓ Running next.config.ts took 123ms
+
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 1 error:
+./proxy.ts:23:14
+Error: Next.js can't recognize the exported `config` field in route. Proxy does not support Edge runtime.
+  [90m21 |[0m }
+  [90m22 |[0m
+[31m[1m>[0m [90m23 |[0m [36mexport[0m [36mconst[0m config = {
+  [90m   |[0m              [31m[1m^^^^^^[0m
+  [90m24 |[0m   [90m// Edge runtime: the redirect only reads request headers, and it keeps the Cloudflare bu...[0m
+  [90m25 |[0m   [90m// OpenNext's Node middleware bundler (which fails to bundle @opentelemetry/api, pulled ...[0m
+  [90m26 |[0m   [90m// node_modules by firebase-admin).[0m
+
+The exported configuration object in a source file needs to have a very specific format from which some properties can be statically parsed at compiled-time.
+
+https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
+
+
+    at <unknown> (https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config)
+node:internal/errors:985
+  const err = new Error(message);
+              ^
+
+Error: Command failed: npm run build
+    at genericNodeError (node:internal/errors:985:15)
+    at wrappedFn (node:internal/errors:539:14)
+    at checkExecSyncError (node:child_process:925:11)
+    at Object.execSync (node:child_process:997:15)
+    at buildNextjsApp (file:///C:/Users/palha/plusmark-retails/plusmark/node_modules/@opennextjs/aws/dist/build/buildNextApp.js:15:8)
+    at build (file:///C:/Users/palha/plusmark-retails/plusmark/node_modules/@opennextjs/cloudflare/dist/cli/build/build.js:64:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async buildCommand (file:///C:/Users/palha/plusmark-retails/plusmark/node_modules/@opennextjs/cloudflare/dist/cli/commands/build.js:40:5) {
+  status: 1,
+  signal: null,
+  output: [ null, null, null ],
+  pid: 6000,
+  stdout: null,
+  stderr: null
+}
+
+Node.js v24.13.0

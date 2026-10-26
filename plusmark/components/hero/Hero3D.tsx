@@ -16,6 +16,7 @@ interface Hero3DProps {
   state: React.RefObject<HeroState>;
   /** Indices that should currently be mounted: the product on show and its neighbour on either side. */
   mounted: number[];
+  ready: boolean[];
   tier: Exclude<DeviceTier, "none">;
   active: boolean;
   onStatus: (index: number, status: "ready" | "error") => void;
@@ -32,12 +33,14 @@ function HeroSlot({
   product,
   state,
   onStatus,
+  ready,
 }: {
   index: number;
   count: number;
   product: FeaturedProduct;
   state: React.RefObject<HeroState>;
   onStatus: Hero3DProps["onStatus"];
+  ready: boolean;
 }) {
   const group = useRef<THREE.Group>(null);
   const opacity = useRef(0);
@@ -49,7 +52,12 @@ function HeroSlot({
     // Offset around the loop: <0 waiting on the right (comes next), >0 gone to the left (shown before).
     const d = slotOffset(s.e, index, count);
     const ad = Math.abs(d);
-    g.visible = ad < 1;
+    const settled = Math.abs(s.e - Math.round(s.e)) < 0.015;
+    // A loaded GLTF can still be uploading textures to the GPU. Do not let the
+    // carousel expose any part of an unready clone during a swipe.
+    // Keep the 3D stage blank while the carousel is moving. The next model is
+    // shown as one complete frame only after its GLTF and GPU textures are ready.
+    g.visible = ready && settled && ad < 0.015;
     if (!g.visible) return;
     const t = clock.clock.elapsedTime;
     const idle = s.reduced ? 0 : 1;
@@ -112,7 +120,7 @@ function Rig({ state }: { state: React.RefObject<HeroState> }) {
   return null;
 }
 
-export default function Hero3D({ products, state, mounted, tier, active, onStatus }: Hero3DProps) {
+export default function Hero3D({ products, state, mounted, ready, tier, active, onStatus }: Hero3DProps) {
   const [dpr, setDpr] = useState<[number, number]>(dprForTier(tier));
   return (
     <Canvas
@@ -135,7 +143,7 @@ export default function Hero3D({ products, state, mounted, tier, active, onStatu
       <Rig state={state} />
       {products.map((p, i) =>
         p.model && mounted.includes(i) ? (
-          <HeroSlot key={p.slug} index={i} count={products.length} product={p} state={state} onStatus={onStatus} />
+          <HeroSlot key={p.slug} index={i} count={products.length} product={p} state={state} onStatus={onStatus} ready={ready[i] === true} />
         ) : null,
       )}
       {tier !== "low" && (

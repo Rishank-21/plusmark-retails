@@ -1,4 +1,4 @@
-﻿// import { company } from "@/data/company";
+// import { company } from "@/data/company";
 // import { Reveal } from "@/components/animations/Reveal";
 // import { LogoMark } from "@/components/ui/Logo";
 
@@ -94,16 +94,16 @@ export function TrustSection() {
                 </span>
               </h2>
 
-              <p className="mt-6 max-w-md text-sm leading-7 text-alu sm:text-base sm:leading-8">
-                {company.panIndia}
+              <p className="mt-5 max-w-lg text-base leading-7 text-alu sm:leading-8">
+                GEM-approved and made in India, Plusmark delivers dependable educational and institutional products with consistent quality, fair rates and Pan India supply.
               </p>
 
               <a
                 href="#location"
-                className="group mt-7 inline-flex items-center gap-2.5 text-sm font-semibold text-white/90 transition-colors hover:text-accent"
+                className="group mt-6 inline-flex items-center gap-2.5 text-lg font-semibold text-white/90 transition-colors hover:text-accent"
               >
                 Discover Plusmark
-                <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                <ArrowUpRight className="size-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
               </a>
             </div>
           </Reveal>
@@ -111,9 +111,9 @@ export function TrustSection() {
           {/* RIGHT: MINIMAL BRAND IDENTITY */}
           <Reveal delay={0.12}>
             <div className="flex min-h-[260px] w-full items-center justify-center py-8 sm:min-h-[320px] lg:min-h-[420px] lg:py-0">
-              <div className="flex items-center gap-3 sm:gap-4 lg:gap-5">
+              <div className="flex items-baseline gap-3 sm:gap-4 lg:gap-5">
                 {/* Lightened Logo */}
-                <div className="size-14 shrink-0 opacity-60 sm:size-20 lg:size-24">
+                <div className="relative top-1 size-14 shrink-0 opacity-60 sm:top-1.5 sm:size-20 lg:top-2 lg:size-24">
                   <LogoMark className="size-full" />
                 </div>
 

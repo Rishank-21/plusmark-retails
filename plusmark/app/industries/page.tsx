@@ -5,9 +5,9 @@ import { EnquiryBand } from "@/components/sections/EnquiryBand";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: "Industries — Schools, Colleges, Institutions, Offices & Factories",
+  title: "Industries — Schools, Offices & Factories",
   description:
-    "Plusmark boards and furniture for schools, colleges and universities, training and coaching centres, dealers and distributors, factories and industrial units, and government and private institutions.",
+    "Plusmark boards and furniture for schools, colleges, training centres, dealers, factories and government and private institutions across India.",
   path: "/industries",
 });
 

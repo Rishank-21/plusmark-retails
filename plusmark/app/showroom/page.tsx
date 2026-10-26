@@ -14,6 +14,7 @@ import { CountUp } from "@/components/animations/CountUp";
 import { Reveal } from "@/components/animations/Reveal";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { getSiteVideos } from "@/lib/videos";
+import { getSiteSettings } from "@/lib/site-settings";
 import { getProduct, products } from "@/data/products";
 import { categories, categoryMap } from "@/data/categories";
 import { company } from "@/data/company";
@@ -27,6 +28,8 @@ export const metadata = buildMetadata({
   description:
     "Walk the Plusmark 3D showroom: every board turns to face you, the camera closes in on the aluminium frame and the writing or pin-up surface, then the next board enters. Made in India since 2015, GEM Portal approved.",
   path: SHOWROOM_PATH,
+  // Alternate home for design variant E — see app/experience/page.tsx.
+  noIndex: true,
 });
 
 type Parts = ShowroomItem["parts"];
@@ -180,7 +183,7 @@ export default async function ShowroomPage() {
 
       <IndustriesSection id="xe-industries" className="relative z-10 scroll-mt-20" />
 
-      <VideoRing videos={siteVideos} />
+      <VideoRing videos={siteVideos} mode={(await getSiteSettings()).videoMode} />
 
       {/* Amazon A+ banner showcase ("Every board, explained.") */}
       <ShowroomAplus />

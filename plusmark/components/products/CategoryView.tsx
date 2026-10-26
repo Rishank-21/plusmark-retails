@@ -1,25 +1,34 @@
 import type { Category } from "@/data/types";
+import { getParentCategory } from "@/data/categories";
 import { getCatalog, liveSubcategoryConfig, productsForCategory } from "@/lib/catalog";
+import Link from "next/link";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { ProductCard } from "./ProductCard";
 import { SubcategoryProductList } from "./SubcategoryProductList";
 import { CategoryGrid } from "./CategoryGrid";
 import { EnquiryBand } from "@/components/sections/EnquiryBand";
+import { RelatedGuides } from "@/components/sections/RelatedGuides";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { Reveal } from "@/components/animations/Reveal";
-import { itemListSchema } from "@/lib/structured-data";
+import { collectionPageSchema } from "@/lib/structured-data";
+import { cn } from "@/lib/utils";
 
 export async function CategoryView({ category }: { category: Category }) {
   const catalog = await getCatalog();
   const subcategoryConfig = liveSubcategoryConfig(catalog, category.slug);
   const list = productsForCategory(catalog, category.slug);
   const listingOnly = list.every((p) => p.catalogDetail === "listing");
+  // Subcategory pages sit one level below their parent, so the breadcrumb and the sibling
+  // switcher both need the parent to keep the category silo connected.
+  const parent = category.parentSlug ? getParentCategory(category.slug) : undefined;
+  const path = `/products/${category.slug}`;
   return (
     <>
       <PageHeader
         crumbs={[
           { name: "Products", path: "/products" },
-          { name: category.name, path: `/products/${category.slug}` },
+          ...(parent ? [{ name: parent.name, path: `/products/${parent.slug}` }] : []),
+          { name: category.name, path },
         ]}
         eyebrow={`${list.length} ${list.length === 1 ? "product" : "products"}`}
         title={category.name}
@@ -30,6 +39,36 @@ export async function CategoryView({ category }: { category: Category }) {
         <h2 id="range-title" className="sr-only">
           {category.name} range
         </h2>
+
+        {parent?.subcategories && (
+          <nav aria-label={`${parent.name} types`} className="mb-10 flex flex-wrap items-center gap-2">
+            <Link
+              href={`/products/${parent.slug}`}
+              className="rounded-full bg-mist px-4 py-2 text-xs font-semibold text-steel ring-1 ring-line transition-all hover:bg-fog hover:text-graphite"
+            >
+              All {parent.name}
+            </Link>
+            {parent.subcategories.map((sub) => {
+              const isCurrent = sub.slug === category.slug;
+              return (
+                <Link
+                  key={sub.slug}
+                  href={`/products/${sub.slug}`}
+                  aria-current={isCurrent ? "page" : undefined}
+                  className={cn(
+                    "rounded-full px-4 py-2 text-xs font-semibold ring-1 transition-all",
+                    isCurrent
+                      ? "bg-accent text-white shadow-sm ring-accent"
+                      : "bg-mist text-steel ring-line hover:bg-fog hover:text-graphite",
+                  )}
+                >
+                  {sub.name}
+                </Link>
+              );
+            })}
+          </nav>
+        )}
+
         {subcategoryConfig ? (
           <SubcategoryProductList
             category={category}
@@ -64,8 +103,25 @@ export async function CategoryView({ category }: { category: Category }) {
         </div>
       </section>
 
+      <RelatedGuides
+        slugs={[
+          category.slug,
+          ...(category.subcategories ?? []).map((s) => s.slug),
+          // A subcategory is a narrower cut of its parent, so guides written about the parent apply.
+          ...(parent ? [parent.slug] : []),
+        ]}
+        title={`Guides on ${category.name.toLowerCase()}`}
+      />
+
       <EnquiryBand title={`Enquire about ${category.name.toLowerCase()}`} />
-      <JsonLd data={itemListSchema(category.name, list)} />
+      <JsonLd
+        data={collectionPageSchema({
+          name: category.name,
+          description: category.seoDescription,
+          path,
+          products: list,
+        })}
+      />
     </>
   );
 }

@@ -67,10 +67,10 @@ export function getProductImageUrl(slug: string, width?: number): string {
 /**
  * A+ listing image URL
  */
-export function getAplusImageUrl(setId: string, imageNumber: number | string): string {
+export function getAplusImageUrl(setId: string, imageNumber: number | string, width = 1464): string {
   const num = typeof imageNumber === 'number' ? String(imageNumber).padStart(2, '0') : imageNumber;
   const fileName = num ? `/${num}.webp` : '.webp';
-  return getCloudinaryUrl(`/images/aplus/${setId}${fileName}`);
+  return getCloudinaryUrl(`/images/aplus/${setId}${fileName}`, { width });
 }
 
 /**

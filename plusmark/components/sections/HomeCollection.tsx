@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import type { Subcategory } from "@/data/subcategories";
+import { subcategoryPageSlug } from "@/data/categories";
 import { cn } from "@/lib/utils";
 
 interface Tab {
@@ -31,6 +32,13 @@ export function HomeCollection({ tabs, cards }: { tabs: Tab[]; cards: Record<str
   const displayProducts = selectedSub
     ? tab.products.filter((slug) => selectedSub.productSlugs.includes(slug))
     : tab.products.slice(0, 8);
+  // Link the "view all" CTA at the indexable subcategory page when one exists.
+  const selectedSubPage = selectedSub ? subcategoryPageSlug(tab.slug, selectedSub.id) : undefined;
+  const viewAllHref = selectedSub
+    ? selectedSubPage
+      ? `/products/${selectedSubPage}`
+      : `${tab.href}?type=${selectedSub.id}`
+    : tab.href;
 
   return (
     <div>
@@ -129,7 +137,7 @@ export function HomeCollection({ tabs, cards }: { tabs: Tab[]; cards: Record<str
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4"
+            className="grid auto-cols-[minmax(78vw,18rem)] grid-flow-col grid-rows-2 gap-5 overflow-x-auto pb-3 [scrollbar-width:none] sm:grid-flow-row sm:grid-cols-2 sm:grid-rows-none sm:auto-cols-auto sm:overflow-visible sm:pb-0 lg:grid-cols-4"
           >
             {displayProducts.map((slug) => (
               <li key={slug}>{cards[slug]}</li>
@@ -138,7 +146,7 @@ export function HomeCollection({ tabs, cards }: { tabs: Tab[]; cards: Record<str
         </AnimatePresence>
         <div className="mt-10 flex justify-end">
           <Link
-            href={selectedSub ? `${tab.href}?type=${selectedSub.id}` : tab.href}
+            href={viewAllHref}
             className="group inline-flex items-center gap-2 text-sm font-semibold"
           >
             <span className="link-underline">

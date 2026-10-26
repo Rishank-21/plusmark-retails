@@ -19,6 +19,7 @@ import { Reveal } from "@/components/animations/Reveal";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { aplusLines } from "@/data/aplus";
 import { getSiteVideos } from "@/lib/videos";
+import { getSiteSettings } from "@/lib/site-settings";
 import { getProduct, products } from "@/data/products";
 import { categories, categoryMap } from "@/data/categories";
 import { company } from "@/data/company";
@@ -31,6 +32,9 @@ export const metadata = buildMetadata({
   description:
     "Explore Plusmark boards in 3D: walk a scroll-driven showroom, inspect frames, corners and surfaces up close, scrub a 360° product film and browse every feature banner. Established 2015, GEM Portal approved, Pan India supply.",
   path: "/experience",
+  // Alternate home for design variant D — same offering as "/", so keep it out of the index
+  // rather than let it compete with the canonical home page.
+  noIndex: true,
 });
 
 /**
@@ -195,7 +199,7 @@ export default async function ExperiencePage() {
 
         <AplusStack lines={aplusLines} />
 
-        <VideoRing videos={siteVideos} />
+        <VideoRing videos={siteVideos} mode={(await getSiteSettings()).videoMode} />
 
         <ReviewWall id="xd-reviews" />
 

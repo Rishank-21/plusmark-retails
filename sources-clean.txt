@@ -1,0 +1,10 @@
+origin http://127.0.0.1:4901 | pages 138
+  ...pages 30/138, sources so far 123
+  ...pages 60/138, sources so far 297
+  ...pages 90/138, sources so far 320
+  ...pages 120/138, sources so far 320
+pages ok 138/138 | distinct image sources 320
+
+== broken image sources: 2 ==
+  ERR TypeError https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/aplus/eco-premium-chalk-board/07 <- http://127.0.0.1:4901/products/eco-premium-chalk-board
+  ERR TypeError https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto/plusmark/aplus/metallic-premium-white-board/07 <- http://127.0.0.1:4901/products/metallic-premium-white-board

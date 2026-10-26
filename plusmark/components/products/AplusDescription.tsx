@@ -70,6 +70,7 @@ export function AplusDescription({ sets, productName }: { sets: ProductAplus[]; 
               alt={img.alt}
               width={APLUS_WIDTH}
               height={APLUS_HEIGHT}
+              loading="lazy"
               sizes="(min-width: 1464px) 1464px, 100vw"
               quality={85}
               unoptimized

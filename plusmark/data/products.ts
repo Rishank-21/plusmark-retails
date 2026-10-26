@@ -40,6 +40,21 @@ function clip(text: string, max = 158): string {
   return `${cut.slice(0, cut.lastIndexOf(" "))}…`;
 }
 
+const stem = (word: string) => (word.endsWith("s") && word.length > 3 ? word.slice(0, -1) : word);
+const tokens = (text: string) => new Set((text.toLowerCase().match(/[a-z0-9]+/g) ?? []).map(stem));
+
+/**
+ * Product title before the "%s | Plusmark Display System" suffix is applied. The category is
+ * appended only when the product name does not already carry one of its words — otherwise titles
+ * read "Metallic Premium White Board | Non-Magnetic White Boards | Plusmark Display System", which
+ * is triple-branded and well past the ~60 characters Google shows.
+ */
+export function productSeoTitle(name: string, categoryName: string): string {
+  const inName = tokens(name);
+  const carried = [...tokens(categoryName)].some((word) => inName.has(word));
+  return carried ? name : `${name} — ${categoryName}`;
+}
+
 function define(input: ProductInput): Product {
   // The gallery's first entry is the main photo with a content-hash `?v=` suffix, so
   // replaced photos get a fresh URL instead of a stale cached copy.
@@ -64,7 +79,7 @@ function define(input: ProductInput): Product {
     gallery: gallery[input.slug] ?? [image],
     model: modelPath(input.slug),
     modelFallback: image,
-    seoTitle: `${input.name} | ${category.name}`,
+    seoTitle: productSeoTitle(input.name, category.name),
     seoDescription: clip(`${input.name} by ${BRAND}. ${input.shortDescription}`),
   };
 }

@@ -34,13 +34,14 @@ const ZOOM = 2.5;
 export function ProductViewer3D({ model, fallback, alt, name, representative, priority, images }: ProductViewer3DProps) {
   const photos = images && images.length > 0 ? images : [fallback];
   /** "3d" = model view (image shown until the model is ready); "size" = selected size photo; number = photo index. */
-  const [view, setView] = useState<"3d" | "size" | number>(model ? "3d" : 0);
+  const [view, setView] = useState<"3d" | "size" | number>(0);
   const size = useSelectedSize();
-  // Picking a size in the SizePicker switches the stage to that size's photo.
+  // Picking a size in the SizePicker switches the stage to that size's photo — only when it has one,
+  // so a size without a photo leaves the current photo / 3D model on the stage.
   useEffect(() => {
-    if (size) setView("size");
+    if (size?.image) setView("size");
   }, [size]);
-  const photo = view === "size" && size ? size.image : view === "3d" || view === "size" ? fallback : photos[view];
+  const photo = view === "size" && size ? size.image ?? fallback : view === "3d" || view === "size" ? fallback : photos[view];
   const showStrip = photos.length > 1 || (!!model && photos.length > 0);
   const wrap = useRef<HTMLDivElement>(null);
   const handle = useRef<ViewerHandle | null>(null);
@@ -49,6 +50,10 @@ export function ProductViewer3D({ model, fallback, alt, name, representative, pr
   const [status, setStatus] = useState<"idle" | "ready" | "error">("idle");
   const [autoRotate, setAutoRotate] = useState(true);
   const [fullscreen, setFullscreen] = useState(false);
+  const show3D = () => {
+    setStatus("idle");
+    setView("3d");
+  };
 
   useEffect(() => {
     setTier(model ? getDeviceTier() : "none");
@@ -171,6 +176,22 @@ export function ProductViewer3D({ model, fallback, alt, name, representative, pr
         </div>
       )}
 
+      {model && (
+        <button
+          type="button"
+          onClick={show3D}
+          aria-pressed={view === "3d"}
+          aria-label="Show interactive 3D model"
+          className={cn(
+            "absolute right-3 top-3 z-10 flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-2 font-mono text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-graphite shadow-sm backdrop-blur transition-colors hover:bg-white",
+            view === "3d" && "bg-accent text-white hover:bg-accent",
+          )}
+        >
+          <Box aria-hidden className="size-3.5" />
+          3D
+        </button>
+      )}
+
       {want3D && status === "idle" && (
         <div className="pointer-events-none absolute inset-x-0 bottom-5 flex justify-center" aria-live="polite">
           <span className="flex items-center gap-3 bg-white/85 px-4 py-2 font-mono text-[0.65rem] uppercase tracking-[0.14em] text-steel ring-1 ring-line">
@@ -181,7 +202,7 @@ export function ProductViewer3D({ model, fallback, alt, name, representative, pr
       )}
 
       {ready && (
-        <div className="absolute right-3 top-3 flex gap-1 opacity-80 transition-opacity hover:opacity-100 focus-within:opacity-100">
+        <div className="absolute right-3 top-14 flex gap-1 opacity-80 transition-opacity hover:opacity-100 focus-within:opacity-100">
           <ViewerButton label="Reset view" onClick={() => handle.current?.reset()}>
             <RotateCcw className="size-3.5" />
           </ViewerButton>
@@ -214,23 +235,6 @@ export function ProductViewer3D({ model, fallback, alt, name, representative, pr
 
       {showStrip && (
         <ul className="mt-3 flex gap-2 overflow-x-auto pb-1" aria-label={`${name} images`}>
-          {model && (
-            <li className="shrink-0">
-              <button
-                type="button"
-                onClick={() => setView("3d")}
-                aria-pressed={view === "3d"}
-                aria-label="Show interactive 3D model"
-                className={cn(
-                  "flex size-16 flex-col items-center justify-center gap-1 rounded-lg bg-white font-mono text-[0.55rem] uppercase tracking-[0.12em] text-steel transition md:size-20",
-                  view === "3d" ? "ring-2 ring-accent" : "opacity-70 hover:opacity-100",
-                )}
-              >
-                <Box aria-hidden className="size-4" />
-                3D
-              </button>
-            </li>
-          )}
           {photos.map((src, i) => (
             <li key={src} className="shrink-0">
               <button
@@ -243,10 +247,27 @@ export function ProductViewer3D({ model, fallback, alt, name, representative, pr
                   view === i ? "ring-2 ring-accent" : "opacity-70 hover:opacity-100",
                 )}
               >
-                <Image src={src} alt="" fill sizes="80px" className="object-contain" />
+                <Image src={src} alt="" fill loading="lazy" sizes="80px" className="object-contain" />
               </button>
             </li>
           ))}
+          {model && (
+            <li className="shrink-0">
+              <button
+                type="button"
+                onClick={show3D}
+                aria-pressed={view === "3d"}
+                aria-label="Show interactive 3D model"
+                className={cn(
+                  "flex size-16 flex-col items-center justify-center gap-1 rounded-lg bg-white font-mono text-[0.55rem] uppercase tracking-[0.12em] text-steel transition md:size-20",
+                  view === "3d" ? "ring-2 ring-accent" : "opacity-70 hover:opacity-100",
+                )}
+              >
+                <Box aria-hidden className="size-4" />
+                3D
+              </button>
+            </li>
+          )}
         </ul>
       )}
     </div>

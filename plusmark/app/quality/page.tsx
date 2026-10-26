@@ -6,9 +6,9 @@ import { company } from "@/data/company";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: "Quality & Manufacturing — Materials, Frames, Surfaces & Corners",
+  title: "Quality & Manufacturing — Materials & Frames",
   description:
-    "How Plusmark boards are built: premium-grade materials, aluminium framing, High Gloss Marker Grade and Hardcore Chalk Grade HPL Sheets, ceramic steel surfaces and signature corner designs.",
+    "How Plusmark boards are built: premium-grade materials, aluminium framing, High Gloss Marker and Hardcore Chalk Grade HPL, and ceramic steel surfaces.",
   path: "/quality",
 });
 

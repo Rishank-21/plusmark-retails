@@ -30,7 +30,7 @@ export function StatsBand() {
       <div className="container-x">
         <ul className="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
           {stats.map((s, i) => (
-            <Reveal as="li" key={s.label} delay={i * 0.06} className="card-premium p-6 md:p-8">
+            <Reveal as="li" key={s.label} delay={i * 0.06} className="bg-white p-6 md:p-8">
               <p className="font-display text-[clamp(2.4rem,5vw,3.8rem)] font-semibold leading-none tracking-tight">
                 <span className="text-gradient">
                   <CountUp to={s.value} />

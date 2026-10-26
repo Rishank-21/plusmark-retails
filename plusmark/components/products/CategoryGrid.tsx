@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { categories } from "@/data/categories";
+import { categories, subcategoryPageSlug } from "@/data/categories";
 import { getCatalog, productsForCategory } from "@/lib/catalog";
 import { getCategorySubcategories } from "@/data/subcategories";
 import { pad2, cn } from "@/lib/utils";
@@ -10,12 +10,23 @@ export async function CategoryGrid({ exclude, compact }: { exclude?: string; com
   const catalog = await getCatalog();
   const list = categories.filter((c) => c.slug !== exclude);
   return (
-    <ul className={cn("grid gap-4 sm:grid-cols-2", compact ? "lg:grid-cols-4" : "lg:grid-cols-3 xl:grid-cols-4")}>
+    <ul
+      className={cn(
+        "grid auto-cols-[minmax(78vw,18rem)] grid-flow-col grid-rows-2 gap-4 overflow-x-auto pb-3 [scrollbar-width:none] sm:grid-flow-row sm:grid-cols-2 sm:grid-rows-none sm:auto-cols-auto sm:overflow-visible sm:pb-0",
+        compact ? "lg:grid-cols-4" : "lg:grid-cols-3 xl:grid-cols-4",
+      )}
+    >
       {list.map((c, i) => {
         const inCategory = productsForCategory(catalog, c.slug);
         const cover = catalog.find((p) => p.slug === c.coverProduct) ?? inCategory[0];
         const subConfig = getCategorySubcategories(c.slug);
         const count = inCategory.length;
+        // Prefer the dedicated landing page so it receives internal links; only categories that
+        // define subcategory pages have one, the rest keep the in-page `?type=` filter.
+        const subHref = (id: string) => {
+          const pageSlug = subcategoryPageSlug(c.slug, id);
+          return pageSlug ? `/products/${pageSlug}` : `/products/${c.slug}?type=${id}`;
+        };
         return (
           <li key={c.slug} className="group relative overflow-hidden rounded-3xl bg-white ring-1 ring-fog shadow-[var(--shadow-soft)] transition-[box-shadow,transform] duration-500 ease-[var(--ease-premium)] hover:-translate-y-1 hover:shadow-[var(--shadow-lift)] motion-reduce:hover:translate-y-0">
             <div className="relative m-2 mb-0 aspect-[16/10] overflow-hidden rounded-[1.1rem] studio-bg">
@@ -43,7 +54,7 @@ export async function CategoryGrid({ exclude, compact }: { exclude?: string; com
                     {subConfig.subcategories.map((sub) => (
                       <Link
                         key={sub.id}
-                        href={`/products/${c.slug}?type=${sub.id}`}
+                        href={subHref(sub.id)}
                         className="rounded-full bg-mist px-2.5 py-0.5 text-[0.68rem] font-medium text-graphite ring-1 ring-line transition-all hover:bg-graphite hover:text-white"
                       >
                         {sub.label}

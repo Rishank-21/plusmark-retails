@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Manrope, Sora, JetBrains_Mono, Plus_Jakarta_Sans, Fraunces, DM_Sans, Outfit, Unbounded } from "next/font/google";
-import { ThemeSwitcher } from "@/components/ui/ThemeSwitcher";
 import { CUSTOM_HOME_PATHS, designBootScript } from "@/lib/design";
 import "./globals.css";
 import { Navbar } from "@/components/navbar/Navbar";
@@ -12,6 +11,7 @@ import { FirebaseAnalytics } from "@/components/analytics/FirebaseAnalytics";
 import { MotionProvider } from "@/components/animations/MotionProvider";
 import { siteConfig } from "@/lib/seo";
 import { organizationSchema, websiteSchema } from "@/lib/structured-data";
+import { getSiteSettings } from "@/lib/site-settings";
 
 const body = Manrope({ subsets: ["latin"], variable: "--font-body", display: "swap" });
 const display = Sora({ subsets: ["latin"], variable: "--font-display-face", display: "swap" });
@@ -28,8 +28,10 @@ const unbounded = Unbounded({ subsets: ["latin"], variable: "--font-unbounded", 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: "Plusmark Display System — White Boards, Chalk Boards & Notice Boards | Made in India",
-    template: "%s | Plusmark Display System",
+    default: "Plusmark — White Boards, Chalk Boards & Notice Boards",
+    // Short brand keeps the assembled title inside the ~60 characters Google displays; the full
+    // legal name still appears in og:site_name and the Organization schema.
+    template: "%s | Plusmark",
   },
   description: siteConfig.description,
   applicationName: siteConfig.name,
@@ -54,6 +56,11 @@ export const metadata: Metadata = {
     url: "/",
   },
   twitter: { card: "summary_large_image" },
+  icons: {
+    icon: "/images/plusmark-mark.png",
+    shortcut: "/images/plusmark-mark.png",
+    apple: "/images/plusmark-mark.png",
+  },
   robots: { index: true, follow: true },
   formatDetection: { telephone: false },
 };
@@ -64,7 +71,8 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const settings = await getSiteSettings();
   return (
     <html
       lang="en-IN"
@@ -73,7 +81,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <head>
         {/* Applies the chosen design variant (?design=b / stored choice) before first paint. */}
-        <script dangerouslySetInnerHTML={{ __html: designBootScript }} />
+        <script dangerouslySetInnerHTML={{ __html: designBootScript(settings.publicDesign) }} />
         {/* Without JavaScript there is no 3D: show the product photos that stand in for it. */}
         <noscript>
           <style>{`.xd-poster,[data-3d-photo]{opacity:1!important;transform:none!important}`}</style>
@@ -97,7 +105,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <SiteChrome>
             <Footer />
             <WhatsAppButton />
-            <ThemeSwitcher />
           </SiteChrome>
           <FirebaseAnalytics />
         </MotionProvider>

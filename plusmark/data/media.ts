@@ -34,9 +34,22 @@ const cloudinaryVideoUrls: Record<string, string> = {
 
 const v = (file: string, title: string, caption: string): Video => {
   const src = cloudinaryVideoUrls[file] || "";
-  // Generates Cloudinary video poster frame directly from video URL
+  // Pick a stable frame per film so the shelf has varied thumbnails without
+  // changing on every render.
+  const frameSeconds = {
+    "board-installation": 3,
+    "eco-premium-both-side": 5,
+    "eco-premium-chalk-board": 2,
+    "eco-premium-notice-board": 4,
+    "eco-premium-white-board": 6,
+    "metallic-premium-both-side": 3,
+    "metallic-premium-chalk-board": 5,
+    "metallic-premium-notice-board": 2,
+    "metallic-premium-white-board": 4,
+    "retail-board-installation": 6,
+  }[file as keyof typeof cloudinaryVideoUrls] ?? 1;
   const poster = src
-    ? src.replace("/video/upload/", "/video/upload/so_1,f_jpg,q_auto/").replace(/\.mp4$/i, ".jpg")
+    ? src.replace(`/video/upload/`, `/video/upload/so_${frameSeconds},f_jpg,q_auto/`).replace(/\.mp4$/i, ".jpg")
     : "";
   return {
     src,

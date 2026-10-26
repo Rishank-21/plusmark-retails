@@ -9,9 +9,9 @@ import { company } from "@/data/company";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: "About Plusmark — Indian Manufacturer of Educational & Institutional Products",
+  title: "About Plusmark — Indian Board Manufacturer",
   description:
-    "Established in 2015, Plusmark is an Indian manufacturing brand specializing in high-quality educational and institutional products, GEM Portal approved with Pan India supply.",
+    "Established 2015, Plusmark is an Indian manufacturer of educational and institutional products. GEM Portal approved, with Pan India supply.",
   path: "/about",
 });
 
@@ -55,15 +55,15 @@ export default function AboutPage() {
               const Icon = item.icon;
               return (
                 <Reveal key={item.title} delay={i * 0.08}>
-                  <div className="group relative overflow-hidden rounded-2xl bg-white p-6 shadow-sm ring-1 ring-fog transition-all duration-500 hover:shadow-xl hover:ring-accent/20 hover:-translate-y-1">
+                  <div className="group relative overflow-hidden rounded-2xl bg-white p-6 transition-transform duration-500 hover:-translate-y-1">
                     <div className="absolute -right-6 -top-6 size-24 rounded-full bg-gradient-to-br from-accent/10 to-brand/10 blur-2xl transition-transform duration-700 group-hover:scale-150" />
                     <div className="relative">
                       <div className="inline-flex size-12 items-center justify-center rounded-xl bg-gradient-to-br from-accent to-brand text-white shadow-lg shadow-accent/25 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
                         <Icon className="size-6" />
                       </div>
-                      <h3 className="mt-4 font-display text-lg font-semibold text-graphite">
+                      <h2 className="mt-4 font-display text-lg font-semibold text-graphite">
                         {item.title}
-                      </h3>
+                      </h2>
                       <p className="mt-2 text-sm leading-relaxed text-steel">
                         {item.description}
                       </p>
@@ -107,30 +107,28 @@ export default function AboutPage() {
           </ul>
         </div>
       </section>
-      <section aria-labelledby="quality-promise" className="relative border-t border-fog bg-gradient-to-br from-mist via-white to-mist py-24">
-        {/* Animated gradient orb */}
-        <div aria-hidden className="absolute left-0 top-1/2 size-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-brand/10 to-accent/10 blur-3xl" />
-        
-        <div className="container-x relative max-w-4xl">
+      <section aria-labelledby="quality-promise" className="bg-mist/40 py-20 md:py-24">
+        <div className="container-x max-w-4xl text-left">
           <Reveal>
-            <div className="rounded-3xl bg-white/80 p-8 shadow-xl ring-1 ring-fog/50 backdrop-blur-sm md:p-12">
-              <p className="eyebrow mb-5">Best Quality. Best Rate.</p>
+            <div>
+              <p className="eyebrow mb-4">Best Quality. Best Rate.</p>
               <h2 id="quality-promise" className="font-display text-[clamp(1.8rem,3.6vw,3rem)] font-semibold leading-[1.08]">
-                Quality is the foundation of{" "}
-                <span className="text-gradient">everything we do.</span>
+                Built for dependable performance.
               </h2>
-              <p className="mt-6 text-lg leading-relaxed text-steel">{company.quality}</p>
-              <div className="mt-8 flex flex-wrap gap-3">
+              <p className="mt-5 max-w-3xl text-base leading-relaxed text-steel md:text-lg">
+                Premium materials, careful manufacturing and strict quality checks go into every Plusmark product.
+              </p>
+              <div className="mt-7 flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium text-graphite">
                 {["Aluminium Frames", "HPL Surfaces", "Strict QC", "Made in India"].map((tag, i) => (
                   <Reveal key={tag} delay={0.1 + i * 0.05}>
-                    <span className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-accent/10 to-brand/10 px-4 py-2 text-sm font-semibold text-accent ring-1 ring-accent/20">
-                      <CheckCircle2 className="size-4" />
+                    <span className="inline-flex items-center gap-2">
+                      <CheckCircle2 className="size-4 text-accent" />
                       {tag}
                     </span>
                   </Reveal>
                 ))}
               </div>
-              <p className="mt-8 text-sm leading-relaxed text-steel">{company.warranty}</p>
+              <p className="mt-7 max-w-2xl text-sm leading-relaxed text-steel">{company.warranty}</p>
             </div>
           </Reveal>
         </div>

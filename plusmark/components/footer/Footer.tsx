@@ -58,11 +58,6 @@ export function Footer() {
         <div className="md:col-span-2">
           <h2 className="eyebrow mb-5 !text-alu-dark">Contact</h2>
           <ul className="space-y-2.5 text-sm">
-            <li>
-              <a href={company.website} className="link-underline hover:text-white">
-                {company.websiteLabel}
-              </a>
-            </li>
             {contactChannels.email && (
               <li>
                 <a href={`mailto:${contactChannels.email}`} className="link-underline hover:text-white">

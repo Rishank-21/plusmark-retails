@@ -185,7 +185,7 @@ export function EnquiryForm({ products, whatsapp }: { products: Option[]; whatsa
           >
             <div className="mb-7 flex items-start justify-between gap-4 border-b border-fog pb-6">
               <div>
-                <h3 className="font-display text-xl font-semibold text-graphite md:text-2xl">Send us your requirement</h3>
+                <h2 className="font-display text-xl font-semibold text-graphite md:text-2xl">Send us your requirement</h2>
                 <p className="mt-1 text-sm text-steel">We usually reply within one working day.</p>
               </div>
               <span className="hidden shrink-0 rounded-full bg-verdant-soft px-3 py-1 text-xs font-semibold text-verdant sm:inline-flex">Free quote</span>

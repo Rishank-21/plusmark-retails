@@ -45,21 +45,21 @@ export function ProcessSection() {
             intro="A simple, transparent process whether you need one board for an office or a full fit-out for a school."
           />
         </Reveal>
-        <ol className="relative grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+        <ol className="relative grid gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-5">
           <span
             aria-hidden
             className="absolute left-0 right-0 top-[3.25rem] hidden h-px bg-gradient-to-r from-transparent via-line to-transparent lg:block"
           />
           {steps.map((s, i) => (
-            <Reveal as="li" key={s.title} delay={i * 0.07} className="card-premium relative p-6">
+            <Reveal as="li" key={s.title} delay={i * 0.07} className="relative">
               <div className="flex items-center justify-between">
-                <span className="inline-flex size-12 items-center justify-center rounded-2xl bg-gradient-to-br from-brand to-accent text-white shadow-[var(--shadow-glow)]">
+                <span className="inline-flex size-11 items-center justify-center rounded-full bg-mist text-accent">
                   <s.icon aria-hidden className="size-5" />
                 </span>
-                <span className="font-mono text-xs text-alu-dark">{String(i + 1).padStart(2, "0")}</span>
+                <span className="font-mono text-xs tracking-[0.14em] text-alu-dark">{String(i + 1).padStart(2, "0")}</span>
               </div>
-              <h3 className="mt-6 font-display text-lg font-semibold">{s.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-steel">{s.text}</p>
+              <h3 className="mt-5 font-display text-lg font-semibold text-graphite">{s.title}</h3>
+              <p className="mt-2 max-w-xs text-sm leading-relaxed text-steel">{s.text}</p>
             </Reveal>
           ))}
         </ol>

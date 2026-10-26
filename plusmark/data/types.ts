@@ -28,6 +28,10 @@ export interface Subcategory {
   name: string;
   summary: string;
   coverProduct: string;
+  /** Overrides the generated title for the subcategory landing page. */
+  seoTitle?: string;
+  /** Overrides the generated meta description for the subcategory landing page. */
+  seoDescription?: string;
 }
 
 export interface Category {
@@ -43,6 +47,8 @@ export interface Category {
   coverProduct: string;
   /** Subcategories for hierarchical organization. */
   subcategories?: Subcategory[];
+  /** Set on flattened subcategory entries so breadcrumbs and sibling links can reach the parent. */
+  parentSlug?: CategorySlug;
 }
 
 export interface Spec {
@@ -81,8 +87,8 @@ export interface Product {
   variants: string[];
   colors: string[];
   sizes: string[];
-  /** Selectable sizes with a photo each (from the Plusmark Drive). Empty when not available. */
-  sizeOptions: { label: string; image: string }[];
+  /** Selectable sizes, each with a photo when one is uploaded. Empty when not available. */
+  sizeOptions: { label: string; image?: string }[];
   /** Catalog-supplied guidance / notes (e.g. "Selection Guidance"). */
   notes: string[];
   /** Small tags shown near the title — only verbatim catalog phrases. */

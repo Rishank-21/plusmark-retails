@@ -4,15 +4,23 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { gsap } from "gsap";
-import { ChevronLeft, ChevronRight, Move3d } from "lucide-react";
+import { ChevronLeft, ChevronRight, Move3d, Box } from "lucide-react";
 import type { FeaturedProduct } from "@/data/featured";
 import { getDeviceTier, prefersReducedMotion, type DeviceTier } from "@/components/three/capabilities";
-import { preloadModel } from "@/components/three/ProductModel";
 import { createHeroState, slotOffset, wrapIndex, type ModelStatus } from "./heroState";
 import { HeroProgress } from "./HeroProgress";
 import { cn } from "@/lib/utils";
 
 const Hero3D = dynamic(() => import("./Hero3D"), { ssr: false });
+// drei's progress store is bound to three's loading manager, so it is imported through a lazy
+// chunk: pulling it in here would put three.js in the homepage's initial JavaScript.
+const HeroLoadingProgress = dynamic(() => import("./HeroLoadingProgress"), { ssr: false });
+
+/** Warm drei's GLTF cache for the board coming up next, without importing three up front. */
+function preloadModel(url?: string) {
+  if (!url) return;
+  void import("@/components/three/ProductModel").then((m) => m.preloadModel(url));
+}
 
 /**
  * How long each product rests on show, counted from the moment its board has settled, before the
@@ -57,8 +65,15 @@ export function HeroExperience({ products, heads, bodies, specs, title }: HeroEx
   const [tier, setTier] = useState<DeviceTier | "pending">("pending");
   const [activeIndex, setActiveIndex] = useState(0);
   const [status, setStatus] = useState<ModelStatus[]>(() => products.map(() => "idle"));
+  const statusRef = useRef(status);
+  useEffect(() => {
+    statusRef.current = status;
+  }, [status]);
+  const [pendingTarget, setPendingTarget] = useState<number | null>(null);
   const [inView, setInView] = useState(true);
   const [interacted, setInteracted] = useState(false);
+  const [mobileViewport, setMobileViewport] = useState(false);
+  const [mobile3D, setMobile3D] = useState(false);
   /** Keyboard focus is inside the hero: the carousel holds still and the counter announces changes. */
   const [kbFocus, setKbFocus] = useState(false);
   const activeRef = useRef(0);
@@ -66,7 +81,22 @@ export function HeroExperience({ products, heads, bodies, specs, title }: HeroEx
   useEffect(() => {
     state.current.reduced = prefersReducedMotion();
     setTier(getDeviceTier());
+    const media = window.matchMedia("(max-width: 767px)");
+    const updateViewport = () => {
+      setMobileViewport(media.matches);
+      if (!media.matches) setMobile3D(false);
+    };
+    updateViewport();
+    media.addEventListener("change", updateViewport);
+    return () => media.removeEventListener("change", updateViewport);
   }, []);
+
+  // Start the first desktop model as soon as capability detection completes. Waiting for the
+  // first Canvas commit can leave the initial GLTF request behind a suspended dynamic subtree.
+  useEffect(() => {
+    if (tier === "pending" || tier === "none" || mobileViewport && !mobile3D) return;
+    preloadModel(products[activeIndex]?.model);
+  }, [activeIndex, mobile3D, mobileViewport, products, tier]);
 
   const onStatus = useCallback((i: number, s: "ready" | "error") => {
     setStatus((prev) => (prev[i] === s ? prev : prev.map((v, k) => (k === i ? s : v))));
@@ -143,6 +173,16 @@ export function HeroExperience({ products, heads, bodies, specs, title }: HeroEx
       const c = carousel.current;
       const p = c.pos;
       window.clearTimeout(c.timer);
+      const targetIndex = wrapIndex(to, n);
+      const targetProduct = products[targetIndex];
+      if (targetProduct?.model && (!mobileViewport || mobile3D) && statusRef.current[targetIndex] === "idle") {
+        c.hold.loading = true;
+        c.target = to;
+        setPendingTarget(to);
+        preloadModel(targetProduct.model);
+        return;
+      }
+      setPendingTarget(null);
       // A click during a transition carries on at speed instead of easing in again.
       const moving = gsap.isTweening(p);
       const steps = Math.abs(to - p.e);
@@ -160,8 +200,16 @@ export function HeroExperience({ products, heads, bodies, specs, title }: HeroEx
         onComplete: schedule,
       });
     },
-    [apply, schedule],
+    [apply, mobile3D, mobileViewport, n, products, schedule],
   );
+
+  useEffect(() => {
+    if (pendingTarget === null) return;
+    const index = wrapIndex(pendingTarget, n);
+    if (products[index]?.model && status[index] === "idle") return;
+    setPendingTarget(null);
+    moveTo(pendingTarget);
+  }, [moveTo, n, pendingTarget, products, status]);
 
   useEffect(() => {
     const c = carousel.current;
@@ -247,17 +295,19 @@ export function HeroExperience({ products, heads, bodies, specs, title }: HeroEx
     });
   }, [activeIndex]);
 
-  // The carousel moves forward on its own: preload the model after the next one.
+  // The carousel moves forward on its own: only warm the immediate next model, and only after
+  // the active model is ready. Loading several multi-megabyte GLBs at once can exhaust the
+  // Worker/browser connection budget and make the active model fall back unnecessarily.
   useEffect(() => {
-    if (tier === "pending" || tier === "none" || n < 3) return;
-    preloadModel(products[(activeIndex + 2) % n]?.model);
-  }, [activeIndex, tier, products, n]);
+    if (tier === "pending" || tier === "none" || n < 2 || status[activeIndex] !== "ready") return;
+    preloadModel(products[(activeIndex + 1) % n]?.model);
+  }, [activeIndex, status, tier, products, n]);
 
-  // The product on show plus its neighbours on the left (previous) and right (next), round the loop.
+  // Keep only the active model mounted. The next model is warmed above after the active model
+  // is ready, so carousel navigation remains responsive without mounting three large scenes.
   const mounted = useMemo(() => {
-    const wrap = (i: number) => ((i % n) + n) % n;
-    return [...new Set([wrap(activeIndex - 1), activeIndex, wrap(activeIndex + 1)])];
-  }, [activeIndex, n]);
+    return [activeIndex];
+  }, [activeIndex]);
 
   /* ---------------- pointer / touch interaction ---------------- */
   const pointers = useRef(new Map<number, { x: number; y: number }>());
@@ -385,13 +435,23 @@ export function HeroExperience({ products, heads, bodies, specs, title }: HeroEx
     s.lastInteract = performance.now();
   };
 
-  const use3D = tier !== "pending" && tier !== "none";
-  const firstReady = status[0] === "ready";
-  const loading = tier === "pending" || (use3D && status[activeIndex] === "idle" && !!products[activeIndex]?.model);
+  const use3D = tier !== "pending" && tier !== "none" && (!mobileViewport || mobile3D);
+  const firstReady = status[0] === "ready" || (mobileViewport && status[activeIndex] === "ready");
+  const loading = tier === "pending" || pendingTarget !== null || (use3D && status[activeIndex] === "idle" && !!products[activeIndex]?.model);
+
+  // Never leave the desktop hero permanently blank when a model request stalls without
+  // rejecting. The image fallback is preferable to an indefinite loading state.
+  useEffect(() => {
+    const product = products[activeIndex];
+    if (!use3D || !product?.model || status[activeIndex] !== "idle") return;
+    const timer = window.setTimeout(() => onStatus(activeIndex, "error"), 15000);
+    return () => window.clearTimeout(timer);
+  }, [activeIndex, onStatus, products, status, use3D]);
+
   // The still photo is only a fallback: never flash it while the 3D model is loading.
   // Show it only when WebGL is unavailable, the model failed, or the product has no model.
   const needsImage = (i: number) =>
-    tier === "none" || status[i] === "error" || (tier !== "pending" && !products[i]?.model);
+    (mobileViewport && !mobile3D) || tier === "none" || status[i] === "error" || (tier !== "pending" && !products[i]?.model);
 
   // Each product gets its full time on show once it is actually visible: the countdown waits
   // for the model on show to load.
@@ -439,6 +499,24 @@ export function HeroExperience({ products, heads, bodies, specs, title }: HeroEx
           onKeyDown={onKeyDown}
           className="relative z-0 -mx-5 [grid-area:model] focus-visible:outline-offset-[-6px] lg:absolute lg:inset-0 lg:mx-0 lg:[grid-area:1/1/-1/-1]"
         >
+          {mobileViewport && products[activeIndex]?.model && (
+            <button
+              type="button"
+              onClick={() => {
+                setMobile3D((enabled) => !enabled);
+                setStatus((prev) => prev.map((value, index) => (index === activeIndex && value === "error" ? "idle" : value)));
+              }}
+              className={cn(
+                "absolute right-4 top-3 z-30 flex items-center gap-1.5 rounded-full bg-white/95 px-3.5 py-2 font-mono text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-graphite shadow-[0_6px_18px_rgb(20_25_30/0.18)] ring-1 ring-black/[0.08] backdrop-blur transition-colors hover:bg-white",
+                mobile3D && "bg-accent text-white hover:bg-accent",
+              )}
+              aria-label={mobile3D ? "Show product image" : "Show interactive 3D model"}
+              aria-pressed={mobile3D}
+            >
+              <Box aria-hidden className="size-3.5" />
+              {mobile3D ? "Image" : "3D"}
+            </button>
+          )}
           <div className="pointer-events-none absolute inset-0 lg:inset-x-[22%] lg:inset-y-[14%]">
             {products.map((p, i) =>
               (mounted.includes(i) || i === 0) && needsImage(i) ? (
@@ -471,6 +549,7 @@ export function HeroExperience({ products, heads, bodies, specs, title }: HeroEx
                 products={products}
                 state={state}
                 mounted={mounted}
+                ready={status.map((value) => value === "ready")}
                 tier={tier}
                 active={inView}
                 onStatus={onStatus}
@@ -492,7 +571,7 @@ export function HeroExperience({ products, heads, bodies, specs, title }: HeroEx
                 <path className="opacity-80" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
               </svg>
               <span className="font-mono text-[0.62rem] uppercase tracking-[0.14em] text-steel/60">
-                Loading 3D…
+                {use3D ? <HeroLoadingProgress /> : "Loading 3D…"}
               </span>
             </div>
           </div>

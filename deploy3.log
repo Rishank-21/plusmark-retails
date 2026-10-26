@@ -1,0 +1,238 @@
+
+> plusmark@0.1.0 deploy:cloudflare
+> npm run build:cloudflare && opennextjs-cloudflare deploy
+
+
+> plusmark@0.1.0 build:cloudflare
+> opennextjs-cloudflare build
+
+
+┌─────────────────────────────┐
+│ OpenNext — Cloudflare build │
+└─────────────────────────────┘
+
+WARN OpenNext is not fully compatible with Windows.
+WARN For optimal performance, it is recommended to use Windows Subsystem for Linux (WSL).
+WARN While OpenNext may function on Windows, it could encounter unpredictable failures during runtime.
+App directory: C:\Users\palha\plusmark-retails\plusmark
+Next.js version : 16.4.2
+@opennextjs/cloudflare version: 1.20.13
+@opennextjs/aws version: 4.1.12
+workerd compatibility_date: 2026-10-22
+
+┌─────────────────────────────────┐
+│ OpenNext — Building Next.js app │
+└─────────────────────────────────┘
+
+
+> plusmark@0.1.0 build
+> next build
+
+▲ Next.js 16.4.2 (Turbopack)
+- Environments: .env
+✓ Running next.config.ts took 95ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 9.4s
+  Running TypeScript ...
+  Finished TypeScript in 21.8s ...
+  Collecting page data using 11 workers ...
+  Generating static pages using 11 workers (0/158) ...
+  Generating static pages using 11 workers (39/158) 
+  Generating static pages using 11 workers (78/158) 
+  Generating static pages using 11 workers (118/158) 
+Error fetching clients from database, using static data: Error: Firebase target service-account secret is not configured.
+    at l (lib\firebase-admin.ts:129:23)
+    at j.get (lib\firebase-admin.ts:114:28)
+    at X (components\sections\TrustedBySection.tsx:9:77)
+    at Y (components\sections\TrustedBySection.tsx:31:25)
+  127 | async function firestoreFetch(path: string, init: RequestInit = {}) {
+  128 |   const account = parseServiceAccount();
+> 129 |   if (!account) throw new Error("Firebase target service-account secret is not configured.");
+      |                       ^
+  130 |   const response = await fetch(`https://firestore.googleapis.com/v1/projects/${account.project_id}/databases/(default)/documents/${path}`, {
+  131 |     ...init,
+  132 |     headers: { authorization: `Bearer ${await accessToken()}`, ...(init.body ? { "content-type": "application/json" } : {}), ...init.headers },
+✓ Generating static pages using 11 workers (158/158) in 5.9s
+  Finalizing page optimization ...
+
+Route (app)                                       Revalidate  Expire
+┌ ○ /                                                     1h      1y
+├ ○ /_not-found                                           1h      1y
+├ ○ /about                                                1h      1y
+├ ƒ /admin
+├ ƒ /admin/clients
+├ ƒ /admin/clients/init
+├ ƒ /admin/enquiries
+├ ƒ /admin/enquiries/[id]
+├ ƒ /admin/export
+├ ƒ /admin/leads
+├ ƒ /admin/login
+├ ƒ /admin/products
+├ ƒ /admin/videos
+├ ƒ /admin/videos/init
+├ ƒ /admin/visits
+├ ƒ /api/clients
+├ ƒ /api/enquiry
+├ ○ /blog                                                 1h      1y
+├   /blog/[slug]
+│ ├ ● /blog/magnetic-vs-non-magnetic-white-board          1h      1y
+│ ├ ● /blog/white-board-surface-guide                     1h      1y
+│ ├ ● /blog/white-board-size-guide                        1h      1y
+│ └ ● [+35 more paths]
+├ ○ /buying-guide                                         1h      1y
+├ ○ /contact                                              1h      1y
+├ ○ /custom-solutions                                     1h      1y
+├ ○ /experience                                           1h      1y
+├ ○ /faq                                                  1h      1y
+├ ○ /industries                                           1h      1y
+├ ○ /opengraph-image
+├ ○ /privacy-policy                                       1h      1y
+├ ○ /products                                             1h      1y
+├   /products/[slug]
+│ ├ ● /products/white-boards                              1h      1y
+│ ├ ● /products/chalk-boards                              1h      1y
+│ ├ ● /products/double-sided-boards                       1h      1y
+│ └ ● [+84 more paths]
+├ ○ /quality                                              1h      1y
+├ ○ /robots.txt
+├ ○ /showroom                                             1h      1y
+├ ○ /site-map                                             1h      1y
+├ ○ /sitemap.xml                                          1h      1y
+└ ○ /terms                                                1h      1y
+
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
+
+┌──────────────────────────────┐
+│ OpenNext — Generating bundle │
+└──────────────────────────────┘
+
+Bundling middleware function...
+Bundling static assets...
+Bundling cache assets...
+Building server function: default...
+Applying code patches: 13.428s
+# copyPackageTemplateFiles
+[35m⚙️ Bundling the OpenNext server...
+[0m
+[35mWorker saved in `.open-next\worker.js` 🚀
+[0m
+OpenNext build complete.
+
+┌──────────────────────────────┐
+│ OpenNext — Cloudflare deploy │
+└──────────────────────────────┘
+
+WARN OpenNext is not fully compatible with Windows.
+WARN For optimal performance, it is recommended to use Windows Subsystem for Linux (WSL).
+WARN While OpenNext may function on Windows, it could encounter unpredictable failures during runtime.
+Incremental cache does not need populating
+Tag cache does not need populating
+
+ ⛅️ wrangler 4.152.0
+────────────────────
+
+Cloudflare collects anonymous telemetry about your usage of Wrangler. Learn more at https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md
+🌀 Building list of assets...
+✨ Read 704 files from the assets directory C:\Users\palha\plusmark-retails\plusmark\.open-next\assets
+🌀 Starting asset upload...
+🌀 Found 31 new or modified static assets to upload. Proceeding with upload...
++ /BUILD_ID
++ /_next/static/chunks/3b06_2wx_7ax9.js
++ /_next/static/chunks/114ca6xh5-pte.js
++ /_next/static/chunks/0xp4p03566brd.js
++ /_next/static/chunks/2wqs99f1q4g9r.js
++ /_next/static/chunks/40kr6n_giuv-j.js
++ /_next/static/chunks/2cqfiyhkfe3d4.js
++ /_next/static/chunks/41v7on-w8ztcq.js
++ /_next/static/chunks/0d51jnpbyz5j-.js
++ /_next/static/chunks/27755t7v3m41s.js
++ /_next/static/chunks/2rrsz6izytcq7.js
++ /_next/static/886FV7CVg5ktBQZmF2Kqt/_ssgManifest.js
++ /_next/static/chunks/1ulauqw7xjt-c.js
++ /_next/static/chunks/1hq-u4bwq--df.js
++ /_next/static/chunks/0q_icnja7uk07.js
++ /_next/static/chunks/0k8q7j6cdpp8n.js
++ /_next/static/chunks/41eq8kggqcpf6.js
++ /_next/static/chunks/2h9fpauh9fdhp.js
++ /_next/static/chunks/234rfq-a3xeph.js
++ /_next/static/chunks/27i_w_gz6hpl2.js
++ /_next/static/chunks/2llljn2_cjavt.css
++ /_next/static/chunks/1jh4m88xxjz1k.js
++ /_next/static/chunks/3130i5ogrocaw.js
++ /_next/static/chunks/1djxvv8e8oc39.js
++ /_next/static/chunks/0un8t85v52y9s.js
++ /_next/static/chunks/3mqxgtw2503vr.js
++ /_next/static/chunks/3osz1ui2knl4j.js
++ /_next/static/chunks/0ce6aopo7yine.js
++ /_next/static/chunks/1r52_7vr5y0fv.js
++ /_next/static/chunks/31wuch1q-c5kp.js
++ /_next/static/chunks/3ce1e19gqkc8l.js
+Asset upload failed. Retrying... 1 of 5 attempts.
+
+Asset upload failed. Retrying... 2 of 5 attempts.
+
+Asset upload failed. Retrying... 1 of 5 attempts.
+
+Asset upload failed. Retrying... 3 of 5 attempts.
+
+Asset upload failed. Retrying... 2 of 5 attempts.
+
+Asset upload failed. Retrying... 4 of 5 attempts.
+
+Asset upload failed. Retrying... 3 of 5 attempts.
+
+Asset upload failed. Retrying... 4 of 5 attempts.
+
+Asset upload failed. Retrying... 5 of 5 attempts.
+
+Asset upload failed. Retrying... 1 of 5 attempts.
+
+Uploaded 10 of 31 assets
+Uploaded 20 of 31 assets
+Uploaded 31 of 31 assets
+✨ Success! Uploaded 31 files (627 already uploaded) (167.17 sec)
+
+Total Upload: 12168.16 KiB / gzip: 2838.25 KiB
+Your Worker has access to the following bindings:
+Binding            Resource      
+env.ASSETS         Assets        
+
+
+[32mIf you think this is a bug then please create an issue at https://github.com/cloudflare/workers-sdk/issues/new/choose[0m
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mA fetch request failed, likely due to a connectivity issue.[0m
+
+  
+  Common causes:
+    - No internet connection or network connectivity problems
+    - Firewall or VPN blocking the request
+    - Network proxy configuration issues
+  
+  Please check your network connection and try again.
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mfetch failed[0m
+
+
+🪵  Logs were written to "C:\Users\palha\AppData\Roaming\xdg.config\.wrangler\logs\wrangler-2026-10-25_06-58-40_507.log"
+ERROR Wrangler deploy command failed:
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mA fetch request failed, likely due to a connectivity issue.[0m
+
+  
+  Common causes:
+    - No internet connection or network connectivity problems
+    - Firewall or VPN blocking the request
+    - Network proxy configuration issues
+  
+  Please check your network connection and try again.
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mfetch failed[0m
+
+
+🪵  Logs were written to "C:\Users\palha\AppData\Roaming\xdg.config\.wrangler\logs\wrangler-2026-10-25_06-58-40_507.log"
+

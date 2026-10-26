@@ -14,12 +14,13 @@ import { FaqSection } from "@/components/sections/FaqSection";
 import { TrustedBySection } from "@/components/sections/TrustedBySection";
 import { DesignHomeRedirect } from "@/components/ui/DesignHomeRedirect";
 import { buildMetadata } from "@/lib/seo";
+import { getSiteSettings } from "@/lib/site-settings";
 
 export const metadata = buildMetadata({
-  title: "Plusmark Display System — White Boards, Chalk Boards & Notice Boards | Made in India",
+  title: "Plusmark — White Boards, Chalk Boards & Notice Boards",
   absoluteTitle: true,
   description:
-    "Plusmark Display System manufactures white boards, chalk boards, notice boards, magnetic and ceramic boards, board stands, clipboards and school benches. Established 2015, GEM Portal approved, Pan India supply.",
+    "Plusmark manufactures white, chalk, notice, magnetic and ceramic boards, board stands, clipboards and school benches. Est. 2015, GEM Portal approved.",
   path: "/",
 });
 
@@ -31,7 +32,7 @@ export default async function HomePage() {
       <TrustedBySection />
       <CollectionSection />
       {/* Same "Spin the film reel" section as design D, with every product and installation film */}
-      <VideoRing videos={await getSiteVideos()} />
+      <VideoRing videos={await getSiteVideos()} mode={(await getSiteSettings()).videoMode} />
       <AboutSection />
       <IndustriesSection />
       <ProcessSection />

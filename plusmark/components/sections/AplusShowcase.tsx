@@ -277,7 +277,7 @@ export function AplusShowcase({ lines }: { lines: AplusLine[] }) {
               href={line.amazonUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-11 items-center gap-2 rounded-full bg-white px-5 text-sm font-semibold text-graphite ring-1 ring-line transition hover:ring-graphite"
+              className="inline-flex h-11 items-center gap-2 rounded-full bg-[#ffd966] px-5 text-sm font-semibold text-[#131921] transition hover:bg-[#f7ca00]"
             >
               View on Amazon <ArrowUpRight aria-hidden className="size-4" />
             </a>

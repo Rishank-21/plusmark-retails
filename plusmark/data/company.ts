@@ -8,8 +8,8 @@ export const company = {
   subline: "Best Quality. Best Rate.",
   catalogTitle: "Plusmark Writing & Display System",
   established: 2015,
-  website: "https://www.plusmarkboards.com",
-  websiteLabel: "www.plusmarkboards.com",
+  website: "https://plusmarkboards.com",
+  websiteLabel: "plusmarkboards.com",
   about: [
     "Established in 2015, Plusmark Brands is a trusted and reputed Indian manufacturing brand specializing in high-quality educational and institutional products. Our mission is to deliver durable, high-performance products that combine superior quality with the best market rates.",
     "With a strong focus on quality, reliability, and customer satisfaction, Plusmark Brands has earned long-term trust from schools, institutions, and government organizations across India. We are recognized as a dependable manufacturing partner known for consistent quality and timely delivery.",

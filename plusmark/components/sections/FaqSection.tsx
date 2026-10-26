@@ -97,7 +97,7 @@ export function FaqSection() {
                         "group relative flex items-center justify-between gap-3 overflow-hidden rounded-xl px-4 py-3 text-left text-sm font-medium transition-colors",
                         isActive
                           ? "text-white"
-                          : "bg-white text-steel ring-1 ring-line hover:bg-mist hover:text-graphite",
+                          : "bg-white text-steel hover:bg-mist hover:text-graphite",
                       )}
                     >
                       {isActive && (
@@ -128,7 +128,7 @@ export function FaqSection() {
             </Reveal>
 
             {/* Quick Contact & WhatsApp Box */}
-            <Reveal delay={0.12} className="mt-8 hidden rounded-2xl border border-line bg-white p-6 shadow-sm lg:block">
+            <Reveal delay={0.12} className="mt-8 hidden rounded-2xl bg-white p-6 lg:block">
               <p className="font-display text-base font-semibold text-graphite">Have a specific question?</p>
               <p className="mt-1 text-xs leading-relaxed text-steel">
                 Get quick answers, size advice and direct quotes from our team.
@@ -145,7 +145,7 @@ export function FaqSection() {
                 {contactChannels.phone && (
                   <a
                     href={`tel:${contactChannels.phone}`}
-                    className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-line bg-mist/50 px-4 text-xs font-semibold text-graphite transition-colors hover:bg-mist"
+                    className="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-mist/50 px-4 text-xs font-semibold text-graphite transition-colors hover:bg-mist"
                   >
                     <PhoneCall className="size-3.5 text-steel" /> {contactChannels.phoneLabel}
                   </a>
@@ -222,7 +222,7 @@ export function FaqSection() {
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.25 }}
-                className="mb-5 flex items-center gap-3 border-b border-line pb-4"
+                className="mb-5 flex items-center gap-3 pb-4"
               >
                 <span className="flex size-8 items-center justify-center rounded-full bg-graphite font-mono text-[0.68rem] font-semibold text-white">
                   {String(faqGroups.findIndex(g => g.id === activeGroup.id) + 1).padStart(2, "0")}
@@ -237,7 +237,7 @@ export function FaqSection() {
 
             {/* Accordion list */}
             {filteredItems.length === 0 ? (
-              <div className="rounded-2xl border border-dashed border-line bg-white p-8 text-center sm:p-12">
+              <div className="rounded-2xl bg-white p-8 text-center sm:p-12">
                 <HelpCircle className="mx-auto size-10 text-alu-dark" />
                 <h4 className="mt-3 font-display text-lg font-semibold text-graphite">No questions matched your search</h4>
                 <p className="mx-auto mt-2 max-w-sm text-sm text-steel">
@@ -258,7 +258,7 @@ export function FaqSection() {
                       setSearchQuery("");
                       setActiveTab(faqGroups[0].id);
                     }}
-                    className="inline-flex h-10 items-center justify-center rounded-xl border border-line bg-mist px-4 text-xs font-medium text-graphite hover:bg-white"
+                    className="inline-flex h-10 items-center justify-center rounded-xl bg-mist px-4 text-xs font-medium text-graphite hover:bg-white"
                   >
                     Clear Search
                   </button>
@@ -279,12 +279,7 @@ export function FaqSection() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.98 }}
                         transition={{ duration: 0.25, ease: EASE }}
-                        className={cn(
-                          "overflow-hidden rounded-2xl border bg-white transition-all duration-300",
-                          isOpen
-                            ? "border-graphite/20 shadow-[0_8px_30px_rgb(27_23_64/0.07)] ring-1 ring-graphite/10"
-                            : "border-line hover:border-graphite/30 hover:shadow-[0_4px_20px_rgb(27_23_64/0.04)]",
-                        )}
+                        className="overflow-hidden rounded-2xl bg-white transition-all duration-300"
                       >
                         <h3>
                           <button
@@ -318,10 +313,10 @@ export function FaqSection() {
                             <span
                               aria-hidden
                               className={cn(
-                                "mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-full border transition-all duration-300",
+                                "mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-full transition-all duration-300",
                                 isOpen
-                                  ? "rotate-45 border-graphite bg-graphite text-white shadow-sm"
-                                  : "border-line bg-mist text-graphite hover:border-graphite/40",
+                                  ? "rotate-45 bg-graphite text-white"
+                                  : "bg-mist text-graphite",
                               )}
                             >
                               <Plus className="size-4" />
@@ -340,7 +335,7 @@ export function FaqSection() {
                               exit={{ height: 0, opacity: 0 }}
                               transition={{ duration: reduce ? 0 : 0.3, ease: EASE }}
                             >
-                              <div className="border-t border-line/60 px-5 pb-6 pt-4 sm:px-6 sm:pl-16">
+                              <div className="px-5 pb-6 pt-4 sm:px-6 sm:pl-16">
                                 <p className="text-[0.95rem] leading-relaxed text-steel">{item.a}</p>
                               </div>
                             </motion.div>
@@ -354,7 +349,7 @@ export function FaqSection() {
             )}
 
             {/* Mobile Support Box */}
-            <div className="mt-8 rounded-2xl border border-line bg-white p-6 shadow-sm lg:hidden">
+            <div className="mt-8 rounded-2xl bg-white p-6 lg:hidden">
               <p className="font-display text-base font-semibold text-graphite">Still have questions?</p>
               <p className="mt-1 text-xs text-steel">Reach out directly on WhatsApp or call us.</p>
               <div className="mt-4 flex flex-wrap gap-2">

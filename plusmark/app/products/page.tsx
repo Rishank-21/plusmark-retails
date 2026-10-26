@@ -10,9 +10,9 @@ import { itemListSchema } from "@/lib/structured-data";
 import { toFilterItem } from "@/lib/filter";
 
 export const metadata = buildMetadata({
-  title: "Products — White Boards, Chalk Boards, Notice Boards & More",
+  title: "Products — White, Chalk & Notice Boards",
   description:
-    "Browse the Plusmark Display System range: white boards, chalk boards, notice boards, magnetic and ceramic boards, acrylic door cover notice boards, board stands, clipboards, school benches and schedule boards.",
+    "Browse the Plusmark range: white, chalk, notice, magnetic and ceramic boards, ADC notice boards, board stands, clipboards, school benches and schedule boards.",
   path: "/products",
 });
 

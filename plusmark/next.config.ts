@@ -11,6 +11,10 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   images: {
+    // The deployed Cloudflare image optimizer intermittently fails with HTTP/2 ping errors.
+    // Product and marketing assets already use Cloudinary/static caching, so serve the source
+    // URL directly instead of routing every image through `/_next/image`.
+    unoptimized: true,
     formats: ["image/avif", "image/webp"],
     qualities: [75, 85],
     remotePatterns: [
@@ -28,11 +32,25 @@ const nextConfig: NextConfig = {
       { pathname: "/images/**", search: "" },
     ],
   },
+  async redirects() {
+    // Canonical host is the apex (see data/company.ts); www is not in DNS, so this only keeps a
+    // future www record from splitting the site across two duplicate hosts. It lives here rather
+    // than in proxy.ts because Next 16 runs proxies on the Node.js runtime, and OpenNext cannot
+    // bundle that for Cloudflare (optional-peer @opentelemetry/api, hoisted by firebase-admin,
+    // reaches the output incomplete). A config redirect also costs no Worker CPU per request.
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.plusmarkboards.com" }],
+        destination: "https://plusmarkboards.com/:path*",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     const immutable = [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }];
+    const document = [{ key: "Cache-Control", value: "no-store, max-age=0" }];
     return [
-      { source: "/models/:path*", headers: immutable },
-      { source: "/draco/:path*", headers: immutable },
       {
         source: "/:path*",
         headers: [
@@ -42,6 +60,15 @@ const nextConfig: NextConfig = {
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
         ],
       },
+      // HTML/RSC responses must not outlive the deployment that produced their hashed JS
+      // references. Static assets are overridden below with their long-lived policy.
+      { source: "/:path*", headers: document },
+      // These assets are content-hashed or immutable Cloudinary-style exports. Keep repeat
+      // visits out of the Worker; the import scripts add `?v=` when a local photo is replaced.
+      { source: "/_next/static/:path*", headers: immutable },
+      { source: "/images/:path*", headers: immutable },
+      { source: "/models/:path*", headers: immutable },
+      { source: "/draco/:path*", headers: immutable },
     ];
   },
 };

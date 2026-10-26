@@ -1,4 +1,4 @@
-﻿import { categories } from "@/data/categories";
+import { categories } from "@/data/categories";
 import { getCatalog, liveSubcategoryConfig, productsForCategory } from "@/lib/catalog";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ProductCard } from "@/components/products/ProductCard";

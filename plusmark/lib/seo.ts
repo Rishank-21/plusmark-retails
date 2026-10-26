@@ -17,12 +17,33 @@ export const navLinks = [
   { href: "/custom-solutions", label: "Custom Solutions" },
   { href: "/industries", label: "Industries" },
   { href: "/buying-guide", label: "Buying Guide" },
+  { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
 ] as const;
+
+/** Everything that does not fit the primary navbar row lives in the "More" dropdown. */
+const moreNavHrefs = ["/industries", "/buying-guide", "/blog"];
+
+export const primaryNavLinks = navLinks.filter((link) => !moreNavHrefs.includes(link.href));
+
+export const moreNavLinks = navLinks.filter((link) => moreNavHrefs.includes(link.href));
 
 export function absoluteUrl(path = "/") {
   return `${siteConfig.url}${path.startsWith("/") ? path : `/${path}`}`;
 }
+
+/**
+ * Catalog photos are either local (`/images/...`) or already absolute (Cloudinary, Firebase
+ * Storage). Prefixing an absolute URL would produce an unfetchable
+ * `https://host/https://cdn/...`, so pass those through untouched.
+ */
+export function absoluteImage(src: string) {
+  return /^https?:\/\//.test(src) ? src : absoluteUrl(src);
+}
+
+/** Dimensions of the generated brand card served at siteConfig.ogImage (see app/opengraph-image.tsx). */
+const DEFAULT_OG_SIZE = { width: 1200, height: 630 };
+const DEFAULT_OG_ALT = "Plusmark Display System — Writing & Display Systems, Made in India";
 
 interface BuildMetadataInput {
   title: string;
@@ -44,7 +65,11 @@ export function buildMetadata({
   noIndex,
   absoluteTitle,
 }: BuildMetadataInput): Metadata {
-  const images = image ? [{ url: image, width: 1600, height: 1200, alt: imageAlt ?? title }] : undefined;
+  // The opengraph-image file convention only applies to its own segment, so pages without a
+  // product photo would otherwise ship no social card at all. Fall back to the brand card.
+  const images = image
+    ? [{ url: image, width: 1600, height: 1200, alt: imageAlt ?? title }]
+    : [{ url: siteConfig.ogImage, ...DEFAULT_OG_SIZE, alt: DEFAULT_OG_ALT }];
   return {
     title: absoluteTitle ? { absolute: title } : title,
     description,
@@ -56,13 +81,13 @@ export function buildMetadata({
       url: path,
       title,
       description,
-      ...(images ? { images } : {}),
+      images,
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      ...(image ? { images: [image] } : {}),
+      images: [images[0].url],
     },
     robots: noIndex
       ? { index: false, follow: true }

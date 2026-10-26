@@ -138,7 +138,7 @@ export function ExperienceNav({
             <Link
               href="/contact#enquiry"
               className={cn(
-                "xd-btn !hidden !h-11 !px-4 !text-[0.92rem] sm:!inline-flex lg:!hidden xl:!inline-flex",
+                "xd-btn !hidden !h-11 !bg-[#ffd966] !px-4 !text-[0.92rem] !text-[#131921] hover:!bg-[#f7ca00] sm:!inline-flex lg:!hidden xl:!inline-flex",
                 open && "invisible",
               )}
             >

@@ -13,7 +13,7 @@ import "server-only";
 import { unstable_cache } from "next/cache";
 import type { CategorySlug, Product, Series, Spec } from "@/data/types";
 import type { AplusImage } from "@/data/aplus";
-import { products as builtIn } from "@/data/products";
+import { products as builtIn, productSeoTitle } from "@/data/products";
 import { categoryMap } from "@/data/categories";
 import { subcategoryConfigs } from "@/data/subcategories";
 import { websiteFirestore, websiteFirebaseConfigured } from "@/lib/firebase-admin";
@@ -93,16 +93,22 @@ function toProduct(d: Stored, base: Product | undefined): Product | null {
     image,
     imageAlt: base && !photosChanged && base.name === name ? base.imageAlt : `${name} — ${category.name} by ${BRAND}`,
     gallery,
-    // The 3D model shows the built-in board, so drop it once the photos are replaced.
-    model: typeof d.model === "string" && d.model.trim() ? d.model : photosChanged ? undefined : base?.model,
+    // Keep the built-in model when an admin replaces photos unless a specific model is supplied.
+    // Otherwise the desktop hero silently loses its default 3D scene after a catalog edit.
+    model: typeof d.model === "string" && d.model.trim() ? d.model : base?.model,
     modelFallback: image,
     featured: typeof d.featured === "boolean" ? d.featured : base?.featured ?? false,
-    seoTitle: `${name} | ${category.name}`,
+    seoTitle: productSeoTitle(name, category.name),
     seoDescription: clip(`${name} by ${BRAND}. ${shortDescription}`),
   };
 }
 
-type CatalogData = { products: Product[]; aplus: Record<string, AplusImage[]> };
+type CatalogData = {
+  products: Product[];
+  aplus: Record<string, AplusImage[]>;
+  /** ISO last-modified time per slug, from Firestore. Absent for built-in products. */
+  updatedAt: Record<string, string>;
+};
 
 function aplusImages(v: unknown, productName: string): AplusImage[] {
   if (!Array.isArray(v)) return [];
@@ -115,7 +121,7 @@ function aplusImages(v: unknown, productName: string): AplusImage[] {
 }
 
 async function loadCatalog(): Promise<CatalogData> {
-  const fallback = { products: builtIn, aplus: {} };
+  const fallback = { products: builtIn, aplus: {}, updatedAt: {} };
   if (!websiteFirebaseConfigured()) return fallback;
   try {
     const snapshot = await websiteFirestore().collection("website_products").get();
@@ -124,6 +130,7 @@ async function loadCatalog(): Promise<CatalogData> {
     const bySlug = new Map(builtIn.map((p) => [p.slug, p]));
     const order = builtIn.map((p) => p.slug);
     const aplus: Record<string, AplusImage[]> = {};
+    const updatedAt: Record<string, string> = {};
     snapshot.forEach((child) => {
       const d = (child.data() ?? {}) as Stored;
       const slug = typeof d.slug === "string" && d.slug ? d.slug : child.id;
@@ -137,19 +144,28 @@ async function loadCatalog(): Promise<CatalogData> {
       bySlug.set(slug, product);
       const banners = aplusImages(d.aplusImages, product.name);
       if (banners.length) aplus[slug] = banners;
+      // The admin SDK types forEach's argument as the base DocumentSnapshot, which omits
+      // updateTime; query results always carry it.
+      const stamp = (child as { updateTime?: { toDate?: () => Date } }).updateTime?.toDate?.();
+      if (stamp) updatedAt[slug] = stamp.toISOString();
     });
-    return { products: order.map((s) => bySlug.get(s)).filter((p): p is Product => !!p), aplus };
+    return { products: order.map((s) => bySlug.get(s)).filter((p): p is Product => !!p), aplus, updatedAt };
   } catch (err) {
     console.error("[catalog] could not load admin product edits, using built-in catalog", err);
     return fallback;
   }
 }
 
-const getCatalogData = unstable_cache(loadCatalog, ["plusmark-catalog-v1"], { tags: [CATALOG_TAG], revalidate: 3600 });
+const getCatalogData = unstable_cache(loadCatalog, ["plusmark-catalog-v2"], { tags: [CATALOG_TAG], revalidate: 3600 });
 
 /** All live products, in catalog order (admin-added products at the end). */
 export async function getCatalog(): Promise<Product[]> {
   return (await getCatalogData()).products;
+}
+
+/** Real last-modified times for admin-edited products. Used for sitemap `lastmod`. */
+export async function getCatalogUpdatedAt(): Promise<Record<string, string>> {
+  return (await getCatalogData()).updatedAt;
 }
 
 /** A+ banners uploaded for a product in the admin (in addition to the built-in sets). */

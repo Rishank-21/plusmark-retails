@@ -43,9 +43,9 @@ export function HeroProductBody({ product, index, style }: Props) {
         </Link>
         <Link
           href={`/contact?product=${product.slug}#enquiry`}
-          className="group inline-flex items-center gap-2 text-[0.8rem] font-semibold text-graphite"
+          className="group inline-flex h-11 items-center gap-2.5 bg-[#08a63a] px-5 text-[0.8rem] font-semibold text-white transition-colors hover:bg-[#078b31]"
         >
-          <span className="link-underline">Enquire</span>
+          <span>Enquire</span>
           <ArrowRight aria-hidden className="size-3.5 transition-transform group-hover:translate-x-1" />
         </Link>
       </div>

@@ -1,0 +1,51 @@
+
+┌──────────────────────────────┐
+│ OpenNext — Cloudflare deploy │
+└──────────────────────────────┘
+
+WARN OpenNext is not fully compatible with Windows.
+WARN For optimal performance, it is recommended to use Windows Subsystem for Linux (WSL).
+WARN While OpenNext may function on Windows, it could encounter unpredictable failures during runtime.
+Incremental cache does not need populating
+Tag cache does not need populating
+
+ ⛅️ wrangler 4.152.0
+────────────────────
+🌀 Building list of assets...
+✨ Read 704 files from the assets directory C:\Users\palha\plusmark-retails\plusmark\.open-next\assets
+🌀 Starting asset upload...
+No updated asset files to upload. Proceeding with deployment...
+Total Upload: 12168.16 KiB / gzip: 2838.25 KiB
+Your Worker has access to the following bindings:
+Binding            Resource      
+env.ASSETS         Assets        
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mUnable to resolve Cloudflare's API hostname (api.cloudflare.com or dash.cloudflare.com).[0m
+
+  
+  This is typically caused by:
+    - No internet connection or network connectivity issues
+    - DNS resolver not configured or not responding
+    - Firewall or VPN blocking DNS requests
+    - Corporate network with restricted DNS
+  
+  Please check your network connection and DNS settings.
+
+
+🪵  Logs were written to "C:\Users\palha\AppData\Roaming\xdg.config\.wrangler\logs\wrangler-2026-10-25_07-13-29_495.log"
+ERROR Wrangler deploy command failed:
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mUnable to resolve Cloudflare's API hostname (api.cloudflare.com or dash.cloudflare.com).[0m
+
+  
+  This is typically caused by:
+    - No internet connection or network connectivity issues
+    - DNS resolver not configured or not responding
+    - Firewall or VPN blocking DNS requests
+    - Corporate network with restricted DNS
+  
+  Please check your network connection and DNS settings.
+
+
+🪵  Logs were written to "C:\Users\palha\AppData\Roaming\xdg.config\.wrangler\logs\wrangler-2026-10-25_07-13-29_495.log"
+

@@ -10,9 +10,9 @@ import { buildMetadata } from "@/lib/seo";
 import { pad2 } from "@/lib/utils";
 
 export const metadata = buildMetadata({
-  title: "Custom Solutions — Custom Boards, Layouts & Schedule Boards",
+  title: "Custom Solutions — Boards Made to Your Design",
   description:
-    "Custom folder sizes, fabric colours and layouts, combination boards, practice board line layouts and dry wipe schedule boards in any design and any size from Plusmark.",
+    "Custom folder sizes, fabric colours and line layouts, combination boards and dry wipe schedule boards in any design and any size from Plusmark.",
   path: "/custom-solutions",
 });
 

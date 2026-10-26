@@ -1,6 +1,6 @@
 # Copy this file to .dev.vars for local `wrangler dev`.
 # Never commit the real .dev.vars file.
-NEXT_PUBLIC_SITE_URL=https://www.plusmarkboards.com
+NEXT_PUBLIC_SITE_URL=https://plusmarkboards.com
 NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=drt0rpkn2
 NEXT_PUBLIC_WHATSAPP_NUMBER=+919913967888
 NEXT_PUBLIC_CONTACT_PHONE=+919913967888

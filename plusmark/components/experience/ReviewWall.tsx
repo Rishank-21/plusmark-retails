@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUpRight, MessageSquareReply, Quote, Star } from "lucide-react";
+import { ArrowUpRight, MessageSquareReply, Quote } from "lucide-react";
 import { Reveal } from "@/components/animations/Reveal";
 import { CountUp } from "@/components/animations/CountUp";
 import { useAutoScroll } from "@/components/animations/useAutoScroll";
@@ -24,7 +24,7 @@ function Stars({ className }: { className?: string }) {
   return (
     <span className={cn("inline-flex gap-0.5", className)} role="img" aria-label={`${reviewSummary.rating} out of 5 stars`}>
       {Array.from({ length: 5 }, (_, i) => (
-        <Star key={i} aria-hidden className="size-3.5 fill-[#f5b301] text-[#f5b301]" />
+        <span key={i} aria-hidden className="review-star" />
       ))}
     </span>
   );
@@ -37,7 +37,7 @@ function ReviewCard({ r, copy }: { r: GoogleReview; copy: boolean }) {
       aria-hidden={copy || undefined}
       className={cn("group shrink-0", long ? "w-[min(26rem,84vw)]" : "w-[min(19rem,76vw)]")}
     >
-      <figure className="flex h-full flex-col rounded-2xl bg-white p-6 shadow-[0_1px_2px_rgb(27_23_64/0.05),0_24px_48px_-36px_rgb(27_23_64/0.45)] ring-1 ring-[rgb(27_23_64/0.07)] transition-[transform,box-shadow] duration-500 ease-[var(--xd-ease)] group-hover:-translate-y-1 group-hover:shadow-[0_1px_2px_rgb(27_23_64/0.06),0_32px_60px_-34px_rgb(79_63_217/0.45)] group-hover:ring-[rgb(79_63_217/0.25)]">
+      <figure className="flex h-full flex-col rounded-2xl bg-white p-6">
         <div className="flex items-center justify-between">
           <Stars />
           <Quote aria-hidden className="size-5 text-accent/30 transition-colors duration-500 group-hover:text-accent" />
@@ -118,7 +118,7 @@ export function ReviewWall({ id }: { id: string }) {
               href={reviewSummary.profileUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="xd-glass group flex items-center gap-5 rounded-2xl px-6 py-5 transition-transform duration-500 ease-[var(--xd-ease)] hover:-translate-y-0.5"
+              className="group flex items-center gap-5 rounded-2xl bg-white/74 px-6 py-5 transition-transform duration-500 ease-[var(--xd-ease)] hover:-translate-y-0.5"
             >
               <span className="font-display text-5xl font-semibold leading-none tracking-[-0.04em] text-graphite">{reviewSummary.rating.toFixed(1)}</span>
               <span className="flex flex-col gap-1.5">

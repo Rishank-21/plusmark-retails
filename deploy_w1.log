@@ -1,0 +1,851 @@
+🪵  Writing logs to "C:\Users\palha\AppData\Roaming\xdg.config\.wrangler\logs\wrangler-2026-10-26_02-26-21_305.log"
+.env file not found at "C:\Users\palha\plusmark-retails\plusmark\.env.local". Continuing... For more details, refer to https://developers.cloudflare.com/workers/wrangler/system-environment-variables/
+
+ ⛅️ wrangler 4.152.0
+────────────────────
+Running autoconfig detection in C:\Users\palha\plusmark-retails\plusmark...
+Metrics dispatcher: Posting data {"deviceId":"aa0c389b-eb4c-40ee-b4aa-4193f3f43174","event":"wrangler command started","timestamp":1792981582078,"properties":{"amplitude_session_id":1792981582038,"amplitude_event_id":0,"wranglerVersion":"4.152.0","wranglerMajorVersion":4,"wranglerMinorVersion":152,"wranglerPatchVersion":0,"osPlatform":"Windows","osVersion":"Windows 11 Home Single Language","nodeVersion":24,"packageManager":"npm","isFirstUsage":false,"configFileType":"jsonc","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":true,"agent":null,"argsUsed":[],"argsCombination":"","sanitizedCommand":"deploy","sanitizedArgs":{"path":null},"currentAgentSkillsInstalled":null}}
+Metrics dispatcher: Posting data {"deviceId":"aa0c389b-eb4c-40ee-b4aa-4193f3f43174","event":"autoconfig_process_started","timestamp":1792981582089,"properties":{"amplitude_session_id":1792981582068,"amplitude_event_id":0,"wranglerVersion":"4.152.0","wranglerMajorVersion":4,"wranglerMinorVersion":152,"wranglerPatchVersion":0,"osPlatform":"Windows","osVersion":"Windows 11 Home Single Language","nodeVersion":24,"packageManager":"npm","isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":null,"category":"Workers","os":"win32:x64","autoConfigId":"f98dfb4e-5f0e-4269-a504-fd2a85f5f267","command":"wrangler deploy","dryRun":false,"currentAgentSkillsInstalled":null}}
+Metrics dispatcher: Posting data {"deviceId":"aa0c389b-eb4c-40ee-b4aa-4193f3f43174","event":"autoconfig_detection_started","timestamp":1792981582095,"properties":{"amplitude_session_id":1792981582071,"amplitude_event_id":0,"wranglerVersion":"4.152.0","wranglerMajorVersion":4,"wranglerMinorVersion":152,"wranglerPatchVersion":0,"osPlatform":"Windows","osVersion":"Windows 11 Home Single Language","nodeVersion":24,"packageManager":"npm","isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":null,"category":"Workers","os":"win32:x64","autoConfigId":"f98dfb4e-5f0e-4269-a504-fd2a85f5f267","command":"wrangler deploy","currentAgentSkillsInstalled":null}}
+Metrics dispatcher: Posting data {"deviceId":"aa0c389b-eb4c-40ee-b4aa-4193f3f43174","event":"autoconfig_detection_completed","timestamp":1792981582107,"properties":{"amplitude_session_id":1792981582074,"amplitude_event_id":0,"wranglerVersion":"4.152.0","wranglerMajorVersion":4,"wranglerMinorVersion":152,"wranglerPatchVersion":0,"osPlatform":"Windows","osVersion":"Windows 11 Home Single Language","nodeVersion":24,"packageManager":"npm","isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":null,"category":"Workers","os":"win32:x64","autoConfigId":"f98dfb4e-5f0e-4269-a504-fd2a85f5f267","configured":true,"success":true,"currentAgentSkillsInstalled":null}}
+Metrics dispatcher: Posting data {"deviceId":"aa0c389b-eb4c-40ee-b4aa-4193f3f43174","event":"autoconfig_process_ended","timestamp":1792981582114,"properties":{"amplitude_session_id":1792981582097,"amplitude_event_id":0,"wranglerVersion":"4.152.0","wranglerMajorVersion":4,"wranglerMinorVersion":152,"wranglerPatchVersion":0,"osPlatform":"Windows","osVersion":"Windows 11 Home Single Language","nodeVersion":24,"packageManager":"npm","isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":null,"category":"Workers","os":"win32:x64","autoConfigId":"f98dfb4e-5f0e-4269-a504-fd2a85f5f267","command":"wrangler deploy","dryRun":false,"success":true,"currentAgentSkillsInstalled":null}}
+OpenNext project detected, calling `opennextjs-cloudflare deploy`
+Using npm as package manager.
+
+┌──────────────────────────────┐
+│ OpenNext — Cloudflare deploy │
+└──────────────────────────────┘
+
+WARN OpenNext is not fully compatible with Windows.
+WARN For optimal performance, it is recommended to use Windows Subsystem for Linux (WSL).
+WARN While OpenNext may function on Windows, it could encounter unpredictable failures during runtime.
+🪵  Writing logs to "C:\Users\palha\AppData\Roaming\xdg.config\.wrangler\logs\wrangler-2026-10-26_02-26-48_851.log"
+local dev variables file not found at ".dev.vars". Continuing... For more details, refer to https://developers.cloudflare.com/workers/wrangler/system-environment-variables/
+Incremental cache does not need populating
+Tag cache does not need populating
+🪵  Writing logs to "C:\Users\palha\AppData\Roaming\xdg.config\.wrangler\logs\wrangler-2026-10-26_02-26-56_833.log"
+.env file not found at "C:\Users\palha\plusmark-retails\plusmark\.env.local". Continuing... For more details, refer to https://developers.cloudflare.com/workers/wrangler/system-environment-variables/
+
+ ⛅️ wrangler 4.152.0
+────────────────────
+Running autoconfig detection in C:\Users\palha\plusmark-retails\plusmark...
+Metrics dispatcher: Posting data {"deviceId":"aa0c389b-eb4c-40ee-b4aa-4193f3f43174","event":"wrangler command started","timestamp":1792981617358,"properties":{"amplitude_session_id":1792981617311,"amplitude_event_id":0,"wranglerVersion":"4.152.0","wranglerMajorVersion":4,"wranglerMinorVersion":152,"wranglerPatchVersion":0,"osPlatform":"Windows","osVersion":"Windows 11 Home Single Language","nodeVersion":24,"packageManager":"npm","isFirstUsage":false,"configFileType":"jsonc","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":true,"agent":null,"argsUsed":[],"argsCombination":"","sanitizedCommand":"deploy","sanitizedArgs":{"path":null},"currentAgentSkillsInstalled":null}}
+Metrics dispatcher: Posting data {"deviceId":"aa0c389b-eb4c-40ee-b4aa-4193f3f43174","event":"autoconfig_process_started","timestamp":1792981617373,"properties":{"amplitude_session_id":1792981617349,"amplitude_event_id":0,"wranglerVersion":"4.152.0","wranglerMajorVersion":4,"wranglerMinorVersion":152,"wranglerPatchVersion":0,"osPlatform":"Windows","osVersion":"Windows 11 Home Single Language","nodeVersion":24,"packageManager":"npm","isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":null,"category":"Workers","os":"win32:x64","autoConfigId":"1af6602c-20ba-4450-8f41-84d2dadb16ad","command":"wrangler deploy","dryRun":false,"currentAgentSkillsInstalled":null}}
+Metrics dispatcher: Posting data {"deviceId":"aa0c389b-eb4c-40ee-b4aa-4193f3f43174","event":"autoconfig_detection_started","timestamp":1792981617378,"properties":{"amplitude_session_id":1792981617352,"amplitude_event_id":0,"wranglerVersion":"4.152.0","wranglerMajorVersion":4,"wranglerMinorVersion":152,"wranglerPatchVersion":0,"osPlatform":"Windows","osVersion":"Windows 11 Home Single Language","nodeVersion":24,"packageManager":"npm","isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":null,"category":"Workers","os":"win32:x64","autoConfigId":"1af6602c-20ba-4450-8f41-84d2dadb16ad","command":"wrangler deploy","currentAgentSkillsInstalled":null}}
+Metrics dispatcher: Posting data {"deviceId":"aa0c389b-eb4c-40ee-b4aa-4193f3f43174","event":"autoconfig_detection_completed","timestamp":1792981617417,"properties":{"amplitude_session_id":1792981617354,"amplitude_event_id":0,"wranglerVersion":"4.152.0","wranglerMajorVersion":4,"wranglerMinorVersion":152,"wranglerPatchVersion":0,"osPlatform":"Windows","osVersion":"Windows 11 Home Single Language","nodeVersion":24,"packageManager":"npm","isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":null,"category":"Workers","os":"win32:x64","autoConfigId":"1af6602c-20ba-4450-8f41-84d2dadb16ad","configured":true,"success":true,"currentAgentSkillsInstalled":null}}
+Metrics dispatcher: Posting data {"deviceId":"aa0c389b-eb4c-40ee-b4aa-4193f3f43174","event":"autoconfig_process_ended","timestamp":1792981617423,"properties":{"amplitude_session_id":1792981617380,"amplitude_event_id":0,"wranglerVersion":"4.152.0","wranglerMajorVersion":4,"wranglerMinorVersion":152,"wranglerPatchVersion":0,"osPlatform":"Windows","osVersion":"Windows 11 Home Single Language","nodeVersion":24,"packageManager":"npm","isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":null,"category":"Workers","os":"win32:x64","autoConfigId":"1af6602c-20ba-4450-8f41-84d2dadb16ad","command":"wrangler deploy","dryRun":false,"success":true,"currentAgentSkillsInstalled":null}}
+fetching auth token grant_type=refresh_token
+Checking if domain has Access enabled: dash.cloudflare.com
+Access switch not cached for: dash.cloudflare.com
+Caching access switch for: dash.cloudflare.com
+Fetching auth token from https://dash.cloudflare.com/oauth2/token
+Writing additional module to output C:\Users\palha\plusmark-retails\plusmark\.wrangler\tmp\deploy-GjNuPh\a5d4d0ae9bf0a18b666f06b1864089d3fe4057cc-yoga.wasm
+Writing additional module to output C:\Users\palha\plusmark-retails\plusmark\.wrangler\tmp\deploy-GjNuPh\a7e702bc5ba9227243abda7977c8096f59478d3f-resvg.wasm
+Writing additional module to output C:\Users\palha\plusmark-retails\plusmark\.wrangler\tmp\deploy-GjNuPh\8a4c78e86e13dbf6e741a84f526dd79481b679db-Geist-Regular.ttf.bin
+Starting verifyWorkerMatchesCITag() with tag: undefined, name: plusmark-retails
+No WRANGLER_CI_MATCH_TAG variable provided, aborting verifyWorkerMatchesCITag()
+-- START CF API REQUEST: GET https://api.cloudflare.com/client/v4/accounts/10f6c5115942d764550bfc6d6f6d952b/workers/services/plusmark-retails
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API REQUEST
+-- START CF API RESPONSE: OK 200
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API RESPONSE
+-- START CF API REQUEST: GET https://api.cloudflare.com/client/v4/accounts/10f6c5115942d764550bfc6d6f6d952b/workers/scripts/plusmark-retails/deployments
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API REQUEST
+-- START CF API RESPONSE: OK 200
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API RESPONSE
+🌀 Building list of assets...
+✨ Read 704 files from the assets directory C:\Users\palha\plusmark-retails\plusmark\.open-next\assets
+/BUILD_ID
+/draco
+/images
+/models
+/sequence
+/_next
+/_next\static
+/_next\static\886FV7CVg5ktBQZmF2Kqt
+/_next\static\chunks
+/_next\static\media
+/_next\static\media\03bda585a99c6450-s.32sris142tqlb.woff2
+/_next\static\media\04c5164763c40239-s.1kd-r_s9smv5m.woff2
+/_next\static\media\051742360c26797e-s.p.1bkzbscqrt8rl.woff2
+/_next\static\media\0b1dc8ddaa74ba49-s.0e__wj8580tc5.woff2
+/_next\static\media\1a099d89ee94ee96-s.35a5cae5tspm2.woff2
+/_next\static\media\1b99372b3eaef0c8-s.1gsd1jahc5dg_.woff2
+/_next\static\media\1e219c03c996efbd-s.2qo5md4hn_gum.woff2
+/_next\static\media\26f284dcc38c84c0-s.3hlisc-pwq13z.woff2
+/_next\static\media\3fd967fc5374d70a-s.42u1-lj4buy61.woff2
+/_next\static\media\4e1c87b7aa9e2f2f-s.3o02-8iknf6dl.woff2
+/_next\static\media\58c4895d0a0ef7cc-s.2vhvl9vrvk-va.woff2
+/_next\static\media\5c285b27cdda1fe8-s.2_mbdogr7ni8i.woff2
+/_next\static\media\6a5386fd6038edbe-s.3_z45zcoc-xoz.woff2
+/_next\static\media\6ab0db14f70d8ed6-s.13hnt-xgp82zk.woff2
+/_next\static\media\7e7f32a39836f228-s.0-oo9_1x_xmvg.woff2
+/_next\static\media\a342834df7752944-s.3hd2l7bm32o7k.woff2
+/_next\static\media\a343f882a40d2cc9-s.p.1sj6eobyi31rd.woff2
+/_next\static\media\b2ea385cb5ae8625-s.1spbknb88wd48.woff2
+/_next\static\media\b35b0dbffda7f2c4-s.1d9rlgtqyj_-l.woff2
+/_next\static\media\b59689b1142d37ce-s.1bk8_xp319hr4.woff2
+/_next\static\media\b886574ba42c3409-s.1_wjncogyh-s7.woff2
+/_next\static\media\bfc7db5c00d21bc5-s.173xwsdme27n8.woff2
+/_next\static\media\c3cb240f9c892514-s.3z_x6eowsw16y.woff2
+/_next\static\media\c41ca59f1c34ba31-s.p.2y2uoi4t910qy.woff2
+/_next\static\media\d0d9446e69c4847e-s.3h31fjnwrfycc.woff2
+/_next\static\media\d3fe2f289711ac3f-s.1l2zhvq5eocqf.woff2
+/_next\static\media\dd14639a62c56cb2-s.0kda-l-rfpyyq.woff2
+/_next\static\media\e629b5bc06499d58-s.10u7vx61f1ie7.woff2
+/_next\static\media\fa39153a3fc630ba-s.36fqqi66-3tjb.woff2
+/_next\static\media\fba5a26ea33df6a3-s.18rizl4rsrl42.woff2
+/_next\static\chunks\05-e4x9a31-xz.js
+/_next\static\chunks\0ce6aopo7yine.js
+/_next\static\chunks\0cz1d0mv5g_q7.js
+/_next\static\chunks\0d51jnpbyz5j-.js
+/_next\static\chunks\0k8q7j6cdpp8n.js
+/_next\static\chunks\0kngeq8qpuhqp.js
+/_next\static\chunks\0q_icnja7uk07.js
+/_next\static\chunks\0s3f-7yvfg7ih.js
+/_next\static\chunks\0un8t85v52y9s.js
+/_next\static\chunks\0xp4p03566brd.js
+/_next\static\chunks\0yszbbgurbtwj.js
+/_next\static\chunks\114ca6xh5-pte.js
+/_next\static\chunks\1ckvzn7sfprko.js
+/_next\static\chunks\1djxvv8e8oc39.js
+/_next\static\chunks\1e-wcqxk6bp6o.js
+/_next\static\chunks\1hq-u4bwq--df.js
+/_next\static\chunks\1jh4m88xxjz1k.js
+/_next\static\chunks\1oyi87pdgtyzy.css
+/_next\static\chunks\1r52_7vr5y0fv.js
+/_next\static\chunks\1to5y5_hyyjng.js
+/_next\static\chunks\1ulauqw7xjt-c.js
+/_next\static\chunks\1x7682-ka5rzr.js
+/_next\static\chunks\232govt2aof21.js
+/_next\static\chunks\234rfq-a3xeph.js
+/_next\static\chunks\27755t7v3m41s.js
+/_next\static\chunks\27i_w_gz6hpl2.js
+/_next\static\chunks\2cqfiyhkfe3d4.js
+/_next\static\chunks\2cr2h8wi_x03s.js
+/_next\static\chunks\2gcnfiuednwgn.js
+/_next\static\chunks\2gsxhio73malr.js
+/_next\static\chunks\2gvu8dyrhibpa.js
+/_next\static\chunks\2h9fpauh9fdhp.js
+/_next\static\chunks\2llljn2_cjavt.css
+/_next\static\chunks\2r4s4h5xul1n-.js
+/_next\static\chunks\2rrsz6izytcq7.js
+/_next\static\chunks\2wqs99f1q4g9r.js
+/_next\static\chunks\3-4gtwrk-v209.js
+/_next\static\chunks\30gxiz8hd3g__.js
+/_next\static\chunks\3130i5ogrocaw.js
+/_next\static\chunks\31wuch1q-c5kp.js
+/_next\static\chunks\35129__n3llji.js
+/_next\static\chunks\3b06_2wx_7ax9.js
+/_next\static\chunks\3ce1e19gqkc8l.js
+/_next\static\chunks\3mqxgtw2503vr.js
+/_next\static\chunks\3osz1ui2knl4j.js
+/_next\static\chunks\3_u5i-1emac-u.js
+/_next\static\chunks\406jwu51qzh_p.js
+/_next\static\chunks\40kr6n_giuv-j.js
+/_next\static\chunks\41eq8kggqcpf6.js
+/_next\static\chunks\41v7on-w8ztcq.js
+/_next\static\chunks\42onvq6nokjl2.js
+/_next\static\chunks\turbopack-2c3mg3r-05n1w.js
+/_next\static\886FV7CVg5ktBQZmF2Kqt\_buildManifest.js
+/_next\static\886FV7CVg5ktBQZmF2Kqt\_clientMiddlewareManifest.js
+/_next\static\886FV7CVg5ktBQZmF2Kqt\_ssgManifest.js
+/sequence\board-turn
+/sequence\board-turn-clean
+/sequence\board-turn-clean\001.webp
+/sequence\board-turn-clean\002.webp
+/sequence\board-turn-clean\003.webp
+/sequence\board-turn-clean\004.webp
+/sequence\board-turn-clean\005.webp
+/sequence\board-turn-clean\006.webp
+/sequence\board-turn-clean\007.webp
+/sequence\board-turn-clean\008.webp
+/sequence\board-turn-clean\009.webp
+/sequence\board-turn-clean\010.webp
+/sequence\board-turn-clean\011.webp
+/sequence\board-turn-clean\012.webp
+/sequence\board-turn-clean\013.webp
+/sequence\board-turn-clean\014.webp
+/sequence\board-turn-clean\015.webp
+/sequence\board-turn-clean\016.webp
+/sequence\board-turn-clean\017.webp
+/sequence\board-turn-clean\018.webp
+/sequence\board-turn-clean\019.webp
+/sequence\board-turn-clean\020.webp
+/sequence\board-turn-clean\021.webp
+/sequence\board-turn-clean\022.webp
+/sequence\board-turn-clean\023.webp
+/sequence\board-turn-clean\024.webp
+/sequence\board-turn-clean\025.webp
+/sequence\board-turn-clean\026.webp
+/sequence\board-turn-clean\027.webp
+/sequence\board-turn-clean\028.webp
+/sequence\board-turn-clean\029.webp
+/sequence\board-turn-clean\030.webp
+/sequence\board-turn-clean\031.webp
+/sequence\board-turn-clean\032.webp
+/sequence\board-turn-clean\033.webp
+/sequence\board-turn-clean\034.webp
+/sequence\board-turn-clean\035.webp
+/sequence\board-turn-clean\036.webp
+/sequence\board-turn-clean\037.webp
+/sequence\board-turn-clean\038.webp
+/sequence\board-turn-clean\039.webp
+/sequence\board-turn-clean\040.webp
+/sequence\board-turn-clean\041.webp
+/sequence\board-turn-clean\042.webp
+/sequence\board-turn-clean\043.webp
+/sequence\board-turn-clean\044.webp
+/sequence\board-turn-clean\045.webp
+/sequence\board-turn-clean\046.webp
+/sequence\board-turn-clean\047.webp
+/sequence\board-turn-clean\048.webp
+/sequence\board-turn-clean\049.webp
+/sequence\board-turn-clean\050.webp
+/sequence\board-turn-clean\051.webp
+/sequence\board-turn-clean\052.webp
+/sequence\board-turn-clean\053.webp
+/sequence\board-turn-clean\054.webp
+/sequence\board-turn-clean\055.webp
+/sequence\board-turn-clean\056.webp
+/sequence\board-turn-clean\057.webp
+/sequence\board-turn-clean\058.webp
+/sequence\board-turn-clean\059.webp
+/sequence\board-turn-clean\060.webp
+/sequence\board-turn-clean\061.webp
+/sequence\board-turn-clean\062.webp
+/sequence\board-turn-clean\063.webp
+/sequence\board-turn-clean\064.webp
+/sequence\board-turn-clean\065.webp
+/sequence\board-turn-clean\066.webp
+/sequence\board-turn-clean\067.webp
+/sequence\board-turn-clean\068.webp
+/sequence\board-turn-clean\069.webp
+/sequence\board-turn-clean\070.webp
+/sequence\board-turn-clean\071.webp
+/sequence\board-turn-clean\072.webp
+/sequence\board-turn-clean\073.webp
+/sequence\board-turn-clean\074.webp
+/sequence\board-turn-clean\075.webp
+/sequence\board-turn-clean\076.webp
+/sequence\board-turn-clean\077.webp
+/sequence\board-turn-clean\078.webp
+/sequence\board-turn-clean\079.webp
+/sequence\board-turn-clean\080.webp
+/sequence\board-turn-clean\081.webp
+/sequence\board-turn-clean\082.webp
+/sequence\board-turn-clean\083.webp
+/sequence\board-turn-clean\084.webp
+/sequence\board-turn-clean\085.webp
+/sequence\board-turn-clean\086.webp
+/sequence\board-turn-clean\087.webp
+/sequence\board-turn-clean\088.webp
+/sequence\board-turn-clean\089.webp
+/sequence\board-turn-clean\090.webp
+/sequence\board-turn-clean\091.webp
+/sequence\board-turn-clean\092.webp
+/sequence\board-turn-clean\093.webp
+/sequence\board-turn-clean\094.webp
+/sequence\board-turn-clean\095.webp
+/sequence\board-turn-clean\096.webp
+/sequence\board-turn-clean\097.webp
+/sequence\board-turn-clean\098.webp
+/sequence\board-turn-clean\099.webp
+/sequence\board-turn-clean\100.webp
+/sequence\board-turn-clean\101.webp
+/sequence\board-turn-clean\102.webp
+/sequence\board-turn-clean\103.webp
+/sequence\board-turn-clean\104.webp
+/sequence\board-turn-clean\105.webp
+/sequence\board-turn-clean\106.webp
+/sequence\board-turn-clean\107.webp
+/sequence\board-turn-clean\108.webp
+/sequence\board-turn-clean\109.webp
+/sequence\board-turn-clean\110.webp
+/sequence\board-turn\001.webp
+/sequence\board-turn\002.webp
+/sequence\board-turn\003.webp
+/sequence\board-turn\004.webp
+/sequence\board-turn\005.webp
+/sequence\board-turn\006.webp
+/sequence\board-turn\007.webp
+/sequence\board-turn\008.webp
+/sequence\board-turn\009.webp
+/sequence\board-turn\010.webp
+/sequence\board-turn\011.webp
+/sequence\board-turn\012.webp
+/sequence\board-turn\013.webp
+/sequence\board-turn\014.webp
+/sequence\board-turn\015.webp
+/sequence\board-turn\016.webp
+/sequence\board-turn\017.webp
+/sequence\board-turn\018.webp
+/sequence\board-turn\019.webp
+/sequence\board-turn\020.webp
+/sequence\board-turn\021.webp
+/sequence\board-turn\022.webp
+/sequence\board-turn\023.webp
+/sequence\board-turn\024.webp
+/sequence\board-turn\025.webp
+/sequence\board-turn\026.webp
+/sequence\board-turn\027.webp
+/sequence\board-turn\028.webp
+/sequence\board-turn\029.webp
+/sequence\board-turn\030.webp
+/sequence\board-turn\031.webp
+/sequence\board-turn\032.webp
+/sequence\board-turn\033.webp
+/sequence\board-turn\034.webp
+/sequence\board-turn\035.webp
+/sequence\board-turn\036.webp
+/sequence\board-turn\037.webp
+/sequence\board-turn\038.webp
+/sequence\board-turn\039.webp
+/sequence\board-turn\040.webp
+/sequence\board-turn\041.webp
+/sequence\board-turn\042.webp
+/sequence\board-turn\043.webp
+/sequence\board-turn\044.webp
+/sequence\board-turn\045.webp
+/sequence\board-turn\046.webp
+/sequence\board-turn\047.webp
+/sequence\board-turn\048.webp
+/sequence\board-turn\049.webp
+/sequence\board-turn\050.webp
+/sequence\board-turn\051.webp
+/sequence\board-turn\052.webp
+/sequence\board-turn\053.webp
+/sequence\board-turn\054.webp
+/sequence\board-turn\055.webp
+/sequence\board-turn\056.webp
+/sequence\board-turn\057.webp
+/sequence\board-turn\058.webp
+/sequence\board-turn\059.webp
+/sequence\board-turn\060.webp
+/sequence\board-turn\061.webp
+/sequence\board-turn\062.webp
+/sequence\board-turn\063.webp
+/sequence\board-turn\064.webp
+/sequence\board-turn\065.webp
+/sequence\board-turn\066.webp
+/sequence\board-turn\067.webp
+/sequence\board-turn\068.webp
+/sequence\board-turn\069.webp
+/sequence\board-turn\070.webp
+/sequence\board-turn\071.webp
+/sequence\board-turn\072.webp
+/sequence\board-turn\073.webp
+/sequence\board-turn\074.webp
+/sequence\board-turn\075.webp
+/sequence\board-turn\076.webp
+/sequence\board-turn\077.webp
+/sequence\board-turn\078.webp
+/sequence\board-turn\079.webp
+/sequence\board-turn\080.webp
+/sequence\board-turn\081.webp
+/sequence\board-turn\082.webp
+/sequence\board-turn\083.webp
+/sequence\board-turn\084.webp
+/sequence\board-turn\085.webp
+/sequence\board-turn\086.webp
+/sequence\board-turn\087.webp
+/sequence\board-turn\088.webp
+/sequence\board-turn\089.webp
+/sequence\board-turn\090.webp
+/sequence\board-turn\091.webp
+/sequence\board-turn\092.webp
+/sequence\board-turn\093.webp
+/sequence\board-turn\094.webp
+/sequence\board-turn\095.webp
+/sequence\board-turn\096.webp
+/sequence\board-turn\097.webp
+/sequence\board-turn\098.webp
+/sequence\board-turn\099.webp
+/sequence\board-turn\100.webp
+/sequence\board-turn\101.webp
+/sequence\board-turn\102.webp
+/sequence\board-turn\103.webp
+/sequence\board-turn\104.webp
+/sequence\board-turn\105.webp
+/sequence\board-turn\106.webp
+/sequence\board-turn\107.webp
+/sequence\board-turn\108.webp
+/sequence\board-turn\109.webp
+/sequence\board-turn\110.webp
+/sequence\board-turn\111.webp
+/sequence\board-turn\112.webp
+/sequence\board-turn\113.webp
+/sequence\board-turn\114.webp
+/sequence\board-turn\115.webp
+/sequence\board-turn\116.webp
+/sequence\board-turn\117.webp
+/sequence\board-turn\118.webp
+/sequence\board-turn\119.webp
+/sequence\board-turn\120.webp
+/models\combination-board.glb
+/models\cork-notice-board.glb
+/models\deluxe-45mm-adc-notice-board-double-door.glb
+/models\deluxe-45mm-adc-notice-board-single-door.glb
+/models\deluxe-standard-ceramic-board.glb
+/models\deluxe-standard-chalk-board.glb
+/models\deluxe-standard-magnetic-board.glb
+/models\deluxe-standard-notice-board.glb
+/models\deluxe-standard-white-board.glb
+/models\eco-adc-notice-board-single-door.glb
+/models\eco-premium-chalk-board.glb
+/models\eco-premium-notice-board.glb
+/models\eco-premium-white-board.glb
+/models\eco-regular-chalk-board.glb
+/models\eco-regular-magnetic-board.glb
+/models\eco-regular-notice-board.glb
+/models\eco-regular-white-board.glb
+/models\fabric-notice-board.glb
+/models\laminate-mdf-base-clipboard.glb
+/models\LOGO-FIX-INSTRUCTIONS.md
+/models\metallic-premium-ceramic-board.glb
+/models\metallic-premium-chalk-board.glb
+/models\metallic-premium-magnetic-board.glb
+/models\metallic-premium-notice-board.glb
+/models\metallic-premium-white-board.glb
+/models\pds-sb-807.glb
+/models\README.md
+/images\aplus
+/images\both-side
+/images\clients
+/images\industries
+/images\plusmark-logo.png
+/images\plusmark-mark-backup.png
+/images\plusmark-mark.png
+/images\products
+/images\products\acrylic-folder-display-board.webp
+/images\products\combination-board.webp
+/images\products\cork-notice-board.webp
+/images\products\crystal-clear-base-clipboard.webp
+/images\products\crystal-colour-base-clipboard.webp
+/images\products\deluxe-45mm-adc-notice-board-double-door.webp
+/images\products\deluxe-45mm-adc-notice-board-single-door.webp
+/images\products\deluxe-standard-ceramic-board.webp
+/images\products\deluxe-standard-chalk-board.webp
+/images\products\deluxe-standard-magnetic-board.webp
+/images\products\deluxe-standard-magnetic-chalk-board.webp
+/images\products\deluxe-standard-notice-board.webp
+/images\products\deluxe-standard-white-board.webp
+/images\products\dry-wipe-schedule-board.webp
+/images\products\eco-adc-notice-board-single-door.webp
+/images\products\eco-premium-both-side-board
+/images\products\eco-premium-both-side-board.webp
+/images\products\eco-premium-chalk-board
+/images\products\eco-premium-chalk-board.webp
+/images\products\eco-premium-notice-board
+/images\products\eco-premium-notice-board.webp
+/images\products\eco-premium-white-board
+/images\products\eco-premium-white-board.webp
+/images\products\eco-regular-chalk-board.webp
+/images\products\eco-regular-magnetic-board
+/images\products\eco-regular-magnetic-board.webp
+/images\products\eco-regular-magnetic-chalk-board.webp
+/images\products\eco-regular-notice-board.webp
+/images\products\eco-regular-white-board.webp
+/images\products\fabric-notice-board.webp
+/images\products\file-rack.webp
+/images\products\first-aid-box.webp
+/images\products\four-leg-stand.webp
+/images\products\four-line-square-line-practice-board.webp
+/images\products\graphic-mdf-base-clipboard
+/images\products\graphic-mdf-base-clipboard.webp
+/images\products\grooved-boards
+/images\products\grooved-boards.webp
+/images\products\heavy-duty-clear-acrylic-clipboard.webp
+/images\products\key-hanger-board.webp
+/images\products\laminate-mdf-base-clipboard
+/images\products\laminate-mdf-base-clipboard.webp
+/images\products\letter-box.webp
+/images\products\letters-and-figures-set.webp
+/images\products\magazine-stand.webp
+/images\products\metallic-premium-ceramic-board
+/images\products\metallic-premium-ceramic-board.webp
+/images\products\metallic-premium-chalk-board
+/images\products\metallic-premium-chalk-board.webp
+/images\products\metallic-premium-magnetic-board
+/images\products\metallic-premium-magnetic-board.webp
+/images\products\metallic-premium-magnetic-chalk-board
+/images\products\metallic-premium-magnetic-chalk-board.webp
+/images\products\metallic-premium-notice-board
+/images\products\metallic-premium-notice-board.webp
+/images\products\metallic-premium-white-board
+/images\products\metallic-premium-white-board.webp
+/images\products\newspaper-stand
+/images\products\newspaper-stand.webp
+/images\products\pds-500.webp
+/images\products\pds-sb-801.webp
+/images\products\pds-sb-802.webp
+/images\products\pds-sb-803.webp
+/images\products\pds-sb-804.webp
+/images\products\pds-sb-805.webp
+/images\products\pds-sb-806.webp
+/images\products\pds-sb-807.webp
+/images\products\pds-sb-808.webp
+/images\products\pds-sb-809.webp
+/images\products\pds-sb-810.webp
+/images\products\pds-sb-811.webp
+/images\products\pds-sb-812.webp
+/images\products\pds-sb-813.webp
+/images\products\pds-sb-814.webp
+/images\products\pds-sb-815.webp
+/images\products\perforated-board.webp
+/images\products\pre-lam-mdf-base-clipboard
+/images\products\pre-lam-mdf-base-clipboard.webp
+/images\products\revolving-stand.webp
+/images\products\student-study-table
+/images\products\student-study-table.webp
+/images\products\telescopic-stand.webp
+/images\products\three-leg-stand.webp
+/images\products\zig-zag-stand.webp
+/images\products\student-study-table\1.webp
+/images\products\student-study-table\10.webp
+/images\products\student-study-table\11.webp
+/images\products\student-study-table\12.webp
+/images\products\student-study-table\2.webp
+/images\products\student-study-table\3.webp
+/images\products\student-study-table\4.webp
+/images\products\student-study-table\5.webp
+/images\products\student-study-table\6.webp
+/images\products\student-study-table\7.webp
+/images\products\student-study-table\8.webp
+/images\products\student-study-table\9.webp
+/images\products\pre-lam-mdf-base-clipboard\1.webp
+/images\products\pre-lam-mdf-base-clipboard\2.webp
+/images\products\pre-lam-mdf-base-clipboard\3.webp
+/images\products\pre-lam-mdf-base-clipboard\4.webp
+/images\products\newspaper-stand\1.webp
+/images\products\metallic-premium-white-board\1.webp
+/images\products\metallic-premium-white-board\2.webp
+/images\products\metallic-premium-white-board\3.webp
+/images\products\metallic-premium-white-board\4.webp
+/images\products\metallic-premium-white-board\5.webp
+/images\products\metallic-premium-white-board\6.webp
+/images\products\metallic-premium-notice-board\1.webp
+/images\products\metallic-premium-notice-board\10.webp
+/images\products\metallic-premium-notice-board\11.webp
+/images\products\metallic-premium-notice-board\2.webp
+/images\products\metallic-premium-notice-board\3.webp
+/images\products\metallic-premium-notice-board\4.webp
+/images\products\metallic-premium-notice-board\5.webp
+/images\products\metallic-premium-notice-board\6.webp
+/images\products\metallic-premium-notice-board\7.webp
+/images\products\metallic-premium-notice-board\8.webp
+/images\products\metallic-premium-notice-board\9.webp
+/images\products\metallic-premium-magnetic-chalk-board\1.webp
+/images\products\metallic-premium-magnetic-chalk-board\2.webp
+/images\products\metallic-premium-magnetic-chalk-board\3.webp
+/images\products\metallic-premium-magnetic-chalk-board\4.webp
+/images\products\metallic-premium-magnetic-chalk-board\5.webp
+/images\products\metallic-premium-magnetic-chalk-board\6.webp
+/images\products\metallic-premium-magnetic-chalk-board\size-2x3.webp
+/images\products\metallic-premium-magnetic-chalk-board\size-2x4.webp
+/images\products\metallic-premium-magnetic-chalk-board\size-3x4.webp
+/images\products\metallic-premium-magnetic-board\1.webp
+/images\products\metallic-premium-magnetic-board\10.webp
+/images\products\metallic-premium-magnetic-board\2.webp
+/images\products\metallic-premium-magnetic-board\3.webp
+/images\products\metallic-premium-magnetic-board\4.webp
+/images\products\metallic-premium-magnetic-board\5.webp
+/images\products\metallic-premium-magnetic-board\6.webp
+/images\products\metallic-premium-magnetic-board\7.webp
+/images\products\metallic-premium-magnetic-board\8.webp
+/images\products\metallic-premium-magnetic-board\9.webp
+/images\products\metallic-premium-chalk-board\1.webp
+/images\products\metallic-premium-chalk-board\2.webp
+/images\products\metallic-premium-chalk-board\3.webp
+/images\products\metallic-premium-chalk-board\4.webp
+/images\products\metallic-premium-chalk-board\5.webp
+/images\products\metallic-premium-chalk-board\6.webp
+/images\products\metallic-premium-ceramic-board\1.webp
+/images\products\metallic-premium-ceramic-board\10.webp
+/images\products\metallic-premium-ceramic-board\2.webp
+/images\products\metallic-premium-ceramic-board\3.webp
+/images\products\metallic-premium-ceramic-board\4.webp
+/images\products\metallic-premium-ceramic-board\5.webp
+/images\products\metallic-premium-ceramic-board\6.webp
+/images\products\metallic-premium-ceramic-board\7.webp
+/images\products\metallic-premium-ceramic-board\8.webp
+/images\products\metallic-premium-ceramic-board\9.webp
+/images\products\laminate-mdf-base-clipboard\1.webp
+/images\products\grooved-boards\1.webp
+/images\products\graphic-mdf-base-clipboard\1.webp
+/images\products\graphic-mdf-base-clipboard\2.webp
+/images\products\graphic-mdf-base-clipboard\3.webp
+/images\products\graphic-mdf-base-clipboard\4.webp
+/images\products\eco-regular-magnetic-board\1.webp
+/images\products\eco-regular-magnetic-board\10.webp
+/images\products\eco-regular-magnetic-board\2.webp
+/images\products\eco-regular-magnetic-board\3.webp
+/images\products\eco-regular-magnetic-board\4.webp
+/images\products\eco-regular-magnetic-board\5.webp
+/images\products\eco-regular-magnetic-board\6.webp
+/images\products\eco-regular-magnetic-board\7.webp
+/images\products\eco-regular-magnetic-board\8.webp
+/images\products\eco-regular-magnetic-board\9.webp
+/images\products\eco-premium-white-board\1.webp
+/images\products\eco-premium-white-board\2.webp
+/images\products\eco-premium-white-board\3.webp
+/images\products\eco-premium-white-board\4.webp
+/images\products\eco-premium-white-board\5.webp
+/images\products\eco-premium-white-board\6.webp
+/images\products\eco-premium-notice-board\1.webp
+/images\products\eco-premium-notice-board\2.webp
+/images\products\eco-premium-notice-board\3.webp
+/images\products\eco-premium-notice-board\4.webp
+/images\products\eco-premium-notice-board\5.webp
+/images\products\eco-premium-notice-board\6.webp
+/images\products\eco-premium-notice-board\7.webp
+/images\products\eco-premium-notice-board\8.webp
+/images\products\eco-premium-chalk-board\1.webp
+/images\products\eco-premium-chalk-board\2.webp
+/images\products\eco-premium-chalk-board\3.webp
+/images\products\eco-premium-chalk-board\4.webp
+/images\products\eco-premium-chalk-board\5.webp
+/images\products\eco-premium-chalk-board\6.webp
+/images\products\eco-premium-both-side-board\1.webp
+/images\products\eco-premium-both-side-board\2.webp
+/images\products\eco-premium-both-side-board\3.webp
+/images\products\eco-premium-both-side-board\4.webp
+/images\products\eco-premium-both-side-board\5.webp
+/images\products\eco-premium-both-side-board\6.webp
+/images\industries\colleges-universities.png
+/images\industries\dealers-distributors.png
+/images\industries\factories-industrial-units.png
+/images\industries\government-private-institutions.webp
+/images\industries\schools.png
+/images\industries\training-coaching-centers.png
+/images\clients\amul-dairy.png
+/images\clients\banas-dairy.png
+/images\clients\delhi-public-school.png
+/images\clients\gem.png
+/images\clients\gujarat-university.png
+/images\clients\iit-kharagpur.png
+/images\clients\jawahar-navodaya-vidyalaya.png
+/images\clients\kendriya-vidyalaya.png
+/images\clients\mahi-dairy.png
+/images\clients\tata-sky.png
+/images\both-side\chalk.webp
+/images\both-side\white.webp
+/images\aplus\brand.webp
+/images\aplus\eco-magnetic-chalk-board
+/images\aplus\eco-premium-both-side-board
+/images\aplus\eco-premium-chalk-board
+/images\aplus\eco-premium-notice-board
+/images\aplus\eco-premium-white-board
+/images\aplus\eco-regular-magnetic-board
+/images\aplus\metallic-ceramic-chalk-board
+/images\aplus\metallic-ceramic-white-board
+/images\aplus\metallic-magnetic-chalk-board
+/images\aplus\metallic-magnetic-white-board
+/images\aplus\metallic-premium-chalk-board
+/images\aplus\metallic-premium-notice-board
+/images\aplus\metallic-premium-white-board
+/images\aplus\metallic-premium-white-board\01.webp
+/images\aplus\metallic-premium-white-board\02.webp
+/images\aplus\metallic-premium-white-board\03.webp
+/images\aplus\metallic-premium-white-board\04.webp
+/images\aplus\metallic-premium-white-board\05.webp
+/images\aplus\metallic-premium-white-board\06.webp
+/images\aplus\metallic-premium-white-board\07.webp
+/images\aplus\metallic-premium-white-board\08.webp
+/images\aplus\metallic-premium-white-board\09.webp
+/images\aplus\metallic-premium-notice-board\01.webp
+/images\aplus\metallic-premium-notice-board\02.webp
+/images\aplus\metallic-premium-notice-board\03.webp
+/images\aplus\metallic-premium-notice-board\04.webp
+/images\aplus\metallic-premium-notice-board\05.webp
+/images\aplus\metallic-premium-notice-board\06.webp
+/images\aplus\metallic-premium-notice-board\07.webp
+/images\aplus\metallic-premium-notice-board\08.webp
+/images\aplus\metallic-premium-notice-board\09.webp
+/images\aplus\metallic-premium-chalk-board\01.webp
+/images\aplus\metallic-premium-chalk-board\02.webp
+/images\aplus\metallic-premium-chalk-board\03.webp
+/images\aplus\metallic-premium-chalk-board\04.webp
+/images\aplus\metallic-premium-chalk-board\05.webp
+/images\aplus\metallic-premium-chalk-board\06.webp
+/images\aplus\metallic-premium-chalk-board\07.webp
+/images\aplus\metallic-premium-chalk-board\08.webp
+/images\aplus\metallic-premium-chalk-board\09.webp
+/images\aplus\metallic-magnetic-white-board\01.webp
+/images\aplus\metallic-magnetic-white-board\02.webp
+/images\aplus\metallic-magnetic-white-board\03.webp
+/images\aplus\metallic-magnetic-white-board\04.webp
+/images\aplus\metallic-magnetic-white-board\05.webp
+/images\aplus\metallic-magnetic-white-board\06.webp
+/images\aplus\metallic-magnetic-white-board\07.webp
+/images\aplus\metallic-magnetic-white-board\08.webp
+/images\aplus\metallic-magnetic-white-board\09.webp
+/images\aplus\metallic-magnetic-chalk-board\01.webp
+/images\aplus\metallic-magnetic-chalk-board\02.webp
+/images\aplus\metallic-magnetic-chalk-board\03.webp
+/images\aplus\metallic-magnetic-chalk-board\04.webp
+/images\aplus\metallic-magnetic-chalk-board\05.webp
+/images\aplus\metallic-magnetic-chalk-board\06.webp
+/images\aplus\metallic-magnetic-chalk-board\07.webp
+/images\aplus\metallic-magnetic-chalk-board\08.webp
+/images\aplus\metallic-magnetic-chalk-board\09.webp
+/images\aplus\metallic-ceramic-white-board\01.webp
+/images\aplus\metallic-ceramic-white-board\02.webp
+/images\aplus\metallic-ceramic-white-board\03.webp
+/images\aplus\metallic-ceramic-white-board\04.webp
+/images\aplus\metallic-ceramic-white-board\05.webp
+/images\aplus\metallic-ceramic-white-board\06.webp
+/images\aplus\metallic-ceramic-white-board\07.webp
+/images\aplus\metallic-ceramic-white-board\08.webp
+/images\aplus\metallic-ceramic-white-board\09.webp
+/images\aplus\metallic-ceramic-chalk-board\01.webp
+/images\aplus\metallic-ceramic-chalk-board\02.webp
+/images\aplus\metallic-ceramic-chalk-board\03.webp
+/images\aplus\metallic-ceramic-chalk-board\04.webp
+/images\aplus\metallic-ceramic-chalk-board\05.webp
+/images\aplus\metallic-ceramic-chalk-board\06.webp
+/images\aplus\metallic-ceramic-chalk-board\07.webp
+/images\aplus\metallic-ceramic-chalk-board\08.webp
+/images\aplus\metallic-ceramic-chalk-board\09.webp
+/images\aplus\eco-regular-magnetic-board\01.webp
+/images\aplus\eco-regular-magnetic-board\02.webp
+/images\aplus\eco-regular-magnetic-board\03.webp
+/images\aplus\eco-regular-magnetic-board\04.webp
+/images\aplus\eco-regular-magnetic-board\05.webp
+/images\aplus\eco-regular-magnetic-board\06.webp
+/images\aplus\eco-regular-magnetic-board\07.webp
+/images\aplus\eco-regular-magnetic-board\08.webp
+/images\aplus\eco-premium-white-board\01.webp
+/images\aplus\eco-premium-white-board\02.webp
+/images\aplus\eco-premium-white-board\03.webp
+/images\aplus\eco-premium-white-board\04.webp
+/images\aplus\eco-premium-white-board\05.webp
+/images\aplus\eco-premium-white-board\06.webp
+/images\aplus\eco-premium-white-board\07.webp
+/images\aplus\eco-premium-white-board\08.webp
+/images\aplus\eco-premium-notice-board\01.webp
+/images\aplus\eco-premium-notice-board\02.webp
+/images\aplus\eco-premium-notice-board\03.webp
+/images\aplus\eco-premium-notice-board\04.webp
+/images\aplus\eco-premium-notice-board\05.webp
+/images\aplus\eco-premium-notice-board\06.webp
+/images\aplus\eco-premium-notice-board\07.webp
+/images\aplus\eco-premium-notice-board\08.webp
+/images\aplus\eco-premium-notice-board\09.webp
+/images\aplus\eco-premium-chalk-board\01.webp
+/images\aplus\eco-premium-chalk-board\02.webp
+/images\aplus\eco-premium-chalk-board\03.webp
+/images\aplus\eco-premium-chalk-board\04.webp
+/images\aplus\eco-premium-chalk-board\05.webp
+/images\aplus\eco-premium-chalk-board\06.webp
+/images\aplus\eco-premium-chalk-board\07.webp
+/images\aplus\eco-premium-chalk-board\08.webp
+/images\aplus\eco-premium-both-side-board\01.webp
+/images\aplus\eco-premium-both-side-board\02.webp
+/images\aplus\eco-premium-both-side-board\03.webp
+/images\aplus\eco-premium-both-side-board\04.webp
+/images\aplus\eco-premium-both-side-board\05.webp
+/images\aplus\eco-premium-both-side-board\06.webp
+/images\aplus\eco-premium-both-side-board\07.webp
+/images\aplus\eco-premium-both-side-board\08.webp
+/images\aplus\eco-magnetic-chalk-board\01.webp
+/images\aplus\eco-magnetic-chalk-board\02.webp
+/images\aplus\eco-magnetic-chalk-board\03.webp
+/images\aplus\eco-magnetic-chalk-board\04.webp
+/images\aplus\eco-magnetic-chalk-board\05.webp
+/images\aplus\eco-magnetic-chalk-board\06.webp
+/images\aplus\eco-magnetic-chalk-board\07.webp
+/images\aplus\eco-magnetic-chalk-board\08.webp
+/draco\draco_decoder.js
+/draco\draco_decoder.wasm
+/draco\draco_wasm_wrapper.js
+🌀 Starting asset upload...
+-- START CF API REQUEST: POST https://api.cloudflare.com/client/v4/accounts/10f6c5115942d764550bfc6d6f6d952b/workers/scripts/plusmark-retails/assets-upload-session
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API REQUEST
+-- START CF API RESPONSE: OK 200
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API RESPONSE
+No updated asset files to upload. Proceeding with deployment...
+Total Upload: 12168.16 KiB / gzip: 2838.25 KiB
+-- START CF API REQUEST: GET https://api.cloudflare.com/client/v4/accounts/10f6c5115942d764550bfc6d6f6d952b/workers/scripts/plusmark-retails/settings
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API REQUEST
+-- START CF API RESPONSE: OK 200
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API RESPONSE
+-- START CF API REQUEST: POST https://api.cloudflare.com/client/v4/accounts/10f6c5115942d764550bfc6d6f6d952b/workers/scripts/plusmark-retails/versions
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+BODY: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API REQUEST
+-- START CF API RESPONSE: OK 200
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API RESPONSE
+-- START CF API REQUEST: POST https://api.cloudflare.com/client/v4/accounts/10f6c5115942d764550bfc6d6f6d952b/workers/scripts/plusmark-retails/deployments
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API REQUEST
+-- START CF API RESPONSE: OK 200
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API RESPONSE
+-- START CF API REQUEST: PATCH https://api.cloudflare.com/client/v4/accounts/10f6c5115942d764550bfc6d6f6d952b/workers/scripts/plusmark-retails/script-settings
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API REQUEST
+-- START CF API RESPONSE: OK 200
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API RESPONSE
+Worker Startup Time: 18 ms
+Your Worker has access to the following bindings:
+Binding            Resource      
+env.ASSETS         Assets        
+
+Uploaded plusmark-retails (205.23 sec)
+-- START CF API REQUEST: GET https://api.cloudflare.com/client/v4/accounts/10f6c5115942d764550bfc6d6f6d952b/workers/workers/plusmark-retails
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API REQUEST
+-- START CF API RESPONSE: OK 200
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API RESPONSE
+-- START CF API REQUEST: POST https://api.cloudflare.com/client/v4/accounts/10f6c5115942d764550bfc6d6f6d952b/workers/scripts/plusmark-retails/subdomain
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API REQUEST
+-- START CF API RESPONSE: OK 200
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API RESPONSE
+Deployed plusmark-retails triggers (3.12 sec)
+  https://plusmark-retails.palhariom698.workers.dev
+Current Version ID: 070f2f50-97b0-4b55-bb1c-4946c6e7bd73
+Metrics dispatcher: Posting data {"deviceId":"aa0c389b-eb4c-40ee-b4aa-4193f3f43174","event":"deploy worker script","timestamp":1792981835126,"properties":{"amplitude_session_id":1792981835109,"amplitude_event_id":0,"wranglerVersion":"4.152.0","wranglerMajorVersion":4,"wranglerMinorVersion":152,"wranglerPatchVersion":0,"osPlatform":"Windows","osVersion":"Windows 11 Home Single Language","nodeVersion":24,"packageManager":"npm","isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":null,"category":"Workers","os":"win32:x64","usesTypeScript":false,"durationMs":214967,"sourceMapSize":14482357,"assetUploadDurationMs":0,"assetUploadIsBulk":true,"assetUploadFileCount":0,"assetUploadTotalBytes":0,"currentAgentSkillsInstalled":null}}
+Metrics dispatcher: Posting data {"deviceId":"aa0c389b-eb4c-40ee-b4aa-4193f3f43174","event":"wrangler command completed","timestamp":1792981835138,"properties":{"amplitude_session_id":1792981617311,"amplitude_event_id":1,"wranglerVersion":"4.152.0","wranglerMajorVersion":4,"wranglerMinorVersion":152,"wranglerPatchVersion":0,"osPlatform":"Windows","osVersion":"Windows 11 Home Single Language","nodeVersion":24,"packageManager":"npm","isFirstUsage":false,"configFileType":"jsonc","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":true,"agent":null,"argsUsed":[],"argsCombination":"","sanitizedCommand":"deploy","sanitizedArgs":{"path":null},"durationMs":217856,"currentAgentSkillsInstalled":null}}
+(node:16324) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+Metrics dispatcher: Posting data {"deviceId":"aa0c389b-eb4c-40ee-b4aa-4193f3f43174","event":"wrangler command completed","timestamp":1792981835661,"properties":{"amplitude_session_id":1792981582038,"amplitude_event_id":1,"wranglerVersion":"4.152.0","wranglerMajorVersion":4,"wranglerMinorVersion":152,"wranglerPatchVersion":0,"osPlatform":"Windows","osVersion":"Windows 11 Home Single Language","nodeVersion":24,"packageManager":"npm","isFirstUsage":false,"configFileType":"jsonc","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":true,"agent":null,"argsUsed":[],"argsCombination":"","sanitizedCommand":"deploy","sanitizedArgs":{"path":null},"durationMs":253745,"currentAgentSkillsInstalled":null}}

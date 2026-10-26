@@ -41,7 +41,7 @@ export function IndustriesSection({
           </Reveal>
         )}
         {!showHeading && <h2 id="industries-title" className="sr-only">Industries served</h2>}
-        <ul className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid auto-cols-[minmax(82vw,20rem)] grid-flow-col grid-rows-2 gap-5 overflow-x-auto pb-3 [scrollbar-width:none] md:grid-flow-row md:grid-cols-2 md:grid-rows-none md:auto-cols-auto md:overflow-visible md:pb-0 lg:grid-cols-3">
           {industries.map((ind, i) => {
             const Icon = ICONS[ind.icon];
             return (

@@ -136,7 +136,7 @@ export function QualityStory() {
             <p className="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-steel">
               {pad2(i + 1)} — {s.title}
             </p>
-            <h3 className="mt-3 font-display text-2xl font-semibold leading-tight md:text-3xl">{s.lead}</h3>
+            <h2 className="mt-3 font-display text-2xl font-semibold leading-tight md:text-3xl">{s.lead}</h2>
             <p className="mt-4 max-w-lg leading-relaxed text-steel">{s.text}</p>
             <ul className="mt-5 flex flex-wrap gap-2">
               {s.terms.map((t) => (

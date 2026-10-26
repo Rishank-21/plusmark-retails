@@ -5,13 +5,15 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { FaqAccordion } from "@/components/ui/FaqAccordion";
 import { Reveal } from "@/components/animations/Reveal";
 import { EnquiryBand } from "@/components/sections/EnquiryBand";
+import { RelatedGuides } from "@/components/sections/RelatedGuides";
+import { categories } from "@/data/categories";
 import { faqGroups } from "@/data/faq";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
-  title: "Board Buying Guide — Choose the Right Series, Surface & Size",
+  title: "Board Buying Guide — Series, Surface & Size",
   description:
-    "Compare Plusmark Metallic Premium, Eco Premium, Deluxe Standard and Eco Regular boards, and choose between HPL, melamine, chalk, magnetic, ceramic and notice board surfaces.",
+    "Compare Metallic Premium, Eco Premium, Deluxe Standard and Eco Regular boards, and choose between HPL, melamine, chalk, magnetic and ceramic surfaces.",
   path: "/buying-guide",
 });
 
@@ -71,14 +73,14 @@ const surfaces = [
     title: "Resin Coated Steel",
     text: "Magnetic surface that accepts magnets, charts and holders — in white (marker) and green (chalk).",
     fit: "Planning walls, labs, offices",
-    href: "/products/magnetic-boards",
+    href: "/products/white-boards-magnetic",
     swatch: "bg-gradient-to-br from-[#f7f8f9] to-[#d9dde2]",
   },
   {
     title: "Ceramic Steel",
     text: "Hard, non-porous porcelain enamel steel for continuous writing and frequent cleaning — very long life.",
     fit: "High-traffic institutions",
-    href: "/products/ceramic-boards",
+    href: "/products/white-boards-ceramic",
     swatch: "bg-gradient-to-br from-white to-[#e4e7ea]",
   },
   {
@@ -229,6 +231,8 @@ export default function BuyingGuidePage() {
           </Reveal>
         </div>
       </section>
+
+      <RelatedGuides slugs={categories.map((c) => c.slug)} title="Read next" />
 
       <EnquiryBand
         title="Still deciding? Tell us about your space."
