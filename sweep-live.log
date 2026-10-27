@@ -1,0 +1,10 @@
+… 1/139 fails=0
+… 21/139 fails=0
+… 41/139 fails=0
+… 61/139 fails=0
+… 81/139 fails=0
+… 101/139 fails=0
+… 121/139 fails=0
+
+sitemap pages 139 | 5xx/ERR 0 | HIT 138 | MISS/other 1 | slow>4s 0
+p50 448ms p90 543ms max 867ms

@@ -1,7 +1,7 @@
 "use server";
 
 import { websiteFirestore } from "@/lib/firebase-admin";
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidateTag } from "next/cache";
 import { requireAdmin } from "@/lib/admin-auth";
 import { VIDEOS_TAG } from "@/lib/videos";
 import type { Video } from "@/data/media";
@@ -63,7 +63,6 @@ function clean(video: Partial<VideoWithId>) {
 /** Videos show on the home page, showroom, experience and product pages, so refresh them all. */
 function revalidate() {
   revalidateTag(VIDEOS_TAG, { expire: 0 });
-  revalidatePath("/", "layout");
 }
 
 export async function addVideo(video: Omit<VideoWithId, "id">, order: number) {

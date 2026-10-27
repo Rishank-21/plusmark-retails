@@ -23,7 +23,7 @@ export const industries: Industry[] = [
     slug: "schools",
     name: "Schools",
     icon: "school",
-    image: "/images/industries/schools.png",
+    image: scene("schools"),
     imageAlt: "Teacher teaching mathematics on a Plusmark chalk board in a school classroom with students",
     summary:
       "Chalk boards, white boards and notice boards for classrooms, practice boards for primary and early learning classes, and school benches.",
@@ -38,7 +38,7 @@ export const industries: Industry[] = [
     slug: "colleges-universities",
     name: "Colleges & Universities",
     icon: "graduation",
-    image: "/images/industries/colleges-universities.png",
+    image: scene("colleges-universities"),
     imageAlt: "Lecturer explaining equations on a Plusmark white board while students raise their hands",
     summary:
       "Boards built for intensive daily institutional use, including ceramic steel surfaces designed for very long product life.",
@@ -53,7 +53,7 @@ export const industries: Industry[] = [
     slug: "dealers-distributors",
     name: "Dealer & Distributors",
     icon: "truck",
-    image: "/images/industries/dealers-distributors.png",
+    image: scene("dealers-distributors"),
     imageAlt: "Sales team planning on a Plusmark magnetic white board in an office meeting room",
     summary:
       "A complete manufacturing range — white, chalk, notice, ceramic and magnetic boards, school benches and all types of board stands — supplied Pan India.",
@@ -68,7 +68,7 @@ export const industries: Industry[] = [
     slug: "factories-industrial-units",
     name: "Factories & Industrial Units",
     icon: "factory",
-    image: "/images/industries/factories-industrial-units.png",
+    image: scene("factories-industrial-units"),
     imageAlt: "Team reviewing a strategy plan on a Plusmark chalk board at the workplace",
     summary:
       "Acrylic folder display boards for charts, reports, SOPs and production data, and lockable key hanger boards for companies and workshops.",
@@ -78,7 +78,7 @@ export const industries: Industry[] = [
     slug: "training-coaching-centers",
     name: "Training & Coaching Centers",
     icon: "presentation",
-    image: "/images/industries/training-coaching-centers.png",
+    image: scene("training-coaching-centers"),
     imageAlt: "Trainer presenting on a Plusmark white board to a group of trainees",
     summary:
       "Boards suited to coaching centres, training rooms and tuition classes across Deluxe Standard, Eco Premium and Eco Regular series.",

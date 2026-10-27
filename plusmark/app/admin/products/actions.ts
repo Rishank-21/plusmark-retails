@@ -1,7 +1,7 @@
 "use server";
 
 import { websiteFirestore } from "@/lib/firebase-admin";
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidateTag } from "next/cache";
 import { requireAdmin } from "@/lib/admin-auth";
 import { CATALOG_TAG } from "@/lib/catalog";
 import type { CategorySlug, Series, Spec } from "@/data/types";
@@ -118,7 +118,6 @@ export async function getProducts(): Promise<ProductData[]> {
 /** Products appear on many pages (home, catalog, categories, enquiry form), so refresh them all. */
 function revalidate() {
   revalidateTag(CATALOG_TAG, { expire: 0 });
-  revalidatePath("/", "layout");
 }
 
 export async function addProduct(product: Omit<ProductData, "id">) {

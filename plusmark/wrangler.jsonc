@@ -8,6 +8,19 @@
     "directory": ".open-next/assets",
     "binding": "ASSETS"
   },
+  // ISR + tag caches live in KV. Without them OpenNext defaults to a per-isolate in-memory
+  // cache, so a cold Worker re-renders the page in request time and blows the Free plan's
+  // 10 ms CPU budget (error 1102 → 503). See open-next.config.ts.
+  "kv_namespaces": [
+    {
+      "binding": "NEXT_INC_CACHE_KV",
+      "id": "ddbfd8bc95f4469091c87311dd18d45c"
+    },
+    {
+      "binding": "NEXT_TAG_CACHE_KV",
+      "id": "ddbfd8bc95f4469091c87311dd18d45c"
+    }
+  ],
   "observability": {
     "enabled": true
   }

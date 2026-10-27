@@ -40,7 +40,7 @@ async function load(): Promise<SiteVideo[] | null> {
   }
 }
 
-const getStored = unstable_cache(load, ["plusmark-videos-v1"], { tags: [VIDEOS_TAG], revalidate: 3600 });
+const getStored = unstable_cache(load, ["plusmark-videos-v1"], { tags: [VIDEOS_TAG], revalidate: 86400 });
 
 /** Every video for the home page "film reel" (and the showroom / experience pages). */
 export async function getSiteVideos(): Promise<Video[]> {

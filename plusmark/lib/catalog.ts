@@ -156,7 +156,7 @@ async function loadCatalog(): Promise<CatalogData> {
   }
 }
 
-const getCatalogData = unstable_cache(loadCatalog, ["plusmark-catalog-v2"], { tags: [CATALOG_TAG], revalidate: 3600 });
+const getCatalogData = unstable_cache(loadCatalog, ["plusmark-catalog-v2"], { tags: [CATALOG_TAG], revalidate: 86400 });
 
 /** All live products, in catalog order (admin-added products at the end). */
 export async function getCatalog(): Promise<Product[]> {

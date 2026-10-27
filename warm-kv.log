@@ -1,0 +1,12 @@
+warming 139 pages (first pass renders, later passes should hit KV)
+  200 MISS 3x 9776ms https://d6c3c516-plusmark-retails.palhariom698.workers.dev/products/board-study-essentials
+  ERR:TypeError - 3x 10676ms https://d6c3c516-plusmark-retails.palhariom698.workers.dev/products/metallic-premium-magnetic-chalk-board
+  200 MISS 2x 6268ms https://d6c3c516-plusmark-retails.palhariom698.workers.dev/products/deluxe-standard-magnetic-chalk-board
+  ERR:AbortError - 3x 30004ms https://d6c3c516-plusmark-retails.palhariom698.workers.dev/products/key-hanger-board
+  200 MISS 2x 6492ms https://d6c3c516-plusmark-retails.palhariom698.workers.dev/products/student-study-table
+  200 MISS 3x 2294ms https://d6c3c516-plusmark-retails.palhariom698.workers.dev/products/pds-sb-801
+  200 MISS 3x 3746ms https://d6c3c516-plusmark-retails.palhariom698.workers.dev/blog/white-board-size-chart-feet-cm
+  200 MISS 3x 2827ms https://d6c3c516-plusmark-retails.palhariom698.workers.dev/blog/white-board-surface-guide
+pages 139 | non-2xx 2 | KV HIT 2 | retried 8
+  STILL FAILING ERR:TypeError https://d6c3c516-plusmark-retails.palhariom698.workers.dev/products/metallic-premium-magnetic-chalk-board
+  STILL FAILING ERR:AbortError https://d6c3c516-plusmark-retails.palhariom698.workers.dev/products/key-hanger-board

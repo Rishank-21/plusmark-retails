@@ -29,10 +29,11 @@ async function loadSiteSettings(): Promise<SiteSettings> {
 }
 
 /**
- * The root layout reads this, so its window becomes every page's edge-cache lifetime. At 60s the
- * CDN revalidated each page every minute and the extra Worker renders hit Cloudflare's CPU limit
- * (error 1102 → 503), matching the catalog / videos caches.
+ * The root layout reads this, so its window becomes every page's edge-cache lifetime. A short
+ * window made the CDN revalidate constantly and the extra Worker renders hit Cloudflare's CPU
+ * limit (error 1102 → 503); a long one also keeps Workers KV writes (Free tier: 1k/day) down,
+ * since each revalidation is a KV write. Admin edits still force a refresh via tag revalidation.
  */
 export const getSiteSettings = unstable_cache(loadSiteSettings, ["plusmark-site-settings"], {
-  revalidate: 3600,
+  revalidate: 86400,
 });

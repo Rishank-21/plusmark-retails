@@ -1,0 +1,49 @@
+
+> plusmark@0.1.0 dev
+> next dev
+
+▲ Next.js 16.4.2 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.12:3000
+- Environments: .env
+✓ Ready in 1911ms
+✓ Running next.config.ts took 129ms
+Warning: Custom Cache-Control headers detected for the following routes:
+  - /_next/static/:path*
+
+Setting a custom Cache-Control header can break Next.js development behavior.
+
+○ Compiling /industries ...
+ GET /industries 200 in 2.6s (next.js: 1247ms, application-code: 1376ms)
+○ Compiling / ...
+Error fetching clients from database, using static data: Error: Firebase target service-account secret is not configured.
+    at firestoreFetch (lib\firebase-admin.ts:129:23)
+    at RestCollection.get (lib\firebase-admin.ts:114:28)
+    at getClients (components\sections\TrustedBySection.tsx:9:77)
+    at TrustedBySection (components\sections\TrustedBySection.tsx:31:25)
+  127 | async function firestoreFetch(path: string, init: RequestInit = {}) {
+  128 |   const account = parseServiceAccount();
+> 129 |   if (!account) throw new Error("Firebase target service-account secret is not configured.");
+      |                       ^
+  130 |   const response = await fetch(`https://firestore.googleapis.com/v1/projects/${account.project_id}/databases/(default)/documents/${path}`, {
+  131 |     ...init,
+  132 |     headers: { authorization: `Bearer ${await accessToken()}`, ...(init.body ? { "content-type": "application/json" } : {}), ...init.headers },
+ GET / 200 in 3.8s (next.js: 124ms, application-code: 3.7s)
+ GET /industries 200 in 285ms (next.js: 4ms, application-code: 281ms)
+Image with src "https://res.cloudinary.com/drt0rpkn2/image/upload/f_auto,q_auto,w_1464/plusmark/aplus/eco-premium-white-board/01" is using quality "30" which is not configured in images.qualities [75, 85]. Please update your config to [30, 75, 85].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+ GET /showroom 200 in 1191ms (next.js: 89ms, application-code: 1102ms)
+ GET /experience 200 in 1068ms (next.js: 53ms, application-code: 1015ms)
+Error fetching clients from database, using static data: Error: Firebase target service-account secret is not configured.
+    at firestoreFetch (lib\firebase-admin.ts:129:23)
+    at RestCollection.get (lib\firebase-admin.ts:114:28)
+    at getClients (components\sections\TrustedBySection.tsx:9:77)
+    at TrustedBySection (components\sections\TrustedBySection.tsx:31:25)
+  127 | async function firestoreFetch(path: string, init: RequestInit = {}) {
+  128 |   const account = parseServiceAccount();
+> 129 |   if (!account) throw new Error("Firebase target service-account secret is not configured.");
+      |                       ^
+  130 |   const response = await fetch(`https://firestore.googleapis.com/v1/projects/${account.project_id}/databases/(default)/documents/${path}`, {
+  131 |     ...init,
+  132 |     headers: { authorization: `Bearer ${await accessToken()}`, ...(init.body ? { "content-type": "application/json" } : {}), ...init.headers },
+ GET / 200 in 1590ms (next.js: 4ms, application-code: 1586ms)
